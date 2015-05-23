@@ -1,6 +1,7 @@
 function [vH] = proj(v,m,n)
 %PROJ Projection onto gi=0-plane
-%   Detailed explanation goes here
+%   Projection of a vector onto the H-plane
+%   described in section 2.3 of the paper, equation (2.17)
 
 vHp=zeros(2*m*n,1);
 for i=1:2*n
