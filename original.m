@@ -15,7 +15,7 @@ x0=[e1;e1;e1;e1;e2;e2;e2;e2;-e1;-e1;-e1;-e1;-e2;-e2;-e2;-e2]/sqrt(.125); %Divide
 %Following lines compute the matrix "A_2n" (see paper sec. 2.1 equation (2.5))
 %Matrix should be removed, and calculations should be done directly
 %to improve the efficiency of the program.
-mJ2n = [zeros(n),eye(n);-eye(n),zeros(n)];
+mJ2n = [zeros(n),-eye(n);eye(n),zeros(n)];
 A2n = zeros(2*m*n);
 for i=1:m
     for j=(i+1):m
