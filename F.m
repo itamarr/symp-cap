@@ -9,7 +9,7 @@ for j=0:m-1
     sum=sum+G(mJ2n*x(j*2*n+1:(j+1)*2*n),n);
 end
 
-y=sum/m^2;
+y=sum/m;
 
 end
 
