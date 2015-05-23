@@ -10,7 +10,7 @@ eps = 1e-8; %tolerance/ exactness
 %initial path x0 in M_m (see paper sec. 2.2, "starting point")
 e1=[1;0];
 e2=[0;1];
-x0=[e1;e1;e1;e1;e2;e2;e2;e2;-e1;-e1;-e1;-e1;-e2;-e2;-e2;-e2]/sqrt(.125); %Divided by 
+x0=[-e2;-e2;-e2;-e2;-e1;-e1;-e1;-e1;e2;e2;e2;e2;e1;e1;e1;e1]/sqrt(0.125); %Divided by 
 
 %Following lines compute the matrix "A_2n" (see paper sec. 2.1 equation (2.5))
 %Matrix should be removed, and calculations should be done directly
