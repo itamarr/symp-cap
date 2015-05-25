@@ -1,5 +1,5 @@
 function [ y ] = G(x,n)
-%G Summary of this function goes here
+%G Describes an ellipsoid
 %   
 a=[1;2;3;4;5;6;7;8;9;10];
 if(size(a,1)~=n)
