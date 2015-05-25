@@ -84,16 +84,23 @@ while carryOn
         end
         carryOn2 = true;
         while carryOn2
+            kk=0;
             cl0=(1/m^2)*l0^2*(yp'*A2n*yp)+1;
             xl0=x+l0*yp;
             xml0=xl0/sqrt(cl0);
             d1=F(x,m,n)-F(xl0,m,n);
             d2=F(x,m,n)-F(xml0,m,n);
             if(4*d2<=d1)
-                l0=l0/2; %We'e not done yet, so start the while loop again
+                l0=l0/2; %We're not done yet, so start the while loop again
+                kk=kk+1;
             else
                 carryOn2=false; %we're done
                 x = xml0;
+            end
+            if (kk==1000) %This happened earlier when 'eps=1e-8', for eps=1e-5 this is not a problem
+                disp('Loop is not ending!! Ending it forcefully.');
+                carryOn2=false;
+                carryOn=false;
             end
         end
         
