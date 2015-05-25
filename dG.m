@@ -13,6 +13,8 @@ for i=1:n
 end
 
 y=y/2;
-
+ %Lp-norm
+ %p=3;
+ %y=(x.*(abs(x).^(p-2)))/2;
 
 end
