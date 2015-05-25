@@ -13,4 +13,9 @@ end
 
 y=sum/4;
 
+%Lp-norm
+%p=3;
+%y=(norm(x,p)^2)/4;
+
+
 end
