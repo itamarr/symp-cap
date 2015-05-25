@@ -15,6 +15,6 @@ end
 y=y/2;
  %Lp-norm
  %p=3;
- %y=(x.*(abs(x).^(p-2)))/(2*norm(x,p)^(p-1));
+ %y=((abs(x)/norm(x,p)).^(p-2)).*x/2;
 
 end
