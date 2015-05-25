@@ -3,8 +3,8 @@
 %parameters
 tic
 n=10; %(1/2)-times dimension of the space
-m=500; %Number of subdivisions of the [0:1]-interval
-eps = 1e-8; %tolerance/ exactness
+m=50; %Number of subdivisions of the [0:1]-interval
+eps = 1e-5; %tolerance/ exactness
 
 % %initial path x0 in M_m (see paper sec. 2.2, "starting point")
 % %in this case it is a square path
