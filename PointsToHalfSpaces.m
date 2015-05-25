@@ -17,7 +17,7 @@ function [ normals, coeff ] = PointsToHalfSpaces( P )
     normals = zeros(size(K));
     coeff = zeros(size(K,1),1);
     
-    for j = 1:size(P,1)
+    for j = 1:size(K,1)
         % this gives us the veritces of the j-th facet
         facet = P(K(j,:),:); 
         sizeOfFacetMatrix = size(facet);
@@ -34,7 +34,7 @@ function [ normals, coeff ] = PointsToHalfSpaces( P )
         % whose rows are the vectors.
         normals(j,:) = (null(parallelVectors(2:end,:)))';
         
-        % the dot product of the first vertex of the facet with the normal
+        % the dot product of thefirst vertex of the facet with the normal
         % to the facet gives you the coefficient that determines the half
         % plane corresponding to the facet.
         coeff(j) = dot(normals(j,:), facet(1,:));
