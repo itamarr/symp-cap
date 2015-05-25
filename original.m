@@ -2,7 +2,7 @@
 
 %parameters
 tic
-n=10; %(1/2)-times dimension of the space
+n=1; %(1/2)-times dimension of the space
 m=50; %Number of subdivisions of the [0:1]-interval
 eps = 1e-5; %tolerance/ exactness
 
@@ -83,8 +83,9 @@ while carryOn
             l0=lm*h0/(h0-hlm);
         end
         carryOn2 = true;
+        kk=0;
         while carryOn2
-            kk=0;
+
             cl0=(1/m^2)*l0^2*(yp'*A2n*yp)+1;
             xl0=x+l0*yp;
             xml0=xl0/sqrt(cl0);
