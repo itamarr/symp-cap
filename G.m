@@ -15,10 +15,12 @@ function [ y ] = G(x,n)
 % 
 % %Lp-norm
 % %p=3;
-% %y=(norm(x,p)^2)/4;
+%y=(norm(x,2)^2)/4;
 % 
 %%l1ball = [1 0;-1 0;0 1;0 -1];
-cube = [1 1; -1 1; -1 -1; 1 -1];
-y = (NormOfPolarBody(cube, x')^2)/4;
+
+%cube = [2 2; -2 2; -2 -2; 2 -2];
+std2splx = [1/2 -1/2; -1/2 1/2; -1/2 -1/2];
+y = (NormOfPolarBody(std2splx, x')^2)/4;
 
 end

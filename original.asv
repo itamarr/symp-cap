@@ -3,7 +3,7 @@
 %parameters
 tic
 n=1; %(1/2)-times dimension of the space
-m=50; %Number of subdivisions of the [0:1]-interval
+m=500; %Number of subdivisions of the [0:1]-interval
 eps = 1e-5; %tolerance/ exactness
 
 % %initial path x0 in M_m (see paper sec. 2.2, "starting point")
