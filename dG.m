@@ -16,7 +16,7 @@ function [y] = dG(x,n)
 %  %Lp-norm
 %  %p=3;
 %  %y=((abs(x)/norm(x,p)).^(p-2)).*x/2;
-l1ball = [1 0;-1 0;0 1;0 -1];
-
-y = (1/2)*NormOfPolarBody(l1ball, x')*(GradOfPolarNorm(l1ball,x)');
+%l1ball = [1 0;-1 0;0 1;0 -1];
+cube = [1 1; -1 1; -1 -1; 1 -1];
+y = (1/2)*NormOfPolarBody(cube, x')*(GradOfPolarNorm(cube,x)');
 end

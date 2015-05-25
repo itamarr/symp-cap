@@ -17,8 +17,8 @@ function [ y ] = G(x,n)
 % %p=3;
 % %y=(norm(x,p)^2)/4;
 % 
-l1ball = [1 0;-1 0;0 1;0 -1];
-
-y = (NormOfPolarBody(l1ball, x')^2)/4;
+%%l1ball = [1 0;-1 0;0 1;0 -1];
+cube = [1 1; -1 1; -1 -1; 1 -1];
+y = (NormOfPolarBody(cube, x')^2)/4;
 
 end

@@ -84,6 +84,9 @@ while carryOn
         end
         carryOn2 = true;
         kk=0;
+        disp('Minimal action:');
+        action=2*F(x,m,n);
+        disp(action);
         while carryOn2
 
             cl0=(1/m^2)*l0^2*(yp'*A2n*yp)+1;
