@@ -2,8 +2,8 @@
 
 %parameters
 tic
-n=10; %(1/2)-times dimension of the space
-m=50; %Number of subdivisions of the [0:1]-interval
+%n=1; %(1/2)-times dimension of the space
+%m=50; %Number of subdivisions of the [0:1]-interval
 eps = 1e-5; %tolerance/ exactness
 
 % %initial path x0 in M_m (see paper sec. 2.2, "starting point")
@@ -24,6 +24,7 @@ for i=1:m
     end
 end
 %disp(A2n);
+
 
 %Generate a random initial path which fulfils the constraints
 l=0;
@@ -55,15 +56,16 @@ x0=x0*m/sqrt(l);
 
 %Initial value computed. Start the minimization process!!!
 
+
 k=0; %Counts the iteration 
 carryOn = true;
 x=x0;
 while carryOn
-
+    kk=0;
     %Following lines of code do the calculations in "paper, sec. 2.2, part 1"
     k = k+1;
     a = (1/m^2)*(A2n+A2n')*x; %calculates ak
-    y = -dF(x,m,n); %calculates yk
+    y = -dF(x,m,n,p); %calculates yk
     aH = proj(a,m,n); %calculates akH.  "proj(*)" calls the function "proj.m"
     yp = proj(y,m,n) - (dot(aH,y)/dot(aH,aH))*aH; %yp refers to ^yk (y with a hat). The calcualtion is similar to that of akH, so the "proj(*)" function can be reused. 
     
@@ -75,7 +77,7 @@ while carryOn
         
         %Following step 3 of sec. 2.2 in the paper.
         lm=sqrt(3/4)*m/sqrt(abs(yp'*A2n*yp)); %'lm' refers to lambda_max
-        hlm=dot(yp,-dF(x+lm*yp,m,n)); %'hlm' refers to hk(lambda_max)
+        hlm=dot(yp,-dF(x+lm*yp,m,n,p)); %'hlm' refers to hk(lambda_max)
         h0=dot(yp,yp); %h0 refers to hk(0)
         if (hlm >= 0)
             l0=lm;
@@ -84,20 +86,23 @@ while carryOn
         end
         carryOn2 = true;
         while carryOn2
-            kk=0;
             cl0=(1/m^2)*l0^2*(yp'*A2n*yp)+1;
             xl0=x+l0*yp;
             xml0=xl0/sqrt(cl0);
-            d1=F(x,m,n)-F(xl0,m,n);
-            d2=F(x,m,n)-F(xml0,m,n);
-            if(4*d2<=d1)
-                l0=l0/2; %We're not done yet, so start the while loop again
+            d1=F(x,m,n,p)-F(xl0,m,n,p);
+            d2=F(x,m,n,p)-F(xml0,m,n,p);
+            if(100*d2<=d1)
+                l0=l0/2; %We'e not done yet, so start the while loop again
                 kk=kk+1;
             else
                 carryOn2=false; %we're done
                 x = xml0;
+                kk=0;
             end
-            if (kk==1000) %This happened earlier when 'eps=1e-8', for eps=1e-5 this is not a problem
+            if(kk==1000)
+                %disp(norm(yp));
+                %action=2*F(x,m,n);
+                %disp(action);
                 disp('Loop is not ending!! Ending it forcefully.');
                 carryOn2=false;
                 carryOn=false;
@@ -108,13 +113,13 @@ while carryOn
     end
 end
 
-disp('Initial value:');
-disp(x0);
-disp('Final value:');
-disp(x);
+%disp('Initial value:');
+%disp(x0);
+%disp('Final value:');
+%disp(x);
 disp('Iterations:');
 disp(k);
 disp('Minimal action:');
-action=2*F(x,m,n);
+action=2*F(x,m,n,p);
 disp(action);
 toc
