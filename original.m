@@ -3,8 +3,8 @@
 %parameters
 tic
 n=1; %(1/2)-times dimension of the space
-m=50; %Number of subdivisions of the [0:1]-interval
-eps = 1e-5; %tolerance/ exactness
+m=80; %Number of subdivisions of the [0:1]-interval
+eps = 1e-7; %tolerance/ exactness
 
 % %initial path x0 in M_m (see paper sec. 2.2, "starting point")
 % %in this case it is a square path
@@ -99,6 +99,7 @@ while carryOn
             xml0=xl0/sqrt(cl0);
             d1=F(x,m,n)-F(xl0,m,n);
             d2=F(x,m,n)-F(xml0,m,n);
+            
             if(4*d2<=d1)
                 l0=l0/2; %We're not done yet, so start the while loop again
                 kk=kk+1;

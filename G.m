@@ -17,10 +17,16 @@ function [ y ] = G(x,n)
 % %p=3;
 %y=(norm(x,2)^2)/4;
 % 
-%%l1ball = [1 0;-1 0;0 1;0 -1];
-
-%cube = [2 2; -2 2; -2 -2; 2 -2];
-std2splx = [1/2 -1/2; -1/2 1/2; -1/2 -1/2];
-y = (NormOfPolarBody(std2splx, x')^2)/4;
+%l1ball = [1 0;-1 0;0 1;0 -1];
+rad=1;
+N=10;
+theta = [0 : 2*pi/N : 2*pi];
+Pos = rad * exp(i*theta);
+X = real(Pos);
+Y = imag(Pos);
+regpoly = [X ; Y]';
+cube = [1 1; -1 1; -1 -1; 1 -1];
+%std2splx = [1/2 -1/2; -1/2 1/2; -1/2 -1/2];
+y = (NormOfPolarBody(regpoly, x')^2)/4;
 
 end

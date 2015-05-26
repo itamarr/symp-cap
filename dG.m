@@ -17,9 +17,15 @@ function [y] = dG(x,n)
 %p=2;
 %y=((abs(x)/norm(x,p)).^(p-2)).*x/2;
 %l1ball = [1 0;-1 0;0 1;0 -1];
-
-%cube = [2 2; -2 2; -2 -2; 2 -2];
-std2splx = [1/2 -1/2; -1/2 1/2; -1/2 -1/2];
-y = (1/2)*NormOfPolarBody(std2splx, x')*(GradOfPolarNorm(std2splx,x)');
+rad=1;
+N=10;
+theta = [0 : 2*pi/N : 2*pi];
+Pos = rad * exp(i*theta);
+X = real(Pos);
+Y = imag(Pos);
+regpoly = [X ; Y]';
+cube = [1 1; -1 1; -1 -1; 1 -1];
+%std2splx = [1/2 -1/2; -1/2 1/2; -1/2 -1/2];
+y = (1/2)*NormOfPolarBody(regpoly, x')*(GradOfPolarNorm(regpoly,x)');
 
 end
