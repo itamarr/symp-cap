@@ -18,15 +18,18 @@ function [ y ] = G(x,n)
 %y=(norm(x,2)^2)/4;
 % 
 %l1ball = [1 0;-1 0;0 1;0 -1];
+
 rad=1;
-N=10;
+N=4;
 theta = [0 : 2*pi/N : 2*pi];
-Pos = rad * exp(i*theta);
+Pos = rad * exp(1i*theta);
 X = real(Pos);
 Y = imag(Pos);
 regpoly = [X ; Y]';
-cube = [1 1; -1 1; -1 -1; 1 -1];
+%cube = [1 1; -1 1; -1 -1; 1 -1];
 %std2splx = [1/2 -1/2; -1/2 1/2; -1/2 -1/2];
-y = (NormOfPolarBody(regpoly, x')^2)/4;
+stdSimplex = [zeros(1,4);eye(4)] - 1/8;  %% 1/4 1/4 ... 1/4 is on the face, take half distance along this line
+
+y = (NormOfPolarBody(stdSimplex, x')^2)/4;
 
 end
