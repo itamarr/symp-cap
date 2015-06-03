@@ -4,7 +4,7 @@
 %parameters
 tic
 n=2; %(1/2)-times dimension of the space
-m=200; %Number of subdivisions of the [0:1]-interval
+m=24; %Number of subdivisions of the [0:1]-interval
 eps = 1e-7; %tolerance/ exactness
 
 % %initial path x0 in M_m (see paper sec. 2.2, "starting point")
@@ -63,10 +63,11 @@ cond = @(x) Constraints(x,m,n,A2n);
 pf = @(x) FuncToMinimize(x,m,n);
 options = optimoptions('fmincon','GradObj','on','GradConstr','on');
 options.Display = 'iter';
-options.Algorithm = 'active-set';
-options.MaxIter=3000;
+options.Algorithm = 'active-set'; %% should try which works best, Maybe this is better that sqp?
+options.MaxIter=10500;
 %options.TolCon= 1e-7;
-%options.TolFun= 1e-7;
+%options.TolFun= 1e-8;
+options.TolX= 1e-9;
 x=fmincon(pf,x0,[],[],sparse(repmat(eye(2*n),1,m)),zeros(2*n,1),[],[],cond,options);
 %options.MaxIter=1000;
 %options.Algorithm = 'interior-point';
@@ -87,8 +88,8 @@ disp('Initial value:');
 disp(x0);
 disp('Final value:');
 disp(x);
-disp('Iterations:');
-disp(k);
+%%disp('Iterations:');
+%%disp(k);
 disp('Minimal action:');
 action=2*F(x,m,n);
 disp(action);
