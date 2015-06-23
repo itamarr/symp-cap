@@ -1,10 +1,11 @@
 %Code the original computer program from the paper
 
+
 %parameters
 tic
-n=1; %(1/2)-times dimension of the space
-m=500; %Number of subdivisions of the [0:1]-interval
-eps = 1e-5; %tolerance/ exactness
+n=2; %(1/2)-times dimension of the space
+m=40; %Number of subdivisions of the [0:1]-interval
+eps = 1e-7; %tolerance/ exactness
 
 % %initial path x0 in M_m (see paper sec. 2.2, "starting point")
 % %in this case it is a square path
@@ -53,6 +54,31 @@ l =x0'*A2n*x0;
 x0=x0*m/sqrt(l);
 %disp(x0'*A2n*x0/m^2 - 1);
 
+
+
+
+    
+cond = @(x) Constraints(x,m,n,A2n);
+pf = @(x) FuncToMinimize(x,m,n);
+options = optimoptions('fmincon','GradObj','on','GradConstr','on');
+options.Display = 'iter';
+options.Algorithm = 'active-set';
+options.MaxIter=500;
+%options.TolCon= 1e-7;
+options.TolFun= 1e-7;
+x=fmincon(pf,x0,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
+options.Algorithm = 'interior-point';
+x9=fmincon(pf,x,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
+
+%  disp(x);
+ disp ('action');
+ action=2*F(x,m,n)
+ %disp(action);
+ disp ('mip');
+% [t s] = pf(x0);
+% [a b c d] = cond(x0)
+% disp ('boo');
+
 %Initial value computed. Start the minimization process!!!
 
 k=0; %Counts the iteration 
@@ -99,6 +125,7 @@ while carryOn
             xml0=xl0/sqrt(cl0);
             d1=F(x,m,n)-F(xl0,m,n);
             d2=F(x,m,n)-F(xml0,m,n);
+            
             if(4*d2<=d1)
                 l0=l0/2; %We're not done yet, so start the while loop again
                 kk=kk+1;

@@ -1,9 +1,10 @@
 %Code the original computer program from the paper
 
+
 %parameters
 tic
-n=1; %(1/2)-times dimension of the space
-m=80; %Number of subdivisions of the [0:1]-interval
+n=2; %(1/2)-times dimension of the space
+m=24; %Number of subdivisions of the [0:1]-interval
 eps = 1e-7; %tolerance/ exactness
 
 % %initial path x0 in M_m (see paper sec. 2.2, "starting point")
@@ -17,13 +18,14 @@ eps = 1e-7; %tolerance/ exactness
 %Matrix should be removed, and calculations should be done directly
 %to improve the efficiency of the program.
 mJ2n = [zeros(n),-eye(n);eye(n),zeros(n)];
-A2n = zeros(2*m*n);
+%A2n = zeros(2*m*n); %big zeros block
+A2n = sparse(2*m*n,2*m*n); %%sparse matrix instead of big zeroes block
 for i=1:m
     for j=(i+1):m
         A2n(2*n*(i-1)+1:2*n*i,2*n*(j-1)+1:2*n*j)=mJ2n;
     end
 end
-%disp(A2n);
+disp(A2n);
 
 %Generate a random initial path which fulfils the constraints
 l=0;
@@ -53,77 +55,41 @@ l =x0'*A2n*x0;
 x0=x0*m/sqrt(l);
 %disp(x0'*A2n*x0/m^2 - 1);
 
+
+
+
+    
+cond = @(x) Constraints(x,m,n,A2n);
+pf = @(x) FuncToMinimize(x,m,n);
+options = optimoptions('fmincon','GradObj','on','GradConstr','on');
+options.Display = 'iter';
+options.Algorithm = 'active-set'; %% should try which works best, Maybe this is better that sqp?
+options.MaxIter=10500;
+%options.TolCon= 1e-7;
+%options.TolFun= 1e-8;
+options.TolX= 1e-9;
+x=fmincon(pf,x0,[],[],sparse(repmat(eye(2*n),1,m)),zeros(2*n,1),[],[],cond,options);
+%options.MaxIter=1000;
+%options.Algorithm = 'interior-point';
+%x9=fmincon(pf,x,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
+
+%  disp(x);
+ disp ('action');
+ action=2*F(x,m,n)
+ %disp(action);
+ disp ('mip');
+% [t s] = pf(x0);
+% [a b c d] = cond(x0)
+% disp ('boo');
+
 %Initial value computed. Start the minimization process!!!
-
-k=0; %Counts the iteration 
-carryOn = true;
-x=x0;
-while carryOn
-
-    %Following lines of code do the calculations in "paper, sec. 2.2, part 1"
-    k = k+1;
-    a = (1/m^2)*(A2n+A2n')*x; %calculates ak
-    y = -dF(x,m,n); %calculates yk
-    aH = proj(a,m,n); %calculates akH.  "proj(*)" calls the function "proj.m"
-    yp = proj(y,m,n) - (dot(aH,y)/dot(aH,aH))*aH; %yp refers to ^yk (y with a hat). The calcualtion is similar to that of akH, so the "proj(*)" function can be reused. 
-    
-    if(norm(yp)<eps) % ^yk is within tolerance, so practically zero. Following step 2 in section 2.2 of the paper.
-        carryOn = false;
-        % we are done. x solves the minimization problem.
-    else
-    
-        
-        %Following step 3 of sec. 2.2 in the paper.
-        lm=sqrt(3/4)*m/sqrt(abs(yp'*A2n*yp)); %'lm' refers to lambda_max
-        hlm=dot(yp,-dF(x+lm*yp,m,n)); %'hlm' refers to hk(lambda_max)
-        h0=dot(yp,yp); %h0 refers to hk(0)
-        if (hlm >= 0)
-            l0=lm;
-        else
-            l0=lm*h0/(h0-hlm);
-        end
-        carryOn2 = true;
-        kk=0;
-        if mod(k,10)==0
-            disp('10-th iteration');
-            disp('Minimal action:');
-            action=2*F(x,m,n);
-            disp(action);
-            disp('error:');
-            disp(norm(yp));
-        end
-        while carryOn2
-
-            cl0=(1/m^2)*l0^2*(yp'*A2n*yp)+1;
-            xl0=x+l0*yp;
-            xml0=xl0/sqrt(cl0);
-            d1=F(x,m,n)-F(xl0,m,n);
-            d2=F(x,m,n)-F(xml0,m,n);
-            
-            if(4*d2<=d1)
-                l0=l0/2; %We're not done yet, so start the while loop again
-                kk=kk+1;
-            else
-                carryOn2=false; %we're done
-                x = xml0;
-            end
-            if (kk==1000) %This happened earlier when 'eps=1e-8', for eps=1e-5 this is not a problem
-                disp('Loop is not ending!! Ending it forcefully.');
-                carryOn2=false;
-                carryOn=false;
-            end
-        end
-        
-        
-    end
-end
 
 disp('Initial value:');
 disp(x0);
 disp('Final value:');
 disp(x);
-disp('Iterations:');
-disp(k);
+%%disp('Iterations:');
+%%disp(k);
 disp('Minimal action:');
 action=2*F(x,m,n);
 disp(action);
