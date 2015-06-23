@@ -4,8 +4,10 @@
 %parameters
 tic
 n=2; %(1/2)-times dimension of the space
-m=24; %Number of subdivisions of the [0:1]-interval
+m=8; %Number of subdivisions of the [0:1]-interval
 eps = 1e-7; %tolerance/ exactness
+P = [zeros(1,4);eye(4)] - 1/8;
+
 
 % %initial path x0 in M_m (see paper sec. 2.2, "starting point")
 % %in this case it is a square path
@@ -17,9 +19,12 @@ eps = 1e-7; %tolerance/ exactness
 %Following lines compute the matrix "A_2n" (see paper sec. 2.1 equation (2.5))
 %Matrix should be removed, and calculations should be done directly
 %to improve the efficiency of the program.
+tic
 mJ2n = [zeros(n),-eye(n);eye(n),zeros(n)];
-%A2n = zeros(2*m*n); %big zeros block
-A2n = sparse(2*m*n,2*m*n); %%sparse matrix instead of big zeroes block
+toc
+
+A2n = zeros(2*m*n); %big zeros block
+%A2n = sparse(2*m*n,2*m*n); %%sparse matrix instead of big zeroes block
 for i=1:m
     for j=(i+1):m
         A2n(2*n*(i-1)+1:2*n*i,2*n*(j-1)+1:2*n*j)=mJ2n;
@@ -60,7 +65,7 @@ x0=x0*m/sqrt(l);
 
     
 cond = @(x) Constraints(x,m,n,A2n);
-pf = @(x) FuncToMinimize(x,m,n);
+pf = @(x) FuncToMinimize(x,P,m,n);
 options = optimoptions('fmincon','GradObj','on','GradConstr','on');
 options.Display = 'iter';
 options.Algorithm = 'active-set'; %% should try which works best, Maybe this is better that sqp?
@@ -73,16 +78,6 @@ x=fmincon(pf,x0,[],[],sparse(repmat(eye(2*n),1,m)),zeros(2*n,1),[],[],cond,optio
 %options.Algorithm = 'interior-point';
 %x9=fmincon(pf,x,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
 
-%  disp(x);
- disp ('action');
- action=2*F(x,m,n)
- %disp(action);
- disp ('mip');
-% [t s] = pf(x0);
-% [a b c d] = cond(x0)
-% disp ('boo');
-
-%Initial value computed. Start the minimization process!!!
 
 disp('Initial value:');
 disp(x0);
@@ -91,6 +86,6 @@ disp(x);
 %%disp('Iterations:');
 %%disp(k);
 disp('Minimal action:');
-action=2*F(x,m,n);
+action=2*F(x,P,m,n);
 disp(action);
 toc

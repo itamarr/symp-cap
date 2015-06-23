@@ -1,4 +1,4 @@
-function [y] = dG(x,n)
+function [y] = dG(x,P,n)
 %DG Describes an ellipsoid
 % 
 % a=[1;2;3;4;5;6;7;8;9;10];
@@ -26,7 +26,7 @@ Y = imag(Pos);
 regpoly = [X ; Y]';
 %cube = [1 1; -1 1; -1 -1; 1 -1];
 %std2splx = [1/2 -1/2; -1/2 1/2; -1/2 -1/2];
-stdSimplex = [zeros(1,4);eye(4)] - 1/8;
-y = (1/2)*NormOfPolarBody(stdSimplex, x')*(GradOfPolarNorm(stdSimplex,x)');
+%stdSimplex = [zeros(1,4);eye(4)] - 1/8;
+y = (1/2)*NormOfPolarBody(P, x')*(GradOfPolarNorm(P,x)');
 
 end

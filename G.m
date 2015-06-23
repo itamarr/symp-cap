@@ -1,4 +1,4 @@
-function [ y ] = G(x,n)
+function [ y ] = G(x,P,n)
 % %G Describes an ellipsoid
 % %   
 % a=[1;2;3;4;5;6;7;8;9;10];
@@ -28,8 +28,8 @@ Y = imag(Pos);
 regpoly = [X ; Y]';
 %cube = [1 1; -1 1; -1 -1; 1 -1];
 %std2splx = [1/2 -1/2; -1/2 1/2; -1/2 -1/2];
-stdSimplex = [zeros(1,4);eye(4)] - 1/8;  %% 1/4 1/4 ... 1/4 is on the face, take half distance along this line
+%stdSimplex = [zeros(1,4);eye(4)] - 1/8;  %% 1/4 1/4 ... 1/4 is on the face, take half distance along this line
 
-y = (NormOfPolarBody(stdSimplex, x')^2)/4;
+y = (NormOfPolarBody(P, x')^2)/4;
 
 end
