@@ -1,4 +1,6 @@
 function [c, ceq, gradc, gradceq] = Constraints(x,m,n,A2n)
+%Constraints This function returns the constrains required for fmincon used
+%in Capacity function.
     c=[];
     gradc=[];
     

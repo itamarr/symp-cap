@@ -1,4 +1,5 @@
 function [c, ceq] = VolumeConstraint(X,n)
+%
        ceq = [];
        c = [];
     [rows, cols] = size(X);
@@ -9,5 +10,5 @@ function [c, ceq] = VolumeConstraint(X,n)
     
     P = reshape(X, [2*n, rows/(2*n)])';
     [K, v] = convhulln(P);
-    c = v -1;
+    ceq = v -1;
 end

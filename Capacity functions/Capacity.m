@@ -1,4 +1,10 @@
 function c = Capacity(P,n)
+%Capacity Calculates the symplectic capacity of the body given in P.
+% Parameters
+%   P - The convex hull of the body whose capacity we wish to calculate. 
+%   It should have the form of a k-2*n matrix.
+%   n - The half dimension of the body.
+
 
 %parameters
 iterations=1;
@@ -7,13 +13,6 @@ eps = 1e-7; %tolerance/ exactness
 minAction=flintmax;
 
 for itr=1:iterations
-    % %initial path x0 in M_m (see paper sec. 2.2, "starting point")
-    % %in this case it is a square path
-    % e1=[1;0];
-    % e2=[0;1];
-    % x0=[-e2;-e2;-e2;-e2;-e1;-e1;-e1;-e1;e2;e2;e2;e2;e1;e1;e1;e1]/sqrt(0.125); 
-
-
     %Following lines compute the matrix "A_2n" (see paper sec. 2.1 equation (2.5))
     %Matrix should be removed, and calculations should be done directly
     %to improve the efficiency of the program.

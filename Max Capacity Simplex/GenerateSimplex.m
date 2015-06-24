@@ -1,4 +1,7 @@
 function P = GenerateSimplex(n)
+%GenerateSimplex Generates an (2n+1)-pointed polygon of volume 1 inside
+%R^2n, such that 0 is an interior point for the polygon.
+
     N = 2*n;
     P = rand(N+1,N);
     % we use convhulln to compute the volumn
