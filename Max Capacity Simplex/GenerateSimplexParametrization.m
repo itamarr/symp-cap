@@ -1,4 +1,4 @@
-function result = GenerateSimplexParamertization(n)
+function result = GenerateSimplexParametrization(n)
 % GenerateSimplexParamertization Generates a parametrization for the space
 % of simplexes in R^{2n}, in symbolic form. The ai_j symbols represent the
 % symplectic area of 2-dim faces of the simplex. 
