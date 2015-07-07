@@ -14,7 +14,7 @@ inverseRadiiSquared = R.^(-2);
 
 % This calculation assumes the coordinates are q_1,..,q_n,p_1,..,p_n
 r = repmat(inverseRadiiSquared, 1, 2);
-y = 0.5 * (r'.* x.^2);
+y = 0.5 * (r'.* x); % elementwise r_i times x_i
 
 
 %y = zeros(2*n,1);

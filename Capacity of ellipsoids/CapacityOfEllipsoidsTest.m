@@ -1,3 +1,3 @@
-R = [1 1];
-n = 2;
+R = [1];
+n = 1;
 CapacityOfEllipsoids(R,n);
