@@ -54,8 +54,9 @@ for itr=1:iterations
         end
     end
 
-    
-    rad=1;
+
+    %{
+    rad=5;
     N=m-1;
     theta = [0 : 2*pi/N : 2*pi];
     Pos = rad * exp(1i*theta);
@@ -79,13 +80,14 @@ for itr=1:iterations
     %disp(x0'*A2n*x0/m^2 - 1);
 
     vectB=reshape(x0,[2,m*n]);
-    plot(vectB(1,:),vectB(2,:));
+    plot(vectB(1,:),vectB(2,:), 'Color', 'red');
     hold on
     
-    char = ReconstructCharacteristic(x0,R,m,n);
+    char = ReconstructCharacteristicEllipsoids(x0,R,m,n);
     vect=reshape(char,[2,m*n]);
-    plot(vect(1,:),vect(2,:));
-    
+    plot(vect(1,:),vect(2,:), 'Color', 'green');
+    hold on
+    %}
 
 
     cond = @(x) Constraints(x,m,n,A2n);
@@ -102,10 +104,10 @@ for itr=1:iterations
     %options.Algorithm = 'interior-point';
     %x9=fmincon(pf,x,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
     
-    char = ReconstructCharacteristic(x,R,m,n);
-    vect=reshape(char,[2,m*n]);
-    plot(vect(1,:),vect(2,:));
-    hold on
+    %char = ReconstructCharacteristicEllipsoids(x,R,m,n);
+   % vect=reshape(char,[2,m*n]);
+    %plot(vect(1,:),vect(2,:), 'Color', 'blue');
+    %hold on
     %disp('Initial value:');
     %disp(x0);
     %disp('Final value:');
