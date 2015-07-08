@@ -25,10 +25,10 @@ for i=1:m-1
 end
 C = (-2*lambdaSquareRoot/(m^2))*tmpV;
 
-%v(1:2*n) =(2*lambdaSquareRoot/m)*matX(:,1) + B + C;
+v(1:2*n) = B + C;
 
-for k=0:m-1
-    A = (2*lambdaSquareRoot/m)*sum(matX(:,1:k+1),2); 
+for k=1:m-1
+    A = (2*lambdaSquareRoot/m)*sum(matX(:,1:k),2); 
     v(k*2*n+1:(k+1)*2*n) = A+B+C;
 end
 

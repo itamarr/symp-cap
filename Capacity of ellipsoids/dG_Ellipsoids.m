@@ -6,14 +6,14 @@ if (size(R,2) ~= n)
     error('function G_Ellipsoids: Dimension mismatch!');
 end
 
-inverseRadiiSquared = R.^(-2);
+radiiSquared = R.^2;
 
 % This calculation assumes the coordinates are q_1,p_1,...,q_n,p_n
 %r = repmat(inverseRadiiSquared, n, 1);
 %y = 0.5 * (r(:).* x.^2);
 
 % This calculation assumes the coordinates are q_1,..,q_n,p_1,..,p_n
-r = repmat(inverseRadiiSquared, 1, 2);
+r = repmat(radiiSquared, 1, 2);
 y = 0.5 * (r'.* x); % elementwise r_i times x_i
 
 
