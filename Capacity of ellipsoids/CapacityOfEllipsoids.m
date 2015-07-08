@@ -11,7 +11,7 @@ function c = CapacityOfEllipsoids(R,n)
 
 %parameters
 iterations=1;
-m=100; %Number of subdivisions of the [0:1]-interval
+m=50; %Number of subdivisions of the [0:1]-interval
 eps = 1e-7; %tolerance/ exactness
 minAction=flintmax;
 
@@ -83,12 +83,7 @@ for itr=1:iterations
     plot(vectB(1,:),vectB(2,:), 'Color', 'red');
     hold on
     
-    char = ReconstructCharacteristicEllipsoids(x0,R,m,n);
-    vect=reshape(char,[2,m*n]);
-    plot(vect(1,:),vect(2,:), 'Color', 'green');
-    hold on
     %}
-
 
     cond = @(x) Constraints(x,m,n,A2n);
     pf = @(x) FuncToMinimizeEllipsoids(x,R,m,n);
@@ -104,6 +99,15 @@ for itr=1:iterations
     %options.Algorithm = 'interior-point';
     %x9=fmincon(pf,x,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
     
+    char = ReconstructCharacteristicEllipsoids(x0,R,m,n);
+    vect=reshape(char,[2,m*n]);
+    char = ReconstructCharacteristicEllipsoids(x,R,m,n);
+    vect2=reshape(char,[2,m*n]);
+    figure
+    plot(vect(1,:),vect(2,:), '-ro', vect2(1,:),vect2(2,:), '-bo')
+    legend('starting trajectory', 'solution','Location','southoutside')
+    title('Minimal action curve for ellipsoids')
+    hold on
     %char = ReconstructCharacteristicEllipsoids(x,R,m,n);
    % vect=reshape(char,[2,m*n]);
     %plot(vect(1,:),vect(2,:), 'Color', 'blue');
