@@ -8,7 +8,7 @@ function c = Capacity(P,n)
 
 %parameters
 iterations=1;
-m=15; %Number of subdivisions of the [0:1]-interval
+m=60; %Number of subdivisions of the [0:1]-interval
 eps = 1e-7; %tolerance/ exactness
 minAction=flintmax;
 
@@ -102,9 +102,7 @@ for itr=1:iterations
     options.TolFun= 1e-9;
     options.TolX= 1e-9;
     x=fmincon(pf,x0,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
-    %options.MaxIter=1000;
-    %options.Algorithm = 'interior-point';
-    %x9=fmincon(pf,x,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
+   
 
 
     %disp('Initial value:');
@@ -118,10 +116,10 @@ for itr=1:iterations
 %     plot(vectB(1,:),vectB(2,:));
 %     hold on
     
-    char = ReconstructCharacteristic(x,P,m,n);
-    vect=reshape(char,[2,m*n]);
-    plot(vect(1,:),vect(2,:));
-    hold on
+%     char = ReconstructCharacteristic(x,P,m,n);
+%     vect=reshape(char,[2,m*n]);
+%     plot(vect(1,:),vect(2,:));
+%     hold on
     
     action = 2*F(x,P,m,n);
     sprintf('Minimal action for iteration %d: %8f', itr, action)
