@@ -1,10 +1,25 @@
-function c = Capacity(P,n)
+function [c, char] = Capacity(P,n)
 %Capacity Calculates the symplectic capacity of the body given in P.
 % Parameters
 %   P - The convex hull of the body whose capacity we wish to calculate. 
 %   It should have the form of a k-2*n matrix.
 %   n - The half dimension of the body.
 
+if (ischar(P))
+    P = str2num(P);
+end
+
+if (ischar(n))
+    n = str2double(n);
+end
+
+numOfVertices = size(P,1);
+avg = ones(1,numOfVertices)*P/numOfVertices;
+
+repeatedAvg = repmat(avg, numOfVertices, 1);
+P = P - repeatedAvg;
+
+%tic
 
 %parameters
 iterations=1;
@@ -16,9 +31,7 @@ for itr=1:iterations
     %Following lines compute the matrix "A_2n" (see paper sec. 2.1 equation (2.5))
     %Matrix should be removed, and calculations should be done directly
     %to improve the efficiency of the program.
-    tic
     mJ2n = [zeros(n),-eye(n);eye(n),zeros(n)];
-    toc
 
     A2n = zeros(2*m*n); %big zeros block
     %A2n = sparse(2*m*n,2*m*n); %%sparse matrix instead of big zeroes block
@@ -97,13 +110,23 @@ for itr=1:iterations
     options = optimoptions('fmincon','GradObj','on','GradConstr','on');
     %options.Display = 'iter';
     options.Algorithm = 'active-set'; %% should try which works best, Maybe this is better that sqp?
-    options.MaxIter=10500;
-    options.TolCon= 1e-9;
-    options.TolFun= 1e-9;
-    options.TolX= 1e-9;
-    x=fmincon(pf,x0,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
-   
-
+    options.MaxIter = 10000;
+    options.TolCon = 1e-5;
+    options.TolFun = 1e-3;
+    options.TolX = 1e-3;
+    x1=fmincon(pf,x0,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
+    options.TolCon = 1e-9;
+    options.TolFun = 1e-6;
+    options.TolX = 1e-4;
+    %l =x1'*A2n*x1; %rescale to fit constraint
+    %x1=x1*m/sqrt(l);
+    x=fmincon(pf,x1,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
+%     options.TolFun = 1e-6;
+%     options.TolX = 1e-4;
+%     l =x2'*A2n*x2; %rescale to fit constraint
+%     x2=x2*m/sqrt(l);
+%     x=fmincon(pf,x2,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
+%     
 
     %disp('Initial value:');
     %disp(x0);
@@ -116,9 +139,9 @@ for itr=1:iterations
 %     plot(vectB(1,:),vectB(2,:));
 %     hold on
     
-%     char = ReconstructCharacteristic(x,P,m,n);
+     char = ReconstructCharacteristic(x,P,m,n);
 %     vect=reshape(char,[2,m*n]);
-%     plot(vect(1,:),vect(2,:));
+%     scatter(vect(1,:),vect(2,:));
 %     hold on
     
     action = 2*F(x,P,m,n);
@@ -129,3 +152,4 @@ for itr=1:iterations
     
     c = minAction;
 end
+%toc
