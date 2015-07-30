@@ -1,2 +1,11 @@
 # matlab auto save files
 *.asv
+
+# matlab compiler output files
+*.exe
+*.prj
+*.log
+
+# image files
+*.png
+*.ico

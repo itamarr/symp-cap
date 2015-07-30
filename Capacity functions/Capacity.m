@@ -13,12 +13,8 @@ if (ischar(n))
     n = str2double(n);
 end
 
-numOfVertices = size(P,1);
-avg = ones(1,numOfVertices)*P/numOfVertices;
-
-repeatedAvg = repmat(avg, numOfVertices, 1);
-P = P - repeatedAvg;
-
+C = centroid(P);
+P = P - repmat(C,size(P,1),1);
 %tic
 
 %parameters
