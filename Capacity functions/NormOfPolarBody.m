@@ -6,7 +6,7 @@ function [ n ] = NormOfPolarBody( P, y )
     %%A(~any(A,2),:) = [];
     %%b(~any(b,2),:) = [];
     
-    [M,I] = max(P*(y)'); %% it's faster!
+    [M,I] = max(P*y); %% it's faster!
     
     
 %     tic
@@ -15,6 +15,7 @@ function [ n ] = NormOfPolarBody( P, y )
 %     disp('linprog');
 %     toc
 %     n = y * maxX;
-    n = (y * (P(I(1),:)'));
+    %n = (y * (P(I(1),:)'));
+    n = (P(I(1),:) * y);
 end
 

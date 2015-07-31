@@ -5,6 +5,8 @@ function [c, char] = Capacity(P,n)
 %   It should have the form of a k-2*n matrix.
 %   n - The half dimension of the body.
 
+tic
+
 if (ischar(P))
     P = str2num(P);
 end
@@ -15,7 +17,6 @@ end
 
 C = centroid(P);
 P = P - repmat(C,size(P,1),1);
-%tic
 
 %parameters
 iterations=1;
@@ -23,11 +24,15 @@ m=60; %Number of subdivisions of the [0:1]-interval
 eps = 1e-7; %tolerance/ exactness
 minAction=flintmax;
 
-for itr=1:iterations
-    %Following lines compute the matrix "A_2n" (see paper sec. 2.1 equation (2.5))
-    %Matrix should be removed, and calculations should be done directly
-    %to improve the efficiency of the program.
+%Following lines compute the matrix "A_2n" (see paper sec. 2.1 equation (2.5))
+%Matrix should be removed, and calculations should be done directly
+%to improve the efficiency of the program.
+%global mJ2n
+%if (isempty(mJ2n) || size(mJ2n, 1) ~= 2*n)
     mJ2n = [zeros(n),-eye(n);eye(n),zeros(n)];
+%end
+
+for itr=1:iterations
 
     A2n = zeros(2*m*n); %big zeros block
     %A2n = sparse(2*m*n,2*m*n); %%sparse matrix instead of big zeroes block
@@ -64,42 +69,6 @@ for itr=1:iterations
     %fulfilled.
     l =x0'*A2n*x0;
     x0=x0*m/sqrt(l);
-    %disp(x0'*A2n*x0/m^2 - 1);
-
-  %%% USING A REGULAR POLYGON IS INITIAL POINT
-% % %     rad=1;
-% % %     N=m-1;
-% % %     theta = [0 : 2*pi/N : 2*pi];
-% % %     Pos = rad * exp(1i*theta);
-% % %     X = real(Pos);
-% % %     Y = imag(Pos);
-% % %     regpoly = [X ; Y]';
-% % %     x0=reshape(regpoly',1,2*n*(N+1));
-% % %     x0=x0';
-% % %     %now that l is positive, rescale x such that the last constraint is
-% % %     %fulfilled.
-% % %     
-% % %    
-% % %     l =x0'*A2n*x0;
-% % %     if(l<0) %in this case, the path has to be inverted
-% % %         x0p=x0;
-% % %         for i=0:m-1
-% % %             j=m-1-i;
-% % %             x0(2*n*i+1:2*n*(i+1))=x0p(2*n*j+1:2*n*(j+1));
-% % %         end
-% % %     end
-% % %     l =x0'*A2n*x0;
-% % %     x0=x0*m/sqrt(l);
-% % %     %disp(x0'*A2n*x0/m^2 - 1);
-% % % 
-% % %     vectB=reshape(x0,[2,m*n]);
-% % %     plot(vectB(1,:),vectB(2,:));
-% % %     hold on
-% % %     
-% % %     char = ReconstructCharacteristic(x0,P,m,n);
-% % %     vect=reshape(char,[2,m*n]);
-% % %     plot(vect(1,:),vect(2,:));
-
 
     cond = @(x) Constraints(x,m,n,A2n);
     pf = @(x) FuncToMinimize(x,P,m,n);
@@ -122,24 +91,21 @@ for itr=1:iterations
 %     l =x2'*A2n*x2; %rescale to fit constraint
 %     x2=x2*m/sqrt(l);
 %     x=fmincon(pf,x2,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
-%     
 
-    %disp('Initial value:');
-    %disp(x0);
-    %disp('Final value:');
-    %disp(x);
-    %%disp('Iterations:');
-    %%disp(k);
-    
+
 %     vectB=reshape(x,[2,m*n]);
 %     plot(vectB(1,:),vectB(2,:));
 %     hold on
     
      char = ReconstructCharacteristic(x,P,m,n);
-%     vect=reshape(char,[2,m*n]);
-%     scatter(vect(1,:),vect(2,:));
-%     hold on
+     %vect=reshape(char,[2,m*n]);
+     %scatter(vect(1,:),vect(2,:));
+     %hold on
     
+%      vectU = reshape(x, [2,m*n]);
+%      scatter(vectU(1,:), vectU(2,:));
+%      hold on
+
     action = 2*F(x,P,m,n);
     sprintf('Minimal action for iteration %d: %8f', itr, action)
     if (action < minAction)
@@ -147,5 +113,6 @@ for itr=1:iterations
     end
     
     c = minAction;
+    
+    toc
 end
-%toc

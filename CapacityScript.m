@@ -8,7 +8,7 @@ tic
 n=2; %(1/2)-times dimension of the space
 m=8; %Number of subdivisions of the [0:1]-interval
 eps = 1e-7; %tolerance/ exactness
-P = [zeros(1,4);eye(4)] - 1/8;
+P = [zeros(1,4);eye(4)] - 1/5;
 
 
 % %initial path x0 in M_m (see paper sec. 2.2, "starting point")

@@ -2,7 +2,10 @@ function [y] = F(x,P,m,n)
 %F Summary of this function goes here
 %   Detailed explanation goes here
 
-mJ2n = [zeros(n),-eye(n);eye(n),zeros(n)]; %'mJ2n' is -J_2n.
+%global mJ2n
+%if (isempty(mJ2n))
+	mJ2n = [zeros(n),-eye(n);eye(n),zeros(n)];
+%end
 
 sum = 0;
 for j=0:m-1
