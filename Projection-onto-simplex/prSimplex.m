@@ -1,4 +1,4 @@
-function [faceArray,projectionData] = prSimplex(n,simplex,path,tolerance)
+function [faceArray,alpha,projectionData] = prSimplex(n,simplex,path,tolerance)
 %PRSIMPLEX Projects path on simplex boundary onto the separate faces
 %   INPUT:
 %
@@ -16,6 +16,9 @@ function [faceArray,projectionData] = prSimplex(n,simplex,path,tolerance)
 %   
 %   faceArray = row vector assigning every connecting vector between two
 %   path vectors 
+%
+%   alpha = angle between the characteristic foliation vector and the
+%   connecting vector between two path vectors
 %
 %   projectionData = cell array containing the projections: 2n+1 rows, each row i
 %   encoding the projection of the path onto the face opposite the vertex
@@ -63,6 +66,9 @@ elseif tolerance>0.1
     disp('Tolerance seeps pretty big...');
 end
 
+barycenter = sum(simplex,2)/size(simplex,2);
+
+
 %%  Looking at the convex polytope: determine the base change info
 
 %check that the simplex is nondegenerate
@@ -91,6 +97,7 @@ for j=1:numOfFaces
     projectionData{j,1}=simplex(:,k); %store v_tr
     S=simplex;
     S(:,j)=[];
+    barycenterS=sum(S,2)/size(S,2);
     S=simplexSetCornerToZero(S,k);
     %determine vector orthogonal to this
     N=null(S');
@@ -99,6 +106,13 @@ for j=1:numOfFaces
     end
     %normalize N
     N=N/norm(N);
+    %correct the sign of N by looking at vector from barycenter to
+    %barycenter of a face
+    ddd=barycenterS-barycenter;
+    if dot(ddd,N)<0
+        j
+        N=-N;
+    end
     normalVecs(:,j)=N;
     %From the above computed matrix S and vector n, determine the base
     %change matrix 'pMat'
@@ -142,5 +156,13 @@ end
 
 %
 [M,faceArray]=max(dotArray);
+
+alpha=zeros(1,m);
+for i=1:m
+    yy=y(:,i);
+    ff=foliationVecs(:,faceArray(i));
+    alpha(i)=dot(yy,ff)/norm(yy);
+end
+alpha=acos(alpha);
 
 end
