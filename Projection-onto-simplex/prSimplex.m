@@ -1,4 +1,4 @@
-function [data] = prSimplex(n,simplex,path,tolerance)
+function [projectionData] = prSimplex(n,simplex,tolerance)
 %PRSIMPLEX Projects path on simplex boundary onto the separate faces
 %   INPUT:
 %
@@ -6,25 +6,18 @@ function [data] = prSimplex(n,simplex,path,tolerance)
 %
 %   simplex = collection of simplex corners written either in a single
 %   vector or in columns of a matrix.
-%   
-%   path = 2n*m-dimensional vector representing the path of m points
 %
 %   tolerance = tolerance of the computation, should have a small value,
 %   sensible value would for example be 1e-8.
 %
 %   OUTPUT:
 %   
-%   data = cell array containing the projections: 2n+1 rows, each row i
+%   projectionData = cell array containing the projections: 2n+1 rows, each row i
 %   encoding the projection of the path onto the face opposite the vertex
 %   i.
-%   First column contains the projected points as a matrix: vectors written
-%   in the columns, have the dimension 2n-1. For details, see comments
-%   about the third and fourth column.
-%   Second column contains the indices of the points as a row vector,
-%   showing which position they have in the path. (Values between 1 and m)
-%   Third column contains the translation vector v_tr of the coordinate
+%   First column contains the translation vector v_tr of the coordinate
 %   transformation. Corresponds to one of the 
-%   Fourth column contains the (orthonormal) base transformation matrix B
+%   Second column contains the (orthonormal) base transformation matrix B
 %   (base vectors in the columns). Last base vector is orthogonal to the
 %   face.
 %   So the new vector v_new and v_old have the relation
@@ -50,10 +43,6 @@ if rem(m,1)~=0
     error('Worng dimensions of "path"!!!');
 end
 
-%store path in columns of matrix
-pathVecs=zeros(dim,m);
-pathVecs(:)=path(:);
-
 %store simplex in columns of matrix
 simplexVecs=zeros(dim,dim+1);
 simplexVecs(:)=simplex(:);
@@ -65,12 +54,9 @@ if abs(det(S))<tolerance
 end
 
 %create empty data cell array
-data = cell(dim+1,4);
+projectionData = cell(dim+1,2);
 
-%for every face i opposite vertex i, v_tr is set to the corner i-1.
-
-%determine normal vectors for every face
-normalVecs=zeros(dim,dim+1);
+%Determine the base change information for every face
 for j=1:(dim+1)
     %Determine linear subspace corresponding to face
     %k: determines which corner is set to zero
@@ -79,7 +65,7 @@ for j=1:(dim+1)
     else
         k=dim; %should be 'k=dim+1' but because a column disappears index shifts
     end
-    data{j,3}=simplexVecs(:,k); %store v_tr
+    projectionData{j,1}=simplexVecs(:,k); %store v_tr
     S=simplexVecs;
     S(:,j)=[];
     S=simplexSetCornerToZero(S,k);
@@ -91,35 +77,13 @@ for j=1:(dim+1)
     %normalize n
     n=n/norm(n);
     %From the above computed matrix S and vector n, determine the base
-    %change matrix B
-    data{j,4}=[gramSchmidt(S),n];
-    if norm(data{j,4}'*data{j,4}-eye(dim))>tolerance
+    %change matrix 'pMat'
+    pMat=[gramSchmidt(S),n];
+    if norm(pMat'*pMat-eye(dim))>tolerance
         error('Base transform matrix is not orthogonal... Check your code, man!');
-    end
-    normalVecs(:,j)=n;
-end
-
-%determine which parts of the path are on which face and store in 'data'
-
-xxx=zeros(dim+1,m);
-for i=1:(dim+1)
-    for j=1:m
-        xxx(i,j)=abs(dot(pathVecs(:,j),normalVecs(:,i)));
-        if abs(dot(pathVecs(:,j),normalVecs(:,i)))<tolerance
-            data{i,2}=[data{i,2},j];
-        end
+    else
+        projectionData{j,2}=pMat;
     end
 end
-xxx %displaying distances of points from sides of simplex
-
-for i=1:(dim+1)
-    vNew=data{i,4}\(pathVecs(:,data{i,2})-repmat(data{i,3},1,size(data{i,2},2)));
-    if norm(vNew(dim,:))>tolerance
-        disp(strcat('Something is wrong with the projection onto plane',num2str(i),' .. Last coordinate is not zero!!'));
-    end
-    vNew(dim,:)=[];
-    data{i,1}=vNew;
-end
 
 end
-
