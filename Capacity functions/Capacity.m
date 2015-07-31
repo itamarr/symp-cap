@@ -1,4 +1,4 @@
-function [c, char] = Capacity(P,n)
+function [c, char] = Capacity(P,n, varargin)
 %Capacity Calculates the symplectic capacity of the body given in P.
 % Parameters
 %   P - The convex hull of the body whose capacity we wish to calculate. 
@@ -6,6 +6,23 @@ function [c, char] = Capacity(P,n)
 %   n - The half dimension of the body.
 
 tic
+
+funcParameters = struct('subintervals', 60, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1);
+optNames = fieldnames(funcParameters);
+
+if (round(nargin/2) ~= nargin/2)
+    error('Input format is <field>, <value> pairs')
+end
+
+for pair = reshape(varargin,2,[]) %# pair is {propName;propValue}
+   inpName = lower(pair{1}); %# make case insensitive
+
+   if any(strcmp(inpName,optNames))
+      funcParameters.(inpName) = pair{2};
+   else
+      error('%s is not a recognized parameter name',inpName)
+   end
+end
 
 if (ischar(P))
     P = str2num(P);
@@ -19,8 +36,8 @@ C = centroid(P);
 P = P - repmat(C,size(P,1),1);
 
 %parameters
-iterations=1;
-m=60; %Number of subdivisions of the [0:1]-interval
+iterations = funcParameters.iterations;
+m = funcParameters.subintervals; %Number of subdivisions of the [0:1]-interval
 eps = 1e-7; %tolerance/ exactness
 minAction=flintmax;
 
@@ -93,18 +110,18 @@ for itr=1:iterations
 %     x=fmincon(pf,x2,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
 
 
-%     vectB=reshape(x,[2,m*n]);
-%     plot(vectB(1,:),vectB(2,:));
-%     hold on
-    
-     char = ReconstructCharacteristic(x,P,m,n);
-     %vect=reshape(char,[2,m*n]);
-     %scatter(vect(1,:),vect(2,:));
-     %hold on
-    
-%      vectU = reshape(x, [2,m*n]);
-%      scatter(vectU(1,:), vectU(2,:));
-%      hold on
+    if (strcmpi(funcParameters.plotchar, 'on'))
+         char = ReconstructCharacteristic(x,P,m,n);
+         vect=reshape(char,[2,m*n]);
+         scatter(vect(1,:),vect(2,:));
+         hold on
+    end
+
+    if (strcmpi(funcParameters.plotudot, 'on'))
+         vectU = reshape(x, [2,m*n]);
+         scatter(vectU(1,:), vectU(2,:));
+         hold on
+    end
 
     action = 2*F(x,P,m,n);
     sprintf('Minimal action for iteration %d: %8f', itr, action)
