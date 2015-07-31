@@ -7,6 +7,8 @@ function [c, char] = Capacity(P,n, varargin)
 
 tic
 
+char = 0;
+
 funcParameters = struct('subintervals', 60, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1);
 optNames = fieldnames(funcParameters);
 
