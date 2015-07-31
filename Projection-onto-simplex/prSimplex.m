@@ -110,7 +110,6 @@ for j=1:numOfFaces
     %barycenter of a face
     ddd=barycenterS-barycenter;
     if dot(ddd,N)<0
-        j
         N=-N;
     end
     normalVecs(:,j)=N;
