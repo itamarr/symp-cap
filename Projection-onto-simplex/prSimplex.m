@@ -4,8 +4,8 @@ function [faceArray,projectionData] = prSimplex(n,simplex,path,tolerance)
 %
 %   n = half of dimension
 %
-%   simplex = collection of simplex corners written either in a single
-%   vector or in columns of a matrix.
+%   simplex = collection of simplex vertiecs written in the colums of a
+%   matrix.
 %
 %   path = path on the surface of the simplex. Should be either in a 
 %
@@ -36,26 +36,26 @@ if rem(n,1)~=0
 end
 dim=2*n;
 
-%determine m
+%determine path length m
 if size(path,1)==1
     m=size(path,2)/dim;
 elseif size(path,2)==1
     m=size(path,1)/dim;
 else
-    error('Worng dimensions of "path"!!!');
+    error('Wrong dimensions of "path"!!!');
 end
 
 if rem(m,1)~=0
-    error('Worng dimensions of "path"!!!');
+    error('Wrong dimensions of "path"!!!');
 end
 
-if size(simplex,1)~=dim || size(simplex,2)~=(dim+1)
-    if size(simplex,2)==dim && size(simplex,2)==(dim+1)
-        simplex=simplex';
-    else
-        error('Wrong dimensions of "simplex"!!!');
-    end
-end
+% if size(simplex,1)~=dim || size(simplex,2)~=(dim+1)
+%     if size(simplex,2)==dim && size(simplex,2)==(dim+1)
+%         simplex=simplex';
+%     else
+%         error('Wrong dimensions of "simplex"!!!');
+%     end
+% end
 
 if tolerance<=0
     error('Unacceptable value for the tolerance!');
@@ -63,48 +63,46 @@ elseif tolerance>0.1
     disp('Tolerance seeps pretty big...');
 end
 
-%%  Looking at the simplex: determine the base change info
-%store simplex in columns of matrix
-simplexVecs=zeros(dim,dim+1);
-simplexVecs(:)=simplex(:);
+%%  Looking at the convex polytope: determine the base change info
 
 %check that the simplex is nondegenerate
-S=simplexSetCornerToZero(simplexVecs,1);
+S=simplexSetCornerToZero(simplex,1);
 if abs(det(S))<tolerance
     error('Simplex is (almost) degenerate!');
 end
 
 %create empty data cell array
-projectionData = cell(dim+1,2);
+projectionData = cell(size(simplex,2),2);
 
 %Determine the base change information for every face
 
 %store normal vectors for every face separately
-normalVecs=zeros(dim,dim+1);
+numOfFaces=size(simplex,2);
+normalVecs=zeros(dim,numOfFaces);
 
-for j=1:(dim+1)
+for j=1:numOfFaces
     %Determine linear subspace corresponding to face
     %k: determines which corner is set to zero
     if j~=1
         k=j-1;
     else
-        k=dim; %should be 'k=dim+1' but because a column disappears index shifts
+        k=1;
     end
-    projectionData{j,1}=simplexVecs(:,k); %store v_tr
-    S=simplexVecs;
+    projectionData{j,1}=simplex(:,k); %store v_tr
+    S=simplex;
     S(:,j)=[];
     S=simplexSetCornerToZero(S,k);
     %determine vector orthogonal to this
-    n=null(S');
-    if mean(size(n)==[dim,1])~=1
+    N=null(S');
+    if mean(size(N)==[dim,1])~=1
         error('unexpected dimensions while using "null"');
     end
-    %normalize n
-    n=n/norm(n);
-    normalVecs(:,j)=n;
+    %normalize N
+    N=N/norm(N);
+    normalVecs(:,j)=N;
     %From the above computed matrix S and vector n, determine the base
     %change matrix 'pMat'
-    pMat=[gramSchmidt(S),n];
+    pMat=[gramSchmidt(S),N];
     if norm(pMat'*pMat-eye(dim))>tolerance
         error('Base transform matrix is not orthogonal... Check your code, man!');
     else
@@ -127,13 +125,22 @@ for i=1:(m-1)
 end
 y(:,m)=pathVecs(:,1)-pathVecs(:,m);
 
-dotArray=zeros(dim+1,m);
+% dotArray stores the inner products of a connecting vector with each
+% foliation vector as a column.
+
+% here size(simplex,2) means the number of vertices in P. In the case of a
+% simplex this is equal to the number of faces. For a general polytope this
+% is not true. We will need additional input to the functionto account for 
+% this in the future.
+
+dotArray=zeros(size(simplex,2),m);
 for i=1:m
     for j=1:(dim+1)
         dotArray(j,i)=abs(dot(y(:,i),foliationVecs(:,j)));
     end
 end
+
+%
 [M,faceArray]=max(dotArray);
 
 end
-
