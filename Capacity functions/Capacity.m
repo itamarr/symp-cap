@@ -4,6 +4,19 @@ function [c, char] = Capacity(P,n, varargin)
 %   P - The convex hull of the body whose capacity we wish to calculate. 
 %   It should have the form of a k-2*n matrix.
 %   n - The half dimension of the body.
+%   varargin - This allows for variable input arguments.
+%   Usage: Capacity(P,n,'option', value,...); Where 'option' is one of the
+%   available options below, and value is the desired value for the option.
+%   The options are:
+%   'SubIntervals' - The number of subintervals, i.e., m. This should be a
+%   number. Default is 60.
+%   'PlotChar' - Controls whether or not to rebuild the characteristic and
+%   plot it. Values should be 'on' or 'off'. Default 'off'.
+%   'PlotUDot' - Controls whether or not to plot the derivative of the
+%   characteristic. Values should be 'on' or 'off'. Default 'off'.
+%   'Iterations' - Controls the number of iterations for the capacity
+%   function. Values should be number. Default is 1.
+%   
 
 tic
 
