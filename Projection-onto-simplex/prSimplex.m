@@ -190,6 +190,11 @@ for k=1:numOfFaces
         dist=abs(ProjectedVec(dim));
         %if n==2 && dist<tolerance
         %Above line commented out because this doesn't work!
+        if i==m
+            iP1=1;
+        else
+            iP1=i+1;
+        end
         if n==2 && faceArray(i)==k && faceArray(iP1)==k
             %Information for drawing and labeling
             projectedVectors{k,1}=[projectedVectors{k,1},ProjectedVec(1:(dim-1))];
