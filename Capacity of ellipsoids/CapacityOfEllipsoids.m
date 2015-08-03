@@ -19,9 +19,7 @@ for itr=1:iterations
     %Following lines compute the matrix "A_2n" (see paper sec. 2.1 equation (2.5))
     %Matrix should be removed, and calculations should be done directly
     %to improve the efficiency of the program.
-    tic
     mJ2n = [zeros(n),-eye(n);eye(n),zeros(n)];
-    toc
 
     A2n = zeros(2*m*n); %big zeros block
     %A2n = sparse(2*m*n,2*m*n); %%sparse matrix instead of big zeroes block
@@ -99,19 +97,20 @@ for itr=1:iterations
     %options.Algorithm = 'interior-point';
     %x9=fmincon(pf,x,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
     
-    char = ReconstructCharacteristicEllipsoids(x0,R,m,n);
-    vect=reshape(char,[2,m*n]);
-    char = ReconstructCharacteristicEllipsoids(x,R,m,n);
-    vect2=reshape(char,[2,m*n]);
-    figure
-    plot(vect(1,:),vect(2,:), '-ro', vect2(1,:),vect2(2,:), '-bo')
-    legend('starting trajectory', 'solution','Location','southoutside')
-    title('Minimal action curve for ellipsoids')
-    hold on
+    %char = ReconstructCharacteristicEllipsoids(x0,R,m,n);
+    %vect=reshape(char,[2,m*n]);
     %char = ReconstructCharacteristicEllipsoids(x,R,m,n);
-   % vect=reshape(char,[2,m*n]);
-    %plot(vect(1,:),vect(2,:), 'Color', 'blue');
+    %vect2=reshape(char,[2,m*n]);
+    %figure
+    %plot(vect(1,:),vect(2,:), '-ro', vect2(1,:),vect2(2,:), '-bo')
+    %legend('starting trajectory', 'solution','Location','southoutside')
+    %title('Minimal action curve for ellipsoids')
     %hold on
+    
+    char = ReconstructCharacteristicEllipsoids(x,R,m,n);
+    vect=reshape(char,[2,m*n]);
+    scatter(vect(1,:),vect(2,:), 'Color', 'blue');
+    hold on
     %disp('Initial value:');
     %disp(x0);
     %disp('Final value:');

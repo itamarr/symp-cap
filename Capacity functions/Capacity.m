@@ -22,7 +22,7 @@ tic
 
 char = 0;
 
-funcParameters = struct('subintervals', 60, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1);
+funcParameters = struct('subintervals', 60, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1, 'minksum', 'off', 'epsilon', 0.25, 'startingtraj', 0);
 optNames = fieldnames(funcParameters);
 
 if (round(nargin/2) ~= nargin/2)
@@ -74,36 +74,45 @@ for itr=1:iterations
         end
     end
     %disp(A2n);
-
+    
     %Generate a random initial path which fulfils the constraints
     l=0;
-    while (abs(l)<eps) %look at last line in this 'while'-loop...
-        x0=2*(0.5-rand(2*m*n,1)); %random numbers between -1 and 1
-        s=zeros(2*n,1);
-        for i=1:2*n
-            s(i)=sum(x0(i:2*n:2*m*n)); %summing the i-th coordiantes, i=1,..,2n
-            for j=0:m-1
-                x0(j*2*n+i)=x0(j*2*n+i)-s(i)/m; %now, sum of vectors is 0
+    if (funcParameters.startingtraj == 0)
+        while (abs(l)<eps) %look at last line in this 'while'-loop...
+            x0=2*(0.5-rand(2*m*n,1)); %random numbers between -1 and 1
+            s=zeros(2*n,1);
+            for i=1:2*n
+                s(i)=sum(x0(i:2*n:2*m*n)); %summing the i-th coordiantes, i=1,..,2n
+                for j=0:m-1
+                    x0(j*2*n+i)=x0(j*2*n+i)-s(i)/m; %now, sum of vectors is 0
+                end
+            end
+            l =x0'*A2n*x0; %this is needed for the last constraint
+        end
+
+        if(l<0) %in this case, the path has to be inverted
+            x0p=x0;
+            for i=0:m-1
+                j=m-1-i;
+                x0(2*n*i+1:2*n*(i+1))=x0p(2*n*j+1:2*n*(j+1));
             end
         end
-        l =x0'*A2n*x0; %this is needed for the last constraint
-    end
 
-    if(l<0) %in this case, the path has to be inverted
-        x0p=x0;
-        for i=0:m-1
-            j=m-1-i;
-            x0(2*n*i+1:2*n*(i+1))=x0p(2*n*j+1:2*n*(j+1));
-        end
+        %now that l is positive, rescale x such that the last constraint is
+        %fulfilled.
+        l = x0'*A2n*x0;
+        x0 = x0*m/sqrt(l);
+    else
+        x0 = funcParameters.startingtraj;
     end
-
-    %now that l is positive, rescale x such that the last constraint is
-    %fulfilled.
-    l =x0'*A2n*x0;
-    x0=x0*m/sqrt(l);
 
     cond = @(x) Constraints(x,m,n,A2n);
-    pf = @(x) FuncToMinimize(x,P,m,n);
+    if (strcmpi(funcParameters.minksum, 'off'))
+        pf = @(x) FuncToMinimize(x,P,m,n);
+    else
+        pf = @(x) FuncToMinimizeMinkSum(x,P,m,n, funcParameters.epsilon);
+    end
+        
     options = optimoptions('fmincon','GradObj','on','GradConstr','on');
     %options.Display = 'iter';
     options.Algorithm = 'active-set'; %% should try which works best, Maybe this is better that sqp?
