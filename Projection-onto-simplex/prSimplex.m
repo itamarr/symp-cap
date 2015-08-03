@@ -107,6 +107,8 @@ for j=1:numOfFaces
     %determine vector orthogonal to this
     N=null(S');
     if mean(size(N)==[dim,1])~=1
+        disp('size(N)=');
+        disp(size(N));
         error('unexpected dimensions while using "null"');
     end
     %normalize N
@@ -188,7 +190,7 @@ for k=1:numOfFaces
         ProjectedVec=B\(pathVecs(:,i)-vTr); %B\v calls a more efficient
         %Matlab algorithm to compute (B^-1)*v
         dist=abs(ProjectedVec(dim));
-        %if n==2 && dist<tolerance
+        %if n==2 && dist<0.9
         %Above line commented out because this doesn't work!
         if i==m
             iP1=1;
@@ -230,9 +232,13 @@ elseif n==2
         figure('name',ttl)
         title(ttl)
         plot3(drawSimplexFace(1,:),drawSimplexFace(2,:),drawSimplexFace(3,:))
+        vL=1:numOfFaces;
+        vL(j)=[];
+        vertexLabels=cellstr(strcat('v',num2str(vL')))';
+        text(S(1,:),S(2,:),S(3,:),vertexLabels);
         hold on
         PP=projectedVectors{j,1};
-        plot3(PP(1,:),PP(2,:),PP(3,:))
+        plot3(PP(1,:),PP(2,:),PP(3,:),'x')
         hold on
         labels=cellstr(num2str(projectedVectors{j,2}'))';
         text(PP(1,:),PP(2,:),PP(3,:),labels)
