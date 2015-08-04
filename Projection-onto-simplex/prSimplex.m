@@ -47,6 +47,8 @@ if size(path,1)==1
     m=size(path,2)/dim;
 elseif size(path,2)==1
     m=size(path,1)/dim;
+elseif size(path,1)==dim
+    m=size(path,2);
 else
     error('Wrong dimensions of "path"!!!');
 end
@@ -107,6 +109,7 @@ for j=1:numOfFaces
     %determine vector orthogonal to this
     N=null(S');
     if mean(size(N)==[dim,1])~=1
+        j
         disp('size(N)=');
         disp(size(N));
         error('unexpected dimensions while using "null"');
@@ -162,7 +165,7 @@ for i=1:m
 end
 
 %
-[M,faceArray]=max(dotMatrix);
+[~,faceArray]=max(dotMatrix);
 
 alpha=zeros(1,m);
 for i=1:m
@@ -238,10 +241,12 @@ elseif n==2
         text(S(1,:),S(2,:),S(3,:),vertexLabels);
         hold on
         PP=projectedVectors{j,1};
-        plot3(PP(1,:),PP(2,:),PP(3,:),'x')
-        hold on
-        labels=cellstr(num2str(projectedVectors{j,2}'))';
-        text(PP(1,:),PP(2,:),PP(3,:),labels)
+        if size(PP,1)== 3
+            plot3(PP(1,:),PP(2,:),PP(3,:),'x')
+            hold on
+            labels=cellstr(num2str(projectedVectors{j,2}'))';
+            text(PP(1,:),PP(2,:),PP(3,:),labels)
+        end
     end
 end
 
