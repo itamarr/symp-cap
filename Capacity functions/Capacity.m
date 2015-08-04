@@ -22,7 +22,7 @@ tic
 
 udot = 0;
 char = 0;
-funcParameters = struct('subintervals', 60, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1, 'minksum', 'off', 'epsilon', 0.25, 'startingtraj', 0, 'toliter', 0.8*1e-3);
+funcParameters = struct('subintervals', 4, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1, 'minksum', 'off', 'epsilon', 0.25, 'startingtraj', 0, 'toliter', 0.8*1e-3);
 optNames = fieldnames(funcParameters);
 
 if (round(nargin/2) ~= nargin/2)
