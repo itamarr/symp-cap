@@ -1,4 +1,4 @@
-function [c, char] = Capacity(P,n, varargin)
+function [c, char, udot] = Capacity(P,n, varargin)
 %Capacity Calculates the symplectic capacity of the body given in P.
 % Parameters
 %   P - The convex hull of the body whose capacity we wish to calculate. 
@@ -20,6 +20,7 @@ function [c, char] = Capacity(P,n, varargin)
 
 tic
 
+udot = 0;
 char = 0;
 
 funcParameters = struct('subintervals', 60, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1, 'minksum', 'off', 'epsilon', 0.25, 'startingtraj', 0);
@@ -126,7 +127,7 @@ for itr=1:iterations
     options.TolX = 1e-4;
     %l =x1'*A2n*x1; %rescale to fit constraint
     %x1=x1*m/sqrt(l);
-    x=fmincon(pf,x1,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
+    udot = fmincon(pf,x1,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
 %     options.TolFun = 1e-6;
 %     options.TolX = 1e-4;
 %     l =x2'*A2n*x2; %rescale to fit constraint
@@ -135,19 +136,19 @@ for itr=1:iterations
 
 
     if (strcmpi(funcParameters.plotchar, 'on'))
-         char = ReconstructCharacteristic(x,P,m,n);
+         char = ReconstructCharacteristic(udot,P,m,n);
          vect=reshape(char,[2,m*n]);
          scatter(vect(1,:),vect(2,:));
          hold on
     end
 
     if (strcmpi(funcParameters.plotudot, 'on'))
-         vectU = reshape(x, [2,m*n]);
+         vectU = reshape(udot, [2,m*n]);
          scatter(vectU(1,:), vectU(2,:));
          hold on
     end
 
-    action = 2*F(x,P,m,n);
+    action = 2*F(udot,P,m,n);
     sprintf('Minimal action for iteration %d: %8f', itr, action)
     if (action < minAction)
         minAction = action;
