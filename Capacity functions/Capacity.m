@@ -22,7 +22,7 @@ tic
 
 udot = 0;
 char = 0;
-funcParameters = struct('subintervals', 60, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1, 'minksum', 'off', 'epsilon', 0.25, 'startingtraj', 0, 'toliter', 3*1e-3);
+funcParameters = struct('subintervals', 60, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1, 'minksum', 'off', 'epsilon', 0.25, 'startingtraj', 0, 'toliter', 0.8*1e-3);
 optNames = fieldnames(funcParameters);
 
 if (round(nargin/2) ~= nargin/2)
@@ -129,7 +129,7 @@ for itr=1:iterations
 
     [prevx, prevval]=fmincon(pf,x0,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
     TolIter = funcParameters.toliter;
-    for k=1:3
+    for k=1:4
         tmpprevx=SubdividePath(prevx,n);
         %clear prevx;
         prevx=tmpprevx;
@@ -142,9 +142,9 @@ for itr=1:iterations
                 A2n(2*n*(i-1)+1:2*n*i,2*n*(j-1)+1:2*n*j)=mJ2n;
             end
         end
-        if k<=3
-            options.TolFun = 10^(-k-3);
-            options.TolX = 10^(-k-3);
+        if k>=2
+            options.TolFun = 1e-6;
+            options.TolX = 1e-6;
         end
         
         %%%  reassign functins with tne new value of m
