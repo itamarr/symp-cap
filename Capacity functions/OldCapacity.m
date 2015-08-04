@@ -1,6 +1,6 @@
-function [c, char] = Capacity(P,n, varargin)
+function [c, char] = OldCapacity(P,n, varargin)
 %Capacity Calculates the symplectic capacity of the body given in P.
-% Parameters
+% ParametersO
 %   P - The convex hull of the body whose capacity we wish to calculate. 
 %   It should have the form of a k-2*n matrix.
 %   n - The half dimension of the body.
@@ -21,7 +21,8 @@ function [c, char] = Capacity(P,n, varargin)
 tic
 
 char = 0;
-funcParameters = struct('subintervals', 60, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1, 'minksum', 'off', 'epsilon', 0.25, 'startingtraj', 0, 'toliter', 3*1e-3);
+
+funcParameters = struct('subintervals', 60, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1, 'minksum', 'off', 'epsilon', 0.25, 'startingtraj', 0);
 optNames = fieldnames(funcParameters);
 
 if (round(nargin/2) ~= nargin/2)
@@ -48,6 +49,7 @@ end
 
 C = centroid(P);
 P = P - repmat(C,size(P,1),1);
+P=P;
 
 %parameters
 iterations = funcParameters.iterations;
@@ -113,60 +115,19 @@ for itr=1:iterations
     end
         
     options = optimoptions('fmincon','GradObj','on','GradConstr','on');
-    options.Display = 'iter';
+    %options.Display = 'iter';
     options.Algorithm = 'active-set'; %% should try which works best, Maybe this is better that sqp?
-    options.MaxIter = 8000;
-    %options.TolCon = 1e-5;
-    %options.TolFun = 1e-3;
-    %options.TolX = 1e-3;
-    %x1=fmincon(pf,x0,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
-    options.TolCon = 1e-9;
+    options.MaxIter = 10000;
+    options.TolCon = 1e-5;
     options.TolFun = 1e-3;
     options.TolX = 1e-3;
+    x1=fmincon(pf,x0,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
+    options.TolCon = 1e-9;
+    options.TolFun = 1e-6;
+    options.TolX = 1e-4;
     %l =x1'*A2n*x1; %rescale to fit constraint
     %x1=x1*m/sqrt(l);
-    [prevx, prevval]=fmincon(pf,x0,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
-    TolIter = funcParameters.toliter;
-    for k=1:3
-        tmpprevx=SubdividePath(prevx,n);
-        %clear prevx;
-        prevx=tmpprevx;
-        m=2*m;
-        disp(m);
-        %%%generate A2n for new value of m
-        A2n = zeros(2*m*n); %big zeros block
-        for i=1:m
-            for j=(i+1):m
-                A2n(2*n*(i-1)+1:2*n*i,2*n*(j-1)+1:2*n*j)=mJ2n;
-            end
-        end
-        if k<=3
-            options.TolFun = 10^(-k-3);
-            options.TolX = 10^(-k-3);
-        end
-        
-        %%%  reassign functins with tne new value of m
-
-         cond = @(x) Constraints(x,m,n,A2n);
-         if (strcmpi(funcParameters.minksum, 'off'))
-             pf = @(x) FuncToMinimize(x,P,m,n);
-         else
-             pf = @(x) FuncToMinimizeMinkSum(x,P,m,n, funcParameters.epsilon);
-         end
-                
-        [newx, newval]=fmincon(pf,prevx,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
-        if abs(newval-prevval)<=TolIter
-            prevx=newx;
-            break
-        else
-            prevval=newval;
-            l = newx'*A2n*newx;
-            newx = newx*m/sqrt(l);
-            prevx=newx;
-        end
-        
-    end
-    x=prevx;
+    x=fmincon(pf,x1,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
 %     options.TolFun = 1e-6;
 %     options.TolX = 1e-4;
 %     l =x2'*A2n*x2; %rescale to fit constraint
