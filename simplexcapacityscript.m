@@ -1,14 +1,21 @@
-% Most general simplex: P = [1,0,0,0; 0,a,1,0; 0,b,0,d; 0,c,f/e,e; 0,0,0,0]
 eps = 1e-6;
 n = 2;
+
 % Create a simplex parametrization of the correct dimensions
 params = GenerateSimplexParametrization(n);
+
+ai = 2;
+aj = 3;
+bi = 1;
+bj = 4;
+
+fixedParam = 1;
 
 % set all the parameters to 1, beside your favorite 2 parameters.
 for i = 1:2*n
     for j = i+1:2*n
-        if (~(i == 1 && j == 2) && ~(i == 1 && j == 4))
-            params = subs(params, sprintf('a%d_%d', i,j), 1);
+        if (~(i == ai && j == aj) && ~(i == bi && j == bj))
+            params = subs(params, sprintf('a%d_%d', i,j), fixedParam);
         end
     end
 end
@@ -31,41 +38,41 @@ i=1;
 for a = aVect
     j=1;
     for b = bVect
-        %P = [1,0,0,0; 0,1,a,0; 0,0,b,1; 0,1,1,1; 0,0,0,0] 
-        
         % dirty fix - we arbitrarily decided that a1_2 is not zero... and
         % sometimes we want it to be zero. so.. emr... never mind and
         % ignore it.
-        if (a == 0)
-            warning('we hit a parameter that gives zero volume simplex for a=%d, b=%d; ignore and continue.', a, b);
-            fprintf(logFile, 'we hit a parameter that gives zero volume simplex for a=%d, b=%d; ignore and continue.', a, b);
+        if (ai == 1 && aj == 2 && a == 0)
+            warning('we hit a parameter that gives zero volume simplex for a=%d, b=%d; ignore and continue.\n', a, b);
+            fprintf(logFile, 'we hit a parameter that gives zero volume simplex for a=%d, b=%d; ignore and continue.\n', a, b);
             j = j+1;
             continue;
         end
         P = zeros(2*n + 1, 2*n);
-        temp = subs(params, 'a1_2',a);
-        temp = subs(temp, 'a1_4', b);
+        temp = subs(params, sprintf('a%d_%d', ai, aj), a);
+        temp = subs(temp, sprintf('a%d_%d', bi, bj), b);
         P(1:end-1,:) = temp;
-        %n = size(P,2)/2 % no need to calculate n, it's fixed at the
-        %beginning
+
         vol = abs(det(P(1:end-1,:))/factorial(2*n))
         if (vol < eps)
-            warning('skipping simplex with volume close to zero, with parameters a=%f, b=%f', a, b);
-            fprintf(logFile, 'skipping simplex with volume close to zero, with parameters a=%f, b=%f', a, b);
+            s = sprintf('skipping simplex with volume close to zero, with parameters a%d_%d=%f, b%d_%d=%f\n', ai, aj, a, bi, bj, b);
+            warning(s);
+            fprintf(logFile, s);
             j = j + 1;
             continue
         end
+        
+        % normalize to volume 1
+        P = P.* vol^(-1/(2*n));
 
         try
             [c,char, udot] = Capacity(P,n);
         catch ME
-            warning('Encountered warning while calculating capacity. May god help us all: %s', ME.msgtext);
-            fprintf(logFile, 'Encountered warning while calculating capacity. May god help us all: %s', ME.msgtext);
+            warning('Encountered warning while calculating capacity. May god help us all: %s\n', ME.msgtext);
+            fprintf(logFile, 'Encountered warning while calculating capacity. May god help us all: %s\n', ME.msgtext);
         end
         udotsVect(i,j) = udotsVect(i, j);
         capacityresults(i,j) = c
-        volnormcapacityresults(i,j) = c/(vol^(1/n))
-        
+
         % this writes the udot result of Capacity function to file, for
         % future generations
         dlmwrite('udots.csv', [a,b,c,volnormcapacityresults(i,j), udot'], '-append'); 
