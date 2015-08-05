@@ -5,6 +5,8 @@ P = [1,0,0,0;0,1,A,0;0,0,B,D;0,F/D,C,E;0,0,0,0];
 P = P - repmat(min(P),size(P,1),1);
 
 n = size(P,2)/2;
+
+
 M = max(P);
 centerpt = M.*rand(1,2*n);
 while not(inhull(centerpt,P));
@@ -59,9 +61,9 @@ end
 %figure
 %scatter(belowP(:,1),belowP(:,2))
 
-[c1,char1] = Capacity(aboveP,n);
-[c2,char2] = Capacity(belowP,n);
-[c,char] = Capacity(P,n);
+[c1,char1,udot1] = Capacity(aboveP,n);
+[c2,char2,udot2] = Capacity(belowP,n);
+[c,char,udot] = Capacity(P,n);
 
 c
 additiveCap = c1 + c2
@@ -76,15 +78,17 @@ end
 
 disp(comment);
 
-data=cell(1,6);
+data=cell(1,12);
 data{1}=[A,B,C,D,E,F];
 data{2}=[c1,c2,c];
 data{3}=char1;
 data{4}=char2;
 data{5}=char;
-data{6}=comment;
-data{7}=cell(3);
-data{7}{1}=aboveP;
-data{7}{2}=belowP;
-data{7}{3}=P;
+data{6}=udot1;
+data{7}=udot2;
+data{8}=udot;
+data{9}=comment;
+data{10}=aboveP;
+data{11}=belowP;
+data{12}=P;
 end
