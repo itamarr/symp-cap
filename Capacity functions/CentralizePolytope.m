@@ -1,7 +1,9 @@
 function [ centP ] = CentralizePolytope( P )
-%CENTRALIZESIMPLEX Gets a simplex as list of row vectors of extreme points,
-%translates it such that the center of mass is at zero.
-%   Detailed explanation goes here
+%CENTRALIZESIMPLEX Translates a polytope such that the center of mass moves
+%to zero. 
+%   Parameters:
+%   P - The extreme points of the poyltope given in a form of a matrix,
+%   where the rows of the matrix are the vertices of the polytope.
 C = centroid(P);
 centP = P - repmat(C,size(P,1),1);
 end

@@ -3,7 +3,11 @@ function c = CapacityOfEllipsoids(R,n)
 %spectrum is given in R. The purpose of this is a sanity check to see that
 %we get the correct analytic answer. This is done in a similar way to the 
 %general case, but the h_K used is tailored for ellipsoids.
-% Parameters
+%
+%WARNING: This function is a bit outdated compared to the Capacity
+%function. 
+%
+%	Parameters
 %   R - The spectrum of the ellipsoid in the form of an n-dimensional
 %   vector in an ascending order.
 %   n - The half dimension of the body.

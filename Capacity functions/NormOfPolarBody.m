@@ -1,21 +1,15 @@
 function [ n ] = NormOfPolarBody( P, y )
 %NormOfPolarBody Calculates the norm of y in relation to the polar of P.
+%   Parameters:
+%   P - The convex hull of the body whose capacity we wish to calculate. 
+%   It should have the form of a k-2*n matrix where k is the number of vertices
+%   in the convex hull.
+%   y -  The point at which we want to calculate the gradient. This is
+%   represented as a column vector.
 
 
-    %[A, b] = PointsToHalfSpaces(P);
-    %%A(~any(A,2),:) = [];
-    %%b(~any(b,2),:) = [];
+    [M,I] = max(P*y);
     
-    [M,I] = max(P*y); %% it's faster!
-    
-    
-%     tic
-%     options = optimset('Display','none'); %% disable logging for linprog
-%     maxX = linprog(-y,A,b,[],[],[],[],[],options);
-%     disp('linprog');
-%     toc
-%     n = y * maxX;
-    %n = (y * (P(I(1),:)'));
     n = (P(I(1),:) * y);
 end
 

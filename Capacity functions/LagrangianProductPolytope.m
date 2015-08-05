@@ -2,7 +2,9 @@ function [ extLagP ] = LagrangianProductPolytope( P1, P2 )
 %LAGRANGIANPRODUCT gets two n-dim Polytopes and returns the extreme points
 %of the simplex resulting in their lagrangian product (in coordinates
 %q1,..,qn,p1,...,pn
-%   Detailed explanation goes here
+%   Parameters:
+%   P1 - The polytope in the p-plane.
+%   P2 - The polytope in the q-plane.
 if (size(P1,2) ~= size(P2,2))
     disp ('Simplices must be of the same dimension');
 end

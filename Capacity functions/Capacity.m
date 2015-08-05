@@ -2,7 +2,8 @@ function [c, char, udot] = Capacity(P,n, varargin)
 %Capacity Calculates the symplectic capacity of the body given in P.
 % Parameters
 %   P - The convex hull of the body whose capacity we wish to calculate. 
-%   It should have the form of a k-2*n matrix.
+%   It should have the form of a k-2*n matrix where k is the number of vertices
+%   in the convex hull.
 %   n - The half dimension of the body.
 %   varargin - This allows for variable input arguments.
 %   Usage: Capacity(P,n,'option', value,...); Where 'option' is one of the
@@ -16,13 +17,33 @@ function [c, char, udot] = Capacity(P,n, varargin)
 %   characteristic. Values should be 'on' or 'off'. Default 'off'.
 %   'Iterations' - Controls the number of iterations for the capacity
 %   function. Values should be number. Default is 1.
-%   
+%   'MaxSubintervals' - The algorithm increases the number of subintervals
+%   until it reaches this value. This defaults to 400.
+%   'MinimumSubintervals' - The algorithm increases its precision after
+%   this number is reached. This defaults to 30.
+%   'ExponentBound' - The algorithm increases the number of subintervals by
+%   2 in each step. This parameter bounds the number of such steps. This
+%   defaults to 4.
+%   'MinkSum' - When this parameter is turned on, the algorithm will use a
+%   different set of G, and F functions. WARNING: This is still work in
+%   progress and is known to be wrong. This defaults to 'off'.
+%   'Epsilon' - The radius of the ball to add to the body for the Minkowski
+%   sum options. This defaults to 0.25.
+%   'DisplayIter' - Turn this on to display the results of each iteration
+%   of fmincon. This defaults to 'off'.
+%   'TolIter' - This tolerance value helps the algorithm decide to stop
+%   iterating fmincon with finer subdivision of intervals. If two
+%   consecutive calls to fmincon is <= this parameter, the algorithm stops.
+%   This defaults to 8e-4.
 
 tic
 
 udot = 0;
 char = 0;
-funcParameters = struct('subintervals', 4, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1, 'minksum', 'off', 'epsilon', 0.25, 'startingtraj', 0, 'toliter', 0.8*1e-3);
+
+% This next part sets the default parameters of the function and reads
+% whatever options were input to the function.
+funcParameters = struct('subintervals', 4, 'maxsubintervals', 400, 'minimumsubintervals', 30, 'exponentbound', 4, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1, 'minksum', 'off', 'epsilon', 0.25, 'startingtraj', 0, 'toliter', 0.8*1e-3, 'displayitre', 'off');
 optNames = fieldnames(funcParameters);
 
 if (round(nargin/2) ~= nargin/2)
@@ -59,10 +80,7 @@ minAction=flintmax;
 %Following lines compute the matrix "A_2n" (see paper sec. 2.1 equation (2.5))
 %Matrix should be removed, and calculations should be done directly
 %to improve the efficiency of the program.
-%global mJ2n
-%if (isempty(mJ2n) || size(mJ2n, 1) ~= 2*n)
-    mJ2n = [zeros(n),-eye(n);eye(n),zeros(n)];
-%end
+mJ2n = [zeros(n),-eye(n);eye(n),zeros(n)];
 
 for itr=1:iterations
 
@@ -114,35 +132,33 @@ for itr=1:iterations
     end
         
     options = optimoptions('fmincon','GradObj','on','GradConstr','on');
-    options.Display = 'iter';
+    if (strcmpi(funcParameters.displayiter, 'on'))
+        options.Display = 'iter';
+    end
     options.Algorithm = 'active-set'; %% should try which works best, Maybe this is better that sqp?
     options.MaxIter = 8000;
-    %options.TolCon = 1e-5;
-    %options.TolFun = 1e-3;
-    %options.TolX = 1e-3;
-    %x1=fmincon(pf,x0,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
     options.TolCon = 1e-9;
     options.TolFun = 1e-3;
     options.TolX = 1e-3;
-    %l =x1'*A2n*x1; %rescale to fit constraint
-    %x1=x1*m/sqrt(l);
 
-    [prevx, prevval]=fmincon(pf,x0,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
+    % fmincon is Matlab's function that finds minimum under constraints.
+    [prevx, prevval] = fmincon(pf,x0,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
     TolIter = funcParameters.toliter;
-    for k=1:4
-        tmpprevx=SubdividePath(prevx,n);
-        %clear prevx;
-        prevx=tmpprevx;
-        m=2*m;
+    for k = 1 : funcParameters.exponentbound
+        tmpprevx = SubdividePath(prevx,n);
+        prevx = tmpprevx;
+        m = 2*m;
         disp(m);
         %%%generate A2n for new value of m
         A2n = zeros(2*m*n); %big zeros block
-        for i=1:m
-            for j=(i+1):m
+        for i = 1:m
+            for j = (i + 1):m
                 A2n(2*n*(i-1)+1:2*n*i,2*n*(j-1)+1:2*n*j)=mJ2n;
             end
         end
-        if k>=2
+        % increase the precision of the algorithm of m is big enough or
+        % we've had enough iterations.
+        if (k >= 2 || m >= funcParameters.minimumsubintervals)
             options.TolFun = 1e-6;
             options.TolX = 1e-6;
         end
@@ -156,30 +172,23 @@ for itr=1:iterations
              pf = @(x) FuncToMinimizeMinkSum(x,P,m,n, funcParameters.epsilon);
          end
                 
-        [newx, newval]=fmincon(pf,prevx,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
-        if abs(newval-prevval)<=TolIter
+        [newx, newval] = fmincon(pf,prevx,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
+        if abs(newval - prevval) <= TolIter
             prevx=newx;
             break
         else
-            prevval=newval;
+            prevval = newval;
             l = newx'*A2n*newx;
             newx = newx*m/sqrt(l);
-            prevx=newx;
+            prevx = newx;
         end
         
     end
-    udot=prevx;
-
-%     options.TolFun = 1e-6;
-%     options.TolX = 1e-4;
-%     l =x2'*A2n*x2; %rescale to fit constraint
-%     x2=x2*m/sqrt(l);
-%     x=fmincon(pf,x2,[],[],repmat(eye(2*n),1,m),zeros(2*n,1),[],[],cond,options);
-
+    udot = prevx;
 
     if (strcmpi(funcParameters.plotchar, 'on'))
          char = ReconstructCharacteristic(udot,P,m,n);
-         vect=reshape(char,[2,m*n]);
+         vect = reshape(char,[2,m*n]);
          scatter(vect(1,:),vect(2,:));
          hold on
     end

@@ -1,1 +1,2 @@
-This folder contains the main Capacity function and its subroutines. These functions should probably just sit inside the Capacity.m file, but there's a limit to how much I want to rock the boat at this particular time.
+This folder contains the main Capacity function and its subroutines. 
+TODO: These functions should probably just sit inside the Capacity.m file...
