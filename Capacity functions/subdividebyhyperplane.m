@@ -83,5 +83,8 @@ data{3}=char1;
 data{4}=char2;
 data{5}=char;
 data{6}=comment;
-
+data{7}=cell(3);
+data{7}{1}=aboveP;
+data{7}{2}=belowP;
+data{7}{3}=P;
 end
