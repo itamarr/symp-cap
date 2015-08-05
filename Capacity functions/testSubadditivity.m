@@ -6,8 +6,9 @@ h=0;
 m=10;
 s=0;
 t=h*3600+m*60+s;
-%randSimplices=cell(0);
-while toc<t
+randSimplices=cell(0);
+numOfTests=30;
+for i=1:numOfTests
     A=10*rand;
     B=10*rand;
     C=10*rand;
@@ -18,5 +19,6 @@ while toc<t
         randSimplices{end+1}=subdividebyhyperplane(A,B,C,D,E,F);
     catch E
         warning('horrible stuff happened');
+        i=i-1;
     end
 end
