@@ -1,0 +1,168 @@
+\documentclass[../capacities_main.tex]{subfiles}
+
+
+% Now just type your section here as usual %
+% IGNORE(!): Add whatever stylistics and abbreviations in a file named preamble_settings one section up%
+\begin{document}
+
+	% Algorithm Convergence %
+
+
+In this section we prove that minimal values of the discretized problem presented in \autoref{discreteproblem} converge to a minimal value of the original problem (\ref{MinProblem}). Moreover, we discuss bound of the rate of convergence and convergence of minimizing trajectories.\\
+
+
+we start by presenting the notation and assumptions required for the results listed in this section. 
+\begin{Definition}
+	
+	For every $m\in\N_+$, $k=0,\dots,m-1$, denote $I_{m,k}:=(\frac{k}{m},\frac{k+1}{m})$., and consider the spaces:
+	\begin{eqnarray*}
+		W &:=& \left\{v\in M: \int_0^1\left<-J\dot v,v\right>_{\R^{2n}}=1\right\}\subset H^1([0,1],\R^{2n})\\
+		W_m &:=& W\cap\{v\in H^1([0,1],\R^{2n}):\text{$v|_{I_{m,k}}$ is linear}\}
+	\end{eqnarray*}
+	
+\end{Definition}
+We are interested in the minimal values of the functional $\F(v)=\int_0^1 G(-J\dot v(t))dt$ on the spaces $W,W_m$, where $G=\mathcal L(H):\R^{2n}\rightarrow \R$ is the Legendre transform of the Hamiltonian $H$. In the following we assume that $G$ is piece-wise $C^1$ with a bounded gradient in the unit ball, and positively homogeneous of degree 2 (ideologically, $G$ will be the dual norm defined by some convex body).  
+
+\subsection{Convergence of Minimal Values}
+
+
+\begin{Lemma}\label{Lemma:dense}
+	The union $\cup_{m\in\N_+} W_m$ is dense in $W$ with respect to the $H^1$ topology.
+\end{Lemma}
+\begin{proof}
+	Let $v\in W$, and let  $v_m\in W_m$ be the sequence of piecewise linear functions defined by: $\dot v_m|_{I_{m,k}}:=\oint_{I_{m,k}} \dot v(t)dt$. Then, $\{v_m\}$ converges to $v$ in the $H^1$ norm. Notice that although $v_m$ is a closed curve, it may not necessarily be in $W$. However, since $v_m$ converges to an element in $W$, it holds that:
+	\[
+	\forall \e>0\ \exists m_0\in\N_+\ \forall m>m_0, \quad \left|\int_0^1\left<-J\dot v,v\right>_{\R^{2n}}-1\right|<\e
+	\] 
+	Thus, we can write
+	\[
+	\int_0^1\left<-J\dot v_m,v_m\right>_{\R^{2n}}=1+c_m
+	\]
+	for some $c_m\in\R$, and assume that $1+c_m>0$ (for large enough $m$). Denote $w_m:=\frac{1}{\sqrt{1+c_m}}\cdot v_m$, then it is easy to check that $w_m\in W_m$. Since $v\in W$ and the above integral is continuous in the $H^1$-norm, it follows that $c_m\underset{m\rightarrow\infty}{\longrightarrow} 0$, which implies that $\{w_m\}$ converges to $v$. 	
+	
+\end{proof}\
+
+
+\begin{Lemma}
+	There exists a constant $c>0$ such that for every $x,y\in\R^{2n}$, 
+	\[
+	|G(x)-G(y)|\leq c\cdot \max(|x|,|y|)\cdot |x-y|.
+	\]
+\end{Lemma}
+
+\begin{proof}
+	Since $G$ is $C^1$, and the unit ball $B(0,1)\subset\R^{2n}$ is compact, there exists a Lipschitz constant $c>0$ such that for every $\hat x,\hat y\in B(0,1)$, $|G(\hat x)-G(\hat y)|\leq c\cdot |\hat x-\hat y|$. Let $x,y\in \R^n$, and assume without loss of generality that $|x|\geq|y|$. Then:
+	\begin{eqnarray*}
+		|G(x)-G(y)| &=& |x|^2\cdot \left|G\left(\frac{x}{|x|}\right)-G\left(\frac{y}{|x|}\right)\right|\leq |x|^2 \cdot c\cdot \left|\frac{x}{|x|}-\frac{y}{|x|}\right| \\
+		&=& |x| \cdot c\cdot \left|x-y\right|  = c\cdot \max(|x|,|y|)\cdot |x-y|.
+	\end{eqnarray*}
+\end{proof}\
+
+\begin{Lemma}
+	The functional $\F(v):=\int_0^1 G(-J \dot v(t))dt$ is $H^1$-continuous. More formally, let $v\in H^1([0,1],\R^{2n})$ and $v_m$ is a sequence converging to $v$ in $H^1$, then the sequence of values converges:
+	\[
+	\F(v_m(t))\underset{n\rightarrow\infty}{\longrightarrow} \F(v(t)).
+	\]
+\end{Lemma}
+\begin{proof}
+	
+	\begin{eqnarray*}
+		&&\left|\int_0^1 G(-J \dot v_m(t))dt-\int_0^1 G(-J \dot v(t))dt\right| \leq \int_0^1 \left| G(-J \dot v_m(t))- G(-J\dot v(t))\right|dt\\
+		&& \leq \int_0^1 c\cdot \max(|\dot v_m|,|\dot v|)\cdot |-J \dot v_m(t)+ J\dot v(t)|dt\\
+		&& \leq \int_0^1 c\cdot (|\dot v_m|+|\dot v|)\cdot |\dot v_m(t)-\dot v(t)|dt\\
+		&& \leq c\cdot \left(\int_0^1 (|\dot v_m|+|\dot v|)^2 dt\right)^{\frac{1}{2}}\cdot \left(\int_0^1 |\dot v_m(t)-\dot v(t)|^2 dt\right)^{\frac{1}{2}}\\
+		&& \leq c\cdot (\|\dot v_m\|_{L^2}+\|\dot v\|_{L^2})\cdot \|\dot v_m(t)-\dot v(t)\|_{L^2} \underset{m\rightarrow\infty}{\longrightarrow}0
+	\end{eqnarray*}
+	
+\end{proof}\
+
+
+\begin{Lemma}
+	Let $u_m\in W_m\subset H^1([0,1],\R^{2n})$ be an orbit that minimizes the action (on the space $W_m$). Then, the sequence of actions $\F(u_m)$ converges to the minimal action on the total space $W$. 
+\end{Lemma}
+
+\begin{proof}
+	Let $u$ be an orbit minimizing the action on $W$, and let $w_m\in W_m$ be a sequence converging to $u$ in the $H^1$-norm (exists by Lemma \autoref{Lemma:dense}). By the previous lemma, the sequence of actions also converges, therefore,
+	\[
+	\F(u)=\lim \F(w_m)\geq \lim \F(u_m),
+	\]
+	since $u_m$ are the minimizers on each $W_m$. On the other hand, since $W_m\subset W$ for every $m$, $\F(u)\leq \F(u_m)$, which yields 
+	\[
+	\lim_{m\rightarrow\infty}\F(u_m)=\F(u).
+	\]
+\end{proof}\
+
+\subsection{Explicit Bound on the Error}
+
+Let $u_m$ be a minimizer of the functional $\F(x)=\int_0^1 h_K^2 (\dot x(t))dt$ on the space $W_m$, and $u$ be a minimizer on the total space $W$. Denote by $E_m:=|\F (u_m)-\F(u)|$ the error of the capacity approximation. Denote by $\alpha_m\in W_m$ the piecewise linear approximation of $u$, $\alpha_m=\frac{1}{\sqrt{1+c_m}}\beta_m$, where $\dot\beta_m$ is the average of $\dot u$ on each subinterval and the normalization is such that the action of $\alpha_m$ has action equals 1. %%%ADD DISCRIPTION
+
+\begin{Lemma}
+	$E_m\leq L(h_K^2) \cdot $, where $L(h_K^2)$ is the Lipschitz constant of $h_K^2$ in the unit ball.
+\end{Lemma}
+\begin{proof}
+	Since $u_m$ minimizes $\F$ on the space $W_m$, we have:
+	\begin{eqnarray*}
+		|\F(u_m)-\F(u)|&\leq& |\F(\alpha_m)-\F(u)| \leq \int_0^1 |\F(\dot \alpha_m)-\F(\dot u)| dt\\
+		&\leq& L(h_K^2) \cdot \max(\|\dot \alpha_m\|_{L^2},\|\dot u\|_{L^2})\cdot \|\dot \alpha_m - \dot u\|_{L^2}\\
+		&\leq& L(h_K^2) \cdot (\|\dot u\|_{L^2}+\|\dot \alpha_m - \dot u\|_{L^2}) \cdot \|\dot \alpha_m - \dot u\|_{L^2}.
+	\end{eqnarray*}
+	Now, denoting by $\l:=\F(u)$ the minimal value, and using the dual action principle, the closed characteristic of the dual problem will be (\cite{going1998diss}):
+	\[
+	z(t)= 2\sqrt{\l} \cdot u\left(\frac{t}{2\l}\right) + c
+	\]
+	for some constant vector $c\in\R^{2n}$. We can use the above equation and the Hamilton equation that $z$ satisfies to bound $\dot u$:
+	\begin{eqnarray*}
+		\|\dot u\|_{L^2}^2 &=& \int_0^1 \left(\frac{1}{2\sqrt{\l}}2\l\cdot\dot z(2\l t)\right)^2 dt =\l\int_0^{2\l} \dot z(s)^2 \frac{1}{2\l}ds \\
+		&=& \frac{1}{2}\|\dot z\|_{L^2}^2 = \frac{1}{2}\|-J\nabla H\circ z\|_{L^2}^2 \leq \l\cdot \|\nabla H\|_{C^0}^2. 
+	\end{eqnarray*}
+	In order to bound the difference $\|\dot\alpha_m-\dot u\|_{L^2}$,  we notice that 
+	\begin{eqnarray*}
+		\|\dot\alpha_m-\dot u\|_{L^2}&\leq& \left|1-\frac{1}{\sqrt{1+c_m}}\right|\|\dot\beta_m\|_{L^2}+\|\dot\beta_m- \dot u\|_{L^2}\\
+		&\leq& \left|1-\frac{1}{\sqrt{1+c_m}}\right|\left(\|\dot u\|_{L^2}+\|\dot\beta_m-\dot u\|_{L^2}\right)+\|\dot\beta_m-\dot u\|_{L^2}
+	\end{eqnarray*}
+	and so it remains to bound $c_m$ and $\|\dot\beta_m-\dot u\|_{L^2}$.
+	\begin{itemize}
+		\item By definition, $1+c_m:=\int_0^1 \left<-J\dot\beta_m,\beta_m\right>dt$, and so:
+		\begin{eqnarray*}
+			1+c_m &=& \int_0^1 \left<-J\dot\beta_m,\beta_m\right>dt = \int_0^1 \left<-J\dot u,u\right>dt + \int_0^1 \left<-J(\dot\beta_m-\dot u),u\right>dt\\
+			&+& \int_0^1 \left<-J\dot u,(\beta_m-u)\right>dt + \int_0^1 \left<-J(\dot\beta_m-\dot u),(\beta_m-u)\right>dt,
+		\end{eqnarray*}
+		therefore,
+		\[
+		c_m = \int_0^1 \left<-J(\dot\beta_m-\dot u),u\right>dt + \int_0^1 \left<-J\dot u,(\beta_m-u)\right>dt + \int_0^1 \left<-J(\dot\beta_m-\dot u),(\beta_m-u)\right>dt.
+		\]
+		Using the Cauchy-Schwartz inequality we get,
+		\[
+		|c_m| \leq \|\dot\beta_m-\dot u\|_{L^2} \cdot \|u\|_{L^2} + \|\dot u\|_{L^2}\cdot \|\beta_m-u\|_{L^2} + \|\dot\beta_m-\dot u\|_{L^2}\cdot \|\beta_m-u\|_{L^2},
+		\]
+		which, after applying the Poincare inequality (without loss of generality, we may assume that the average of $u$ is 0 and so is the average of $\beta_m-u$) reduces to:
+		\[
+		|c_m| \leq \frac{1}{\pi} \left(2 \|\dot u\|_{L^2}\cdot \|\dot\beta_m-\dot u\|_{L^2} + \|\dot\beta_m-\dot u\|_{L^2}^2\right).
+		\]
+		\item 	Bounding $\|\dot\beta_m-\dot u\|_{L^2}$:
+		\[
+		\|\dot\beta_m-\dot u\|_{L^2}^2 = \int_0^1 (\dot\beta_m(t)-\dot u(t))^2 dt = \sum_{k=0}^{m-1} \int_{I_k} \left( \fint_{I_k}\dot u(s) ds-\dot u(t)\right)^2 dt
+		\]
+		Using the Poincare inequality for the $L^2$-norm (or, equivalently, the variational principle), we get:
+		\begin{eqnarray*}
+			\|\dot\beta_m-\dot u\|_{L^2}^2 &=& \sum_{k=0}^{m-1} \int_{I_k} \left( \fint_{I_k}\dot u(s) ds-\dot u(t)\right)^2 dt\\
+			&\leq& \sum_{k=0}^{m-1} \frac{1}{\pi^2 m^2}\int_{I_k} \ddot u^2(t)dt \leq  \sum_{k=0}^{m-1} \frac{1}{\pi^2 m^2} \|\ddot u(t)\|_{L^2(S^1,\R^{2n})}^2\\
+			&=& \frac{1}{\pi^2 m} \|\ddot u(t)\|_{L^2(S^1,\R^{2n})}^2.
+		\end{eqnarray*}
+		In order to bound the second derivative, $\ddot u$, we can derivate the Hamilton equation by $t$:
+		\[
+		\ddot u(t) = \boldsymbol{H} (H)\circ u(t)\cdot \dot u(t)
+		\]
+		which yields:
+		\[
+		\|\dot\beta_m-\dot u\|_{L^2}^2 \leq \frac{1}{\pi^2 m} \|\boldsymbol{H}(H)\circ u(t)\cdot \dot u(t)\|_{L^2}\leq \frac{\l}{\pi^2 m}\|\boldsymbol{H} (H)\|_{C^0}\cdot \|\nabla H\|_{C^0}.
+		\]
+	\end{itemize}\
+	
+	Concluding the above, we obtain the following bound on the error of the discrete approximation:
+	\[
+	|\F(u_m)-\F(u)|\leq  L(h_K^2) \cdot\frac{\l^2}{\pi^2 m} \left(1+\frac{1}{\pi^2 m}\|\boldsymbol{H} (H)\|_{C^0}\right) \cdot\|\boldsymbol{H} (H)\|_{C^0}\cdot \|\nabla H\|_{C^0}^2.
+	\]
+\end{proof}\
+
+\end{document}

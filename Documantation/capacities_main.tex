@@ -1,0 +1,97 @@
+% \input{preamble_settings}
+% IGNORE(!): Put there any abbreviations and general settings in the preamble_settings file.
+
+%&latex
+\documentclass{amsart}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage[mathcal]{eucal}
+%\usepackage[vcentermath]{youngtab}
+\usepackage[shortalphabetic, initials]{amsrefs}
+\usepackage{hyperref}
+\usepackage{esint}
+
+\usepackage{subfiles} % needed to manage the subfiles/subsections %
+
+% math symbols
+\def\C{{\mathbb C}}
+\def\R{{\mathbb R}}
+\def\N{{\mathbb N}}
+\def\O{{\mathscr O}}
+\def\W{{\mathscr W}}
+\def\Gr{{\mathscr G}}
+\def\F{{\mathcal F}}
+\def\A{{\mathcal A}}
+\def\D{{\mathbb D}}
+\def\:{\colon}
+\def\e{{\varepsilon}}
+\def\d{{\delta}}
+\def\l{\lambda}
+\def\L{\Lambda}
+\def\ord{\operatorname{ord}}
+\def\Mat{\operatorname{Mat}}
+\def\^{\hat}
+
+% markup for writing "code"
+\def\code#1{\texttt{#1}}
+
+
+\theoremstyle{theorem}
+\newtheorem{Theorem}{Theorem}
+\newtheorem{Proposition}{Proposition}
+\newtheorem{Corollary}{Corollary}
+\newtheorem{Lemma}{Lemma}
+\newtheorem*{Exercie}{Exercise}
+\theoremstyle{Definition} 
+\newtheorem{Definition}{Definition}
+
+\theoremstyle{remark}
+\newtheorem{Rem}{Remark}
+
+\title{Symplectic Capacities Project}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	\begin{abstract}
+		A record of current progress in the symplectic capacities project, as well as some background information. 
+	\end{abstract}
+	\maketitle
+	\tableofcontents
+
+	
+	% section name in {} brackets %
+	% to add a section, just type the following, adding the file name and the right destinasion %
+	\section{template section} 
+	\subfile{sections/template_section.tex} 
+	
+	\section{TODO} 
+	\subfile{todo/todo.tex} 
+	
+	\section{List of Notations} 
+	\subfile{notations/notations.tex}
+	
+	\section{Background on Symplectic Capacities}
+	\subfile{bckgrnd_symp_cap/bckgrnd_symp_cap.tex}
+	
+	\section{Basic Description of Algorithm} \label{discreteproblem}
+	\subfile{algorithm_basic_descr/algorithm_basic_descr.tex}
+	
+	\section{Details of Algorithm Implementation}
+	\subfile{algorithm_implement_details/algorithm_implement_details.tex}
+	
+	\section{Algorithm Convergence}
+	\subfile{algorithm_convergence/algorithm_convergence.tex}
+	
+	\section{Tests and Experimental Data}
+	\subfile{tests_experiment_data/tests_experiment_data.tex}
+	
+	\section{Convex Functions and Sets}
+	\subfile{convex_funcs_and_sets/convex_funcs_and_sets.tex}
+	
+\bibliographystyle{plain}
+\bibliography{refs}
+	
+\end{document}

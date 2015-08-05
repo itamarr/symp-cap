@@ -1,0 +1,117 @@
+\documentclass[../capacities_main.tex]{subfiles}
+
+
+% Now just type your section here as usual %
+% IGNORE(!): Add whatever stylistics and abbreviations in a file named preamble_settings one section up%
+\begin{document}
+	
+	% Background on Symplectic Capacities %
+	
+	
+	Fix coordinates $(q_1, \ldots ,q_n,p_1, \ldots ,p_n)$ on $\R^{2n}$ and let $\omega_0$ be the standard symplectic structure $\sum dx_i\wedge dy_i$.  The ball with radius $r>0$ is the set 
+	\begin{equation*}
+	B_{2n}(r) = \{ (q,p) \in \R^{2n} : \sum (q_i^2 + p_i^2)< r^2 \}
+	\end{equation*}
+	and the standard cylinder is the set 
+	\begin{equation*}
+	Z_{2n}(r) = \{ (q,p) \in \R^{2n} : q_1^2 + p_1^2< r^2 \} = B_2(r) \times \R^{2(n-1)}.
+	\end{equation*}
+	Any open subset of $\R^{2n}$ with the restriction of $\omega_0$ is a symplectic manifold.  A symplectomorphism of $\R^{2n}$ is a diffeomorphism $\phi$ such that $\phi^*\omega_0 = \omega_0$.
+	
+	\begin{Definition}
+		A \emph{symplectic capacity} on $\R^{2n}$ is a function $c$ defined on open subsets of $\R^{2n}$, taking values in the set $[0,\infty]$ with the following properties:
+		\begin{enumerate}
+			\item (Monotonicity) If $U \subset V$, then $c(U) \leq c(V)$,
+			\item (Invariance) If $\phi$ is a symplectomorphism then $c(\phi(U)) = c(U)$,
+			\item (Homogeneity) For all $\alpha >0$, $c(\alpha U) = \alpha^2 c(U)$, and
+			\item (Non-triviality) $0 < c(B_{2n}(1))$ and $c_{2n}(Z(1)) < \infty$.
+		\end{enumerate}
+		A symplectic capacity $c$ is said to be \emph{normalized} if $c(B_{2n}(1)) = c(Z_{2n}(1)) = \pi$.
+	\end{Definition}
+	
+	\subsection{The Eckland-Hofer-Zhender capacity}
+	
+	The Eckland-Hofer-Zhender capacity, denoted $c_{EHZ}$, is a normalized symplectic capacity defined on compact, convex subsets of $\R^{2n}$. Let $K$ be a compact, strictly convex set in $\R^{2n}$ such that the interior of $K$ contains the origin and the boundary of $K$ is smooth of class $C^2$ (i.e. locally it has $C^2$ parameterizations).  Let
+	\begin{equation*}
+	H(x) = ||x||_K^2.
+	\end{equation*}
+	The Hamiltonian vector field $X_H = J\nabla H$ defines a flow on $\partial K$ which is the level set $H^{-1}(1)$.  Consider the space of periodic orbits of $X_H$, 
+	\begin{equation*}
+	\mathcal{E}_K = \left\{ z \in C^2( \R,\partial K) : \dot z = X_H\circ z,\ z(0)=z(T) \text{ for some }T>0\right\}
+	\end{equation*}
+	
+	\begin{Definition}
+		The \emph{action} of an orbit $z \in \mathcal{E}_K$ with period $T$ is
+		\begin{equation*}
+		\mathcal{A}(z) = \frac{1}{2}\int_{0}^T \left<-J\dot z,z\right> dt.
+		\end{equation*}
+		The \emph{Eckland-Hofer-Zhender capacity} of $K$ is the quantity
+		\begin{equation*}
+		c_{EHZ}(K) = \inf\left\{\mathcal{A}(z): \, z\in \mathcal{E}_K\right\}
+		\end{equation*}
+	\end{Definition}
+	Let $\mathcal{K}$ be the set of all compact, strictly convex subsets of $\R^{2n}$ which have $C^2$ boundary.
+	\begin{Theorem}
+		The function $c_{EHZ}$ satisfies the axioms of a symplectic capacity on the set $\mathcal{K}$.
+	\end{Theorem}
+	
+	To prove this theorem, one considers an equivalent variational problem. Let 
+	\begin{equation*}
+	M = \left\{ x\in H^{1}([0,1],\R^{2n})\,:\, \int_0^1 \dot x(t)dt = 0\right\}
+	\end{equation*}
+	and consider the functional 
+	\begin{equation*}
+	\F_K(x) = \int_0^1h_K^2(-J\dot x(t))dt.
+	\end{equation*}
+	The constrained minimization problem 
+	\begin{equation}\label{MinProblem}
+	\lambda = \inf\left\{ \F_K(x) : \, x\in M,\, \int_0^1\langle -J\dot x(t),x(t)\rangle dt = 1\right\}
+	\end{equation}
+	has at least one solution, denoted by $u$. 
+	
+	\begin{Proposition}
+		Let $u$ be a minimizer for $\F_K$, consider the path 
+		\begin{equation}
+		z(t) = 2\sqrt{\lambda} u\left(\frac{t}{2\lambda}\right) + \frac{c}{\sqrt{\lambda}},
+		\end{equation}
+		\begin{equation}
+		c=\int_0^1 \nabla h_K^2(-J\dot u)dt + 2\int_0^1 u(t) dt.
+		\end{equation}
+		The path $z(t)$ is a $2\lambda$-periodic solution of $X_H$ which lies in $\partial K$ and minimizes $\mathcal{A}$. Thus
+		\begin{equation*}
+		c_{EHZ}(K)  = \mathcal{A}(z) = 2\lambda.
+		\end{equation*}
+	\end{Proposition}
+	
+	\begin{proof}
+		
+	\end{proof}
+	
+	\subsection{Generalized Characteristics}
+	
+	Now we follow \cite{artstein-avidan-ostrover}.  Let $\widetilde{\mathcal{K}}$ be the set of convex bodies in $\R^{2n}$ with non-empty interior.  There is a unique extension of $c_{EHZ}$ to $\widetilde{\mathcal{K}}$ that is homogeneous, monotone, and continuous with respect to the Hausdorff metric.  By uniqueness, this extension can be given the same definition in terms of a dual minimization problem \cite{artstein-avidan-ostrover}
+	\begin{equation*}
+	\tilde c_{EHZ}(K)  = 2\inf \left\{ \mathcal{F}_{K}(x) :\, x\in M\right\}.
+	\end{equation*}
+	It was shown in \cite{artstein-avidan-ostrover} that this extension has a geometric definition.  The \emph{normal cone} to a convex body $K$ at $x\in \partial K$ is 
+	\begin{equation*}
+	N_{\partial K}(x)  = \left\{ u \in \R^{2n} : \, \langle u, x-y \rangle \geq 0, \mbox{ for every } y \in K \right\}.
+	\end{equation*} 
+	\begin{Definition}
+		A \emph{generalized closed characteristic} is a periodic, piece-wise smooth path $z: \R \rightarrow \partial K$ such that 
+		\begin{equation*}
+		\dot z_{\pm}(t) = JN_{\partial K}(z(t))
+		\end{equation*} 
+		for all $t\in \R$, where $\dot z_{\pm}$ are the left and right derivatives of $z$.
+	\end{Definition}
+	Note that we have defined the Eckland-Hofer-Zhender capacity in terms of Hamilton's equation rather than solutions to the characteristic foliation, whereas this definition of a generalized closed characteristic coincides with the latter definition in the case where $K$ has smooth boundary. This issue of parameterization does not effect the computed action.
+	
+	If $\widetilde{\mathcal{E}_K}$ is the space of generalized closed characteristics for $K$, then 
+	\begin{Theorem}\cite{artstein-avidan-ostrover}
+		\begin{equation*}
+		\tilde c_{EHZ}(K) = 2\inf \left\{ \mathcal{F}_{K}(x) :\, x\in M\right\} = \inf\left\{ |\mathcal{A}(z)| \, :\, z \in \widetilde{\mathcal{E}_K}\right\}.
+		\end{equation*}
+	\end{Theorem}
+	
+	
+\end{document}
