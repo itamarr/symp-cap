@@ -43,7 +43,7 @@ char = 0;
 
 % This next part sets the default parameters of the function and reads
 % whatever options were input to the function.
-funcParameters = struct('subintervals', 4, 'maxsubintervals', 400, 'minimumsubintervals', 30, 'exponentbound', 4, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1, 'minksum', 'off', 'epsilon', 0.25, 'startingtraj', 0, 'toliter', 0.8*1e-3, 'displayitre', 'off');
+funcParameters = struct('subintervals', 4, 'maxsubintervals', 400, 'minimumsubintervals', 30, 'exponentbound', 4, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1, 'minksum', 'off', 'epsilon', 0.25, 'startingtraj', 0, 'toliter', 0.8*1e-3, 'displayiter', 'off');
 optNames = fieldnames(funcParameters);
 
 if (round(nargin/2) ~= nargin/2)
