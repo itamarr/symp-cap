@@ -1,11 +1,12 @@
-eps = 1e-6;
+eps = 1e-8;
 n = 2;
-iterations = 380;
-maxEntryValue = 100;
+iterations = 140;
+maxEntryValue = 10;
+capacityReruns = 5;
 currentIteration = 1;
 
 % result vectors
-capacityResults = zeros(1, iterations);
+capacityResults = zeros(capacityReruns, iterations);
 volNormCapacityResults = zeros(size(capacityResults));
 udots = cell(size(capacityResults));
 simplices = cell(size(capacityResults));
@@ -28,22 +29,24 @@ while (currentIteration <= iterations)
     simplices(currentIteration) = mat2cell(P,size(P,1),size(P,2));
     dlmwrite('Random_Simplex_Capacities_Results.csv', P, '-append');
     
-    % Calculate the capacity of the simplex, safely.
-    try
-        waitbar(currentIteration / iterations, h, sprintf('Calculating capacity for simplex no. %d', currentIteration));
-        [c,char, udot] = Capacity(P,n);
-    catch ME
-        warning('Encountered warning while calculating capacity. May god help us all: %s\n', ME.msgtext);
-        fprintf(logFile, 'Encountered warning while calculating capacity. May god help us all: %s\n', ME.msgtext);
+    for j = 1:capacityReruns
+        % Calculate the capacity of the simplex, safely.
+        try
+            waitbar((currentIteration*capacityReruns + j) / (capacityReruns * iterations), h, sprintf('Calculating capacity for simplex no. %d, run no. %d', currentIteration, j));
+            [c,char, udot] = Capacity(P,n);
+        catch ME
+            warning('Encountered warning while calculating capacity. May god help us all: %s\n', ME.msgtext);
+            fprintf(logFile, 'Encountered warning while calculating capacity. May god help us all: %s\n', ME.msgtext);
+        end
+
+        % Save the results to file, including the ratio between the capacity
+        % and the n-th root of the simplex's volume.
+        capacityResults(j, currentIteration) = c;
+        volNormCapacityResults(j, currentIteration) = c/ (vol^(1/n));
+        udots(j, currentIteration) = mat2cell(udot,size(udot,1));
+    
+        dlmwrite('Random_Simplex_Capacities_Results.csv', [c, volNormCapacityResults(j, currentIteration), udot'], '-append');
     end
-    
-    % Save the results to file, including the ratio between the capacity
-    % and the n-th root of the simplex's volume.
-    capacityResults(currentIteration) = c;
-    volNormCapacityResults(currentIteration) = c/ (vol^(1/n));
-    udots(currentIteration) = mat2cell(udot,size(udot,1));
-    
-    dlmwrite('Random_Simplex_Capacities_Results.csv', [c, volNormCapacityResults(currentIteration), udot'], '-append');
     
     
     currentIteration = currentIteration + 1;
@@ -57,4 +60,4 @@ end
 close(h);
 fclose(logFile);
 save('Random_Simplex_Capacities_Results_Workspace');
-
+datetime('now','TimeZone','local','Format','d-MMM-y HH:mm:ss Z')
