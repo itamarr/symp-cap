@@ -52,13 +52,13 @@ for n=2:50
         %udots(1, n) = mat2cell(udotK,size(udotK,1));
         fprintf(logFile, 'udotK size %d\n', size(udotK,1));
         
-        [c, char, udotDiff] = Capacity(P(1:2*n*(2*n + 1), 1:2*n), n);
+        [c, char, udotDiff] = Capacity(P(1:2*n*(2*n + 1), 1:2*n), n, 'centralize', 'off');
         capacityResults(2,n) = c;
         %udots(2, n) = mat2cell(udotDiff,size(udotDiff,1));
         fprintf(logFile, 'udotDiff size %d\n', size(udotDiff,1));
     catch ME
-        warning('Encountered warning while calculating capacity. May god help us all: %s\n', ME.msgtext);
-        fprintf(logFile, 'Encountered warning while calculating capacity. May god help us all: %s\n', ME.msgtext);
+        warning('Encountered warning while calculating capacity. May god help us all: %s\n', ME.message);
+        fprintf(logFile, 'Encountered warning while calculating capacity. May god help us all: %s\n', ME.message);
     end
     
     ratios(n) = capacityResults(2,n) / capacityResults(1,n);

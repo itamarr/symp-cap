@@ -35,6 +35,9 @@ function [c, char, udot] = Capacity(P,n, varargin)
 %   iterating fmincon with finer subdivision of intervals. If two
 %   consecutive calls to fmincon is <= this parameter, the algorithm stops.
 %   This defaults to 8e-4.
+%   'centralize' - Set this to 'on' if you want the Capacity function to
+%   move the body P such that its centroid is at the origin. The default
+%   value is 'on'.
 
 tic
 
@@ -43,7 +46,10 @@ char = 0;
 
 % This next part sets the default parameters of the function and reads
 % whatever options were input to the function.
-funcParameters = struct('subintervals', 4, 'maxsubintervals', 400, 'minimumsubintervals', 30, 'exponentbound', 4, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1, 'minksum', 'off', 'epsilon', 0.25, 'startingtraj', 0, 'toliter', 0.8*1e-3, 'displayiter', 'off');
+funcParameters = struct('subintervals', 4, 'maxsubintervals', 400, 'minimumsubintervals',...
+    30, 'exponentbound', 4, 'plotchar', 'off', 'plotudot', 'off', 'iterations', 1,...
+    'minksum', 'off', 'epsilon', 0.25, 'startingtraj', 0, 'toliter', 0.8*1e-3,...
+    'displayiter', 'off', 'centralize', 'on');
 optNames = fieldnames(funcParameters);
 
 if (round(nargin/2) ~= nargin/2)
@@ -68,8 +74,10 @@ if (ischar(n))
     n = str2double(n);
 end
 
-C = centroid(P);
-P = P - repmat(C,size(P,1),1);
+if (strcmpi(funcParameters.centralize, 'on'))
+    C = centroid(P);
+    P = P - repmat(C,size(P,1),1);
+end
 
 %parameters
 iterations = funcParameters.iterations;

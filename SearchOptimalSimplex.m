@@ -35,8 +35,8 @@ while (currentIteration <= iterations)
             waitbar((currentIteration*capacityReruns + j) / (capacityReruns * iterations), h, sprintf('Calculating capacity for simplex no. %d, run no. %d', currentIteration, j));
             [c,char, udot] = Capacity(P,n);
         catch ME
-            warning('Encountered warning while calculating capacity. May god help us all: %s\n', ME.msgtext);
-            fprintf(logFile, 'Encountered warning while calculating capacity. May god help us all: %s\n', ME.msgtext);
+            warning('Encountered warning while calculating capacity. May god help us all: %s\n', ME.message);
+            fprintf(logFile, 'Encountered warning while calculating capacity. May god help us all: %s\n', ME.message);
         end
 
         % Save the results to file, including the ratio between the capacity

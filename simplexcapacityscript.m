@@ -67,8 +67,8 @@ for a = aVect
         try
             [c,char, udot] = Capacity(P,n);
         catch ME
-            warning('Encountered warning while calculating capacity. May god help us all: %s\n', ME.msgtext);
-            fprintf(logFile, 'Encountered warning while calculating capacity. May god help us all: %s\n', ME.msgtext);
+            warning('Encountered warning while calculating capacity. May god help us all: %s\n', ME.message);
+            fprintf(logFile, 'Encountered warning while calculating capacity. May god help us all: %s\n', ME.message);
         end
         udotsVect(i,j) = udotsVect(i, j);
         capacityresults(i,j) = c
