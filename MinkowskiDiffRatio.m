@@ -9,6 +9,10 @@ capacityResults = zeros(2, maxDim);
 ratios = zeros(1, maxDim);
 udots = cell(size(capacityResults));
 simplices = cell(size(capacityResults));
+udotK = zeros(512,1);
+udotDiff = zeros(512,1);
+P = zeros(10100, 100);
+K = [zeros(1,100); eye(100)];
 
 logFile = fopen('MinkowskiDiffRatio.log', 'w');
 
@@ -16,14 +20,14 @@ h = waitbar(0, 'initializing waitbar...');
 for n=2:50
     %% Set up the polygons
     waitbar(n/maxDim, h, sprintf('Building polygon K-K for n=%d', n));
-    K = [zeros(1,2*n); eye(2*n)];
+    %K = [zeros(1,2*n); eye(2*n)];
     % K-K is the convex hull of (\pm e_i, \pm (e_i-e_j))_{i,j=1}^{2n} where the e_k's
     % are the unit vectors.
     % The number of such extreme points is 2n(2n+1), so we allocate the
     % matrix for this polygon accordingly
-    P = zeros(2*n*(2*n + 1), 2*n);
-    P(1:2*n,:) = eye(2*n);
-    P(2*n+1:4*n,:)=-eye(2*n);
+    %P = zeros(2*n*(2*n + 1), 2*n);
+    P(1:2*n,1:2*n) = eye(2*n);
+    P(2*n+1:4*n,1:2*n)=-eye(2*n);
 
     % We calculate the rest of P in an ad hoc computation by summing the
     % i-th row with the j-th row, where i goes over the unit vectors and
@@ -43,13 +47,15 @@ for n=2:50
     %% Calculate Capacities
     try
         waitbar(n/maxDim, h, sprintf('Calculating c(K-K)/C(K) for n=%d', n));
-        [c, char, udotK] = Capacity(K,n);
+        [c, char, udotK] = Capacity(K(1:2*n+1, 1:2*n), n);
         capacityResults(1,n) = c;
-        udots(1, n) = mat2cell(udotK,size(udotK,1));
+        %udots(1, n) = mat2cell(udotK,size(udotK,1));
+        fprintf(logFile, 'udotK size %d\n', size(udotK,1));
         
-        [c, char, udotDiff] = Capacity(P,n);
+        [c, char, udotDiff] = Capacity(P(1:2*n*(2*n + 1), 1:2*n), n);
         capacityResults(2,n) = c;
-        udots(2, n) = mat2cell(udotDiff,size(udotDiff,1));
+        %udots(2, n) = mat2cell(udotDiff,size(udotDiff,1));
+        fprintf(logFile, 'udotDiff size %d\n', size(udotDiff,1));
     catch ME
         warning('Encountered warning while calculating capacity. May god help us all: %s\n', ME.msgtext);
         fprintf(logFile, 'Encountered warning while calculating capacity. May god help us all: %s\n', ME.msgtext);
