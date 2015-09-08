@@ -7,7 +7,46 @@
 	
 	% Basic Description of Algorithm %
 	
-	In order to numerically solve the minimization problem (\ref{MinProblem}), we follow the general lines of the discretized problem presented in \cite{gjthesis}. 
-	Given $m\in\N$, divide the interval $[0,1]$ into $m$ subintervals of length $\frac{1}{m}$,  
+	In order to numerically solve the minimization problem (\ref{MinProblem}), we follow the general lines of the discretized problem presented in \cite{gjthesis}. \\
+
+	
+	Given $m\in\N_+$, divide the interval $[0,1]$ to $m$ subintervals $I_{m,k}:=(\frac{k}{m},\frac{k+1}{m})$, $k=0,\dots,m-1$, of length $\frac{1}{m}$, and consider only $H^1$-functions that are linear on each subinterval,
+	\begin{equation}
+	W_m:=\left\{u\in H^1([0,1],\R^{2n})\ \big|\ \dot u|_{I_{m,k}} \text{ is constant},\ \int_0^1u(t)dt=0,\ \int_0^1\left<-J\dot u,u\right>=1 \right\},
+	\end{equation}
+	where $J\in\Mat(2n,\R)$ is the standard complex structure on $\R^{2n}$,
+	\begin{equation*}
+	J= \left(\begin{array}{cc}
+	0 & I_n\\ -I_n & 0
+	\end{array}\right).
+	\end{equation*}
+	Let $u\in W_m$, then $\dot u$ is piece-wise constant, and can be represented by a vector $\dot \x= (\dot x_1,\dots,\dot x_{m})\in \R^{2n\cdot m}$. In this case, the functional to minimize (\ref{eq:functional}) takes the form
+	\begin{equation}
+	F(\dot\x) = \frac{1}{m} \sum_{j=1}^{m} G(-J \dot x_j),
+	\end{equation}
+	and its gradient is
+	\begin{equation}
+	\nabla F (\dot\x) = \frac{1}{m} (J\nabla G(-J\dot x_1),\dots,J\nabla G(-J\dot x_{m})).
+	\end{equation}
+	The constraints are given by
+	\begin{eqnarray}
+	0 &=& \ell(\dot\x) = \sum_{j=0}^{m-1}\dot x_j, \label{eq:lincon}\\
+	0 &=& q(\dot\x) = \frac{1}{m^2} \sum_{k=1}^{m-1}\sum_{j=0}^{k-1}\left<-J \dot x_k, \dot x_j\right> -1 = \frac{1}{m^2} \dot \x^T A \dot \x -1,\label{eq:quadcon}
+	\end{eqnarray}
+	where 
+	\begin{equation*}
+	A:=\left(\begin{array}{cccc}
+	0_{2n} & -J_{2n} & \cdots & -J_{2n}\\
+	\vdots & \ddots & & \vdots\\
+	\vdots & & \ddots & -J_{2n}\\
+	0_{2n} & \cdots & \cdots & 0_{2n}
+	\end{array}\right) \in \Mat(\R, 2n\cdot m),
+	\end{equation*}
+	and the gradient of the quadratic constraint is 
+	\begin{equation*}
+	\nabla q(\dot\x) = \frac{1}{m^2} (A+A^T)\dot \x.
+	\end{equation*}
+	
+	To minimize the functional $F$ under the constraints $\ell,q$ we use the Matlab library function named "\href{http://www.mathworks.com/help/optim/ug/fmincon.html}{fmincon}". This function recives as input the functional, its gradient, the constraints and their gradients, together with a starting point in  $\R^{2n\cdot m}$ and iteratively searches for a local minimum. The function "fmincon" enables to choose a minimization algorithm out of a given list. After numerically experimenting the possible algorithms, we chose "active-set" as it produced the best results in terms of accuracy and run-time. To choose a starting vector, we randomly pick a vector in $\R^{2n\cdot m}$, then shift and rescale it to satisfy conditions (\ref{eq:lincon}), (\ref{eq:quadcon}).
 	
 \end{document}
