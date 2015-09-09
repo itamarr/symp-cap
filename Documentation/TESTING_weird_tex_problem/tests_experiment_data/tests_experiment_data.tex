@@ -1,0 +1,46 @@
+\documentclass[../capacities_main.tex]{subfiles}
+
+
+% Now just type your section here as usual %
+% IGNORE(!): Add whatever stylistics and abbreviations in a file named preamble_settings one section up%
+\begin{document}
+	
+	% Tests and Experimental Data %
+
+\subsection{Behaviour of Generalized Characteristics}
+
+In \cite{yaron} a minimizing generalized closed characteristic was constructed for the standard simplex 
+\begin{equation*}
+\Delta_{STD}  = \text{hull}\left\{ 0, e_1, \ldots, e_{2n}\right\}.
+\end{equation*}
+It is proven directly that the piece-wise linear path $\gamma(t)$ which travels from 0 to $(1/n,\ldots,1/n,0,\ldots,0)$ with tangent vector $\sum_{i=1}^ne_i$, then travels to $(0,\ldots,0,1/n,\ldots,1/n)$ with tangent vector $\sum_{i=n+1}^{2n}e_i - \sum_{i=1}^ne_i$, then travels to 0 with tangent vector $-\sum_{i=n+1}^{2n}e_i $, is a minimizing generalized characteristic for $\Delta_{STD}$. This characteristic is special because the first and last thirds of the path are spent in codimension $>2$ facets, and it seems that this is due to the symmetry of the standard simplex. One might suspect that if you perform a sufficiently generic perturbation of the standard simplex, then the minimizing characteristics will travel in the facets where their dynamics are determined by the characteristic foliation of the facets.
+
+We designed a program called \texttt{prSimplex.m} to study the behaviour of action minimizing generalized characteristics in simplexes. First, one runs the minimization algorithm for a simplex $\Delta$ and obtains a piece-wise linear path $(z_m)_{j=1}^m$ that approximates the minimizing characteristic (this is currently the reconstructed path).  If a minimizing characteristic travels through the interior of a facet $F_i$, then the tangent vector to the characteristic is in the same direction as the characteristic foliation vector $Jn_i$, where $n_i$ is a unit normal vector for the facet $F_i$. The program compares the tangent vectors $(\dot z_j)_{j=1}^m$ from the approximation with the vectors $Jn_i$ and outputs a string of facet numbers $(a_j)_{j=1}^n$ where $a_j\in \{0,\ldots,2n\}$ is the number of the facet which maximizes the quantity
+\begin{equation*}
+\langle Jn_i,\dot z_j\rangle.
+\end{equation*}
+Assuming that $z$ travels entirely in the facets of $\Delta$, this program tells us symbolically the order in which each facet is visited by $z$.
+
+
+\begin{table}[]
+	\centering
+	\caption{Vertices and normal vectors for the test simplex $\Delta$. We denote by $F_i$ the facet opposite to the vertex $v_i$.}
+	\label{test simplex}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		$v_0$ & $ (0,0,0,0) $  & $n_0$ &  $(0.4827,0.5310,0.4397,0.5401)$ \\ \hline
+		$v_1$ & $ (1.1 ,0 ,-.1, 0.1)$  & $n_1$ & $ (-0.9951,0.0098,0.0985,0.0009)$\\ \hline
+		$v_2$ &  $(0 ,1, -0.1, .1)$  & $n_2$ &  $(0.0170,-0.9910,0.0974,-0.0901)$\\ \hline
+		$v_3 $&  $(0.1, 0.1, 1, 0)$  & $n_3$ &  $(-0.0893,-0.0982,-0.9911,-0.0089)$\\ \hline
+		$v_4$ & $ (0, -0.1, 0, 1.1)$  & $n_4$ &  $( 0.0884,0.0973,-0.0186,-0.9912)$\\ \hline
+	\end{tabular}
+\end{table}
+Let $\Delta\subset \R^4$ be the simplex with vertices in Table \ref{test simplex}.  With $m=120$, the minimization algorithm (as on github on August 1) computes $c= 0.2489$. The \texttt{prSimplex.m} algorithm gives very clean output for the calculated characteristic. The order the faces are visited is 
+\begin{equation*}
+2 \rightarrow 0 \rightarrow 4 \rightarrow 3 \rightarrow 1 \rightarrow 2
+\end{equation*}
+With the exception of a few segments of the path $z$ that occur at the transition between facets, the error angle between the tangent vectors $\dot z_m$ and the $Jn_i$ chosen by the program is very small (on the order of 0.001 or smaller).
+
+
+
+\end{document}

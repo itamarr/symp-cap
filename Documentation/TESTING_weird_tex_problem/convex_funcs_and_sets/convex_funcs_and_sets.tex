@@ -1,0 +1,120 @@
+\documentclass[../capacities_main.tex]{subfiles}
+
+
+% Now just type your section here as usual %
+% IGNORE(!): Add whatever stylistics and abbreviations in a file named preamble_settings one section up%
+\begin{document}
+	
+	% Convex Functions and Sets %
+	
+	First, lets recall some basic facts about convex functions and Legendre transforms, which can be found in \cite{amann}. A function $H: \R^{2n} \rightarrow \R$ is \emph{convex} if for all $x,y$, 
+	\begin{equation*}
+	H(tx+(1-t)y) \geq tH(x) + (1-t)H(y)
+	\end{equation*}
+	and $H$ is strictly convex if this inequality is strict.
+	
+	\begin{Proposition}
+		Let $H \in C^2(\R^{2n},\R)$. Then $H$ is (strictly) convex if and only if the Hessian $D^2H(x)$ is positive (definite) semi-definite for all $x\in \R^{2n}$.
+	\end{Proposition}
+	
+	The Hessian $D^2H$ is \emph{uniformly} positive definite if there is a constant $\alpha>0$ such that 
+	\begin{equation*}
+	\langle D^2H(x)y,y\rangle \geq \alpha|y|^2, \forall x,y \in \R^{2n}
+	\end{equation*}
+	
+	\begin{Proposition}
+		Let $H \in C^2(\R^{2n},\R)$. If $D^2H$ is uniformly positive definite then the gradient $\nabla H: \R^{2n} \rightarrow \R^{2n}$ is bijective. 
+	\end{Proposition}
+	The \emph{Legendre transform} of a function $H:\R^{2n} \rightarrow \R$ is defined as
+	\begin{equation*}
+	\mathcal{L}H(y) = \sup_{x\in \R^{2n}}\left\{ \langle y,x\rangle - H(x)\right\}.
+	\end{equation*}
+	\begin{Proposition}\label{amann}
+		Let $H \in C^2(\R^{2n},\R)$ and assume that $D^2H$ is uniformly positive definite. Then
+		\begin{enumerate}
+			\item $\mathcal{L}H(y) = \langle y,x\rangle - H(x)$ for $x = (\nabla H)^{-1}(y)$.
+			\item $\mathcal{L}H \in C^2(\R^{2n},\R)$, $\mathcal{L}H$ is strictly convex, and $\nabla (\mathcal{L}H) = (\nabla H)^{-1}$.
+			\item $H(x) + \mathcal{L}H(y) \geq \langle x,y\rangle$, for all $x,y\in \R^{2n}$ with equality if and only if $x=y$.
+			\item $\mathcal{L}^2H = H$.
+		\end{enumerate}
+	\end{Proposition}
+	
+	Now we follow \cite{hofer-zhender}. Suppose $K \subset \R^{2n}$ is a compact, convex set whose interior contains the origin.  The \emph{norm} of the convex body $K$ is
+	\begin{equation*}
+	||x||_K = \inf\left\{ r> 0 : \frac{x}{r} \in K\right\},\, \forall x \neq 0
+	\end{equation*}
+	and by definition,
+	\begin{equation*}
+	K = \left\{ x \in \R^{2n} : ||x||_K \leq 1\right\}.
+	\end{equation*}
+	Note that $H(x) = ||x||_K^2$ is homogeneous of degree two (i.e. $H(\alpha x) = \alpha^2H(x) $ for all $\alpha >0$) and has quadratic growth (i.e. there exist constants $c_1,c_2 >0$ such that 
+	\begin{equation*}
+	c_1||x||^2 \leq H(x) \leq c_2 ||x||^2).
+	\end{equation*}
+	
+	\begin{Proposition}\label{function H}
+		If $K$ is strictly convex and $\partial K$ is smooth of class $C^2$, then the function $H(x) = ||x||_K^2$ satisfies the following properties:
+		\begin{enumerate}
+			\item $H\in C^2(\R^{2n}\setminus \{0\},\R)$.
+			\item $D^2H$ is uniformly positive definite (in particular, $H$ is strictly convex).
+		\end{enumerate}
+	\end{Proposition}
+	
+	\begin{proof}
+		
+		\begin{enumerate}
+			\item 
+			\item 
+		\end{enumerate}
+	\end{proof}
+	
+	Given a (strictly) convex set $K$ that contains the origin, its \emph{dual} is the (strictly) convex set
+	\begin{equation*}
+	K^{\circ} = \{ y\in \R^{2n} :\, \langle x,y \rangle \leq 1\, \forall x \in K \}.
+	\end{equation*}
+	Observe that $(K^{\circ})^{\circ}$.
+	\begin{Proposition}
+		$K$ is $C^2$ and strictly convex if and only if $K^{\circ}$ is $C^2$ and strictly convex.
+	\end{Proposition}
+	
+	In this paper, we often consider the supporting function
+	\begin{equation*}
+	h_K(x) = \sup_{y\in K}\left\{ \langle x,y\rangle \right\}. 
+	\end{equation*}
+	Observe that $K^{\circ} = \{x :h_K(x)\leq 1\}$ and so $h_{K}(x) = ||x||_{K^{\circ}}$. If $K+K'$ is the Minkowski sum of 
+	two convex sets then it follows from the definition that
+	\begin{equation*}
+	h_{K+K'} = h_K + h_{K'}
+	\end{equation*}
+	
+	\begin{Proposition}
+		If $K$ is a convex set then 
+		\begin{equation*}
+		\mathcal{L}h_K^2 = \frac{1}{4}h_{K^{\circ}}^2
+		\end{equation*}
+	\end{Proposition}
+	
+	\subsection{Smoothed Dual Body Approach}
+	
+	The following is one approach to running the algorithm with a smoothing of a convex polytope.
+	
+	Suppose that $K$ is a convex polytope and we want to run the algorithm for the smoothed body $K_{\epsilon} = \left(K^{\circ} + B(\epsilon)\right)^{\circ}$. Then we need to express the function $h^2_{K_{\epsilon}}$ as well as the gradient $\nabla h^2_{K_{\epsilon}}$ in a computable way. 
+	\begin{equation*}
+	h_{K_{\epsilon}}^2 = 4\mathcal{L} \left(h_{K_{\epsilon}^{\circ}}\right)^2=  4\mathcal{L}h_{K^{\circ} + B(\epsilon)}^2 = 4\mathcal{L}\left( h_{K^{\circ}}+h_{B(\epsilon)}\right)^2.
+	\end{equation*}
+	The function $h_{K^{\circ}}$ can be computed combinatorially, and the Legendre transform can be computed using a software package.  Since we would not like to evaluate the gradient of this Legendre transform, we note that
+	\begin{equation*}
+	\nabla h_{K_{\epsilon}}^2(u) = v \mbox{ if and only if } u = \nabla \left(h_{K_{\epsilon}^{\circ}}\right)^2(v)
+	\end{equation*}
+	so to solve for the gradient of $h_{K_{\epsilon}}^2$ at $u$, we can evaluate the minimization problem
+	\begin{equation*}
+	v\mbox{ minimizes } |u - \nabla \left(h_{K_{\epsilon}^{\circ}}\right)^2(v)|.
+	\end{equation*}
+	Now
+	\begin{equation*}
+	\nabla \left(h_{K_{\epsilon}^{\circ}}\right)^2 = \nabla \left(h_{K} + h_{B(\epsilon)}\right)^2 = \nabla h_{K}^2 + 2\nabla \left(h_{K}h_{B(\epsilon)}\right)  + \nabla h_{B(\epsilon)}^2
+	\end{equation*}
+	And every expression in this equation can be evaluated piece-wise analytically.
+	
+	
+\end{document}

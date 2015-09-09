@@ -1,0 +1,26 @@
+% \bib, bibdiv, biblist are defined by the amsrefs package.
+\begin{bibdiv}
+\begin{biblist}
+
+\bib{artstein-avidan-ostrover}{article}{
+      author={Artstein-Avidan, Shiri},
+      author={Ostrover, Yaron},
+       title={Bounds for minkowski billiard trajectories in convex bodies},
+        date={2014},
+     journal={International Mathematics Research Notices},
+      volume={2014},
+      number={1},
+       pages={165\ndash 193},
+}
+
+\bib{gjthesis}{thesis}{
+      author={G{\"o}ing-Jaeschke, Anja},
+      author={others},
+       title={Parameter estimation and bessel processes in financial models and
+  numerical analysis in hamiltonian dynamics},
+        type={Ph.D. Thesis},
+        date={1998},
+}
+
+\end{biblist}
+\end{bibdiv}

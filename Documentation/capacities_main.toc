@@ -1,0 +1,16 @@
+\contentsline {section}{\tocsection {}{1}{template section}}{1}{section.1}
+\contentsline {section}{\tocsection {}{2}{TODO}}{1}{section.2}
+\contentsline {section}{\tocsection {}{3}{List of Notations}}{1}{section.3}
+\contentsline {section}{\tocsection {}{4}{Background on Symplectic Capacities}}{2}{section.4}
+\contentsline {subsection}{\tocsubsection {}{4.1}{The Eckland-Hofer-Zhender capacity}}{2}{subsection.4.1}
+\contentsline {subsection}{\tocsubsection {}{4.2}{Generalized Characteristics}}{3}{subsection.4.2}
+\contentsline {section}{\tocsection {}{5}{Basic Description of Algorithm}}{4}{section.5}
+\contentsline {section}{\tocsection {}{6}{Details of Algorithm Implementation}}{5}{section.6}
+\contentsline {section}{\tocsection {}{7}{Algorithm Convergence}}{5}{section.7}
+\contentsline {subsection}{\tocsubsection {}{7.1}{Convergence of Minimal Values}}{5}{subsection.7.1}
+\contentsline {subsection}{\tocsubsection {}{7.2}{Explicit Bound on the Error}}{7}{subsection.7.2}
+\contentsline {section}{\tocsection {}{8}{Tests and Experimental Data}}{9}{section.8}
+\contentsline {subsection}{\tocsubsection {}{8.1}{Behaviour of Generalized Characteristics}}{9}{subsection.8.1}
+\contentsline {section}{\tocsection {}{9}{Convex Functions and Sets}}{10}{section.9}
+\contentsline {subsection}{\tocsubsection {}{9.1}{Smoothed Dual Body Approach}}{11}{subsection.9.1}
+\contentsline {section}{\tocsection {}{}{References}}{11}{section*.2}
