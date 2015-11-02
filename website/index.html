@@ -27,6 +27,7 @@
 	// defining macros
 	// to use in latex - type \"name of macro", e.g. \R would give \mathbb{R}
 	
+	// !!! DON'T FORGET the commas!
 				MathJax.Hub.Config({
 			  TeX: {
 			    Macros: {
@@ -36,7 +37,11 @@
 			      om: "{\\omega}",
 			      vphi: "{\\varphi}",
 			      epsi: "{\\varepsilon}",
-			      de: "{\\partial}"
+			      de: "{\\partial}",
+			      calE: "{\\mathcal{E}}",
+			      calA: "{\\mathcal{A}}",
+			      calF: "{\\mathcal{F}}",
+			      calK: "{\\mathcal{K}}"
 			    }
 			  }
 			});
@@ -101,19 +106,9 @@
 		<h1 class="title">
 			Capacitators of the world - unite!
 		</h1>
-		This is a fancy math formula written as if we're in latex:
-		$f : A \to B$ <br/>
 		
-		<br/>
-		Let the display begin!
-		$
-		\begin{equation}
-		{ (a+b)^n = \Sigma_{k=0}^{n} \binom{n}{k} a^k b^{n-k} }
-		\end{equation}
-		$
-	<br/>
-		$\R$
 
+		
 	<h2 class="title" id="the_project">
 		About the project
 	</h2>	
@@ -180,50 +175,154 @@
 	
 	<span class="sec_title">Symplectic manifolds and symplectic capacities</span>
 	<p>
-		A symplectic manifold $(M,\om)$ is a smooth manifold $M$ equipped with a closed non-degenerate 2-form $\om$, called a symplectic form.
+		A <span class="defn">symplectic manifold</span> $(M,\om)$ is a smooth manifold $M$ equipped with a closed non-degenerate 2-form $\om$, called a symplectic form.
 		A first example would be the standard symplectic vector space $\R^{2n}$, with coordinates $q_1, \ldots, q_n, p_1,\ldots, p_n$, equipped with the standard symplectic form $\om_0 = \sum_{i=1}^n dp_i \wedge dq_i$.
 		Locally, by Darboux theorem, any symplectic manifold looks like the standard $(\R^{2n},\om_0)$. 
 		Thus, there are no local invariants in symplectic geometry, as opposed to the situation in Riemannian geometry.
-		However, numerical global invaariants do exist, symplectic capacities are a significant example of such invariants.
+		However, numerical global invariants do exist, symplectic capacities are a significant example of such invariants.
 		We deal with symplectic capacities of submanifolds of $\R ^{2n}$ equipped with the standard symplectic form, so will only describe this case.
 	</p>
 	
 	<p>
 		We use the following notations:
-		$B_{2n}(r) = \{ x\in \R^{2n} \ |\  \|x\| < r \}$  the open ball of radius $r$ centered at the origin,
-		and
-		$Z_{2n}(r) = \{ x\in \R^{2n} : q_1^2 + p_1^2 < r^2 \} = B_2(r) \times \R^{2(n-1)}$, a cylinder.
+		<ul>
+			<li>
+				$B_{2n}(r) = \{ x\in \R^{2n} \ |\  \|x\| < r \}$  the open ball of radius $r$ centered at the origin,
+				and
+			</li>
+			<li>
+				$Z_{2n}(r) = \{ x\in \R^{2n} : q_1^2 + p_1^2 < r^2 \} = B_2(r) \times \R^{2(n-1)}$, a cylinder.
+			</li>
+		</ul>
 	</p>
 	
 	<p>
-		A symplectic capacity on $\R^{2n}$ is a function $c$ defined on open subsets of $\R^{2n}$, taking non-negative values, with the following properties:
-		<ul class="numbered">
-			<li>(Monotonicity) If $U \subset V$, then $c(U) \leq c(V)$, </li>
-			<li>(Invariance) If $\vphi$ is a symplectomorphism, then $c(\vphi(U)) = c(U)$,</li>
-			<li>(Homogeneity) For all $\alpha > 0$, $c(\alpha U) = \alpha^2 c(U)$,</li>
-			<li>(Non-triviality) $c (B_{2n}(1)) > 0$ and $c(Z_{2n}(1)) < \infty$.</li>
-		</ul>
-		A symplectic capacity $c$ is said to be normalized, if $c (B_{2n}(1)) = c(Z_{2n}(1)) = \pi $.
 	
-	It is a-priori unclear whether a symplectic capacity exists, but currently there is already a list of capacities introduced in various ways.
-	The concept was introduced by I. Ekeland amd H. Hofer in 1990, although, in fact, the first symplectic capacity was constructed by M. Gromov, related to the Non-squeezing theorem he proved in 1985.
+		<div class="definition">
+			A <span class="defn">symplectic capacity</span> on $\R^{2n}$ is a function $c$ defined on open subsets of $\R^{2n}$, taking non-negative values, with the following properties:
+			<ul class="numbered">
+				<li>(Monotonicity) If $U \subset V$, then $c(U) \leq c(V)$, </li>
+				<li>(Invariance) If $\vphi$ is a symplectomorphism, then $c(\vphi(U)) = c(U)$,</li>
+				<li>(Homogeneity) For all $\alpha > 0$, $c(\alpha U) = \alpha^2 c(U)$,</li>
+				<li>(Non-triviality) $c (B_{2n}(1)) > 0$ and $c(Z_{2n}(1)) < \infty$.</li>
+			</ul>
+		</div>
+		A symplectic capacity $c$ is said to be <span class="defn">normalized</span>, if $c (B_{2n}(1)) = c(Z_{2n}(1)) = \pi $.
+	<br/>
+	
+		It is a-priori unclear whether a symplectic capacity exists, but currently there is already a list of capacities introduced in various ways.
+		The concept was introduced by I. Ekeland amd H. Hofer in 1990, although, in fact, the first symplectic capacity (the symplectic width) was constructed by M. Gromov, related to the Non-Squeezing theorem he proved in 1985.
 	</p>
 	
 	<p>
 		The project focuses on a certain capacity, called the Ekeland-Hofer-Zehnder capacity, $c_{EHZ}$.
 		It is a normalized symplectic capacity defined on compact convex subsets of $\R^{2n}$, as will be shortly given.
 		<br/>
-		Let $K$ be a compact strictly convex set in $\R^{2n}$, such that $0 \in interior(K)$ and the boundary $\de K$ is smooth of class $C^2$.
-		Denote $H(x) = \| x \|_K^2$ (the semi-norm with respect to the convex body $K$.
+		Let $K$ be a compact strictly convex set in $\R^{2n}$, such that $0$ is in the interior of $K$ and the boundary $\de K$ is smooth of class $C^2$.
+		Denote $H(x) = \| x \|_K^2$, where $\| x \|_K = inf \{ \lambda>0 : x \in \lambda K \} $ is the semi-norm with respect to the convex body $K$.
+		(It is a semi-norm in the sense that it is only positively homogeneous, since $K$ might not be symmetric; Being a semi-norm would be enough for our purposes). 
+	
+		By definition, $K = \{ x\in \R^{2n} : \|x\|_K \leq 1 \}$ and $\de K = H^{-1} (1)$.
+		Note also that the Hamiltonian vector field $X_H = J \nabla H$ defines a flow on $\de K$.
+		<br/>
+		
+		Consider the space of periodic orbits of $X_H$,
+		\begin{equation}
+  			\calE_K = \left\{ z \in C^2(\R,\de K) : \dot z = X_H\circ z,\ z(0)=z(T) \text{ for some }T>0\right\} \;.
+  			\label{eq:def_space_of_periodic_orbits}
+		\end{equation}
+		
+		<div class="definition">
+			The <span class="defn">action</span> of an orbit $z \in \calE_K$ with period $T$ is
+			$\calA (z) = \frac{1}{2}\int_{0}^T \left<-J\dot z,z\right> dt \;.$
+		</div>
+		
+		<div class="definition">
+			The <span class="defn">Ekeland-Hofer-Zehnder capacity</span> of $K$ is the quantity
+			\begin{equation}
+				c_{EHZ} (K) = \inf \left\{  \calA (z) : z \in \calE _K  \right\} \;.
+				\label{eq:def_EHZ_capacity}
+			\end{equation}
+		</div>
+		
+		We denote by $\calK$ the set of all compact strictly convex subsets of $\R^{2n}$ which have $C^2$ boundary.
+		
+		<div class="theorem">
+		 	The functional $c_{EHZ}$ is a capacity on $\calK$.
+		</div>
+		
+		dddd
+		
+		<div class="definition">
+		 bla-bla-bla
+		</div>
+		
 	</p>
 	
-	<span class="sec_title">Capacities - known and unknown</span>
+	<span class="sec_title">Capacities - Known values and known conjectures</span>
 	<p>
-			Hello world.
+			- In the plane (or state it before as an explanation?)
+			
+			- Balls
+			
+			- Yoav's
+			
+			
+	</p>
+	
+	<p>
+	
+		To establish a connection between capacities with the approach of Riemannian geometry, one can ask about the relations between capacity and volume. Some of these questions are in the taste of the isoperimetric inequality.
+		
+		<br/>
+		Claude Viterbo has conjectured that among all convex bodies in $\R^{2n}$ of a given volume, the Euclidean ball has maximal symplectic capacity. 
+		
+		To be precise, consider the following relation between the a capacity $c$ of a (convex) set $K$ and the unit ball in $\R^{2n}$
+		\begin{equation} 
+			\frac{c(K)}{c\left( B_{2n} \right)} 
+				\leq 
+			\gamma_n \left( \frac{Vol (K) }{Vol (B_{2n})} \right) ^{1/n} \;,
+			\label{viterbo_ineq_expression}
+		\end{equation}
+		
+		where the constant $\gamma_n$ is of interest.
+		
+		
+		
+		<div class="conjecture"> (Viterbo's conjecture)
+			The best constant in (\ref{viterbo_ineq_expression}) is $\gamma_n = 1$, for any choice of convex body $K$ and any capacity.
+		</div>
+		
+		We considered this conjecture for the Ekeland-Hofer-Zehnder capacity.
+		<br/>
+		
+		Another known question is the following.
+		<div class="conjecture"> (The subadditivity conjecture)
+			If a convex body $K \subset \R^{2n}$ is covered by a finite set of convex bodies $\{ K_i \}$
+			the for a symplectic capacity $c$, 
+			\begin{equation}
+				c(K) \leq \sum_i c(K_i) \;,
+			\end{equation}
+		</div>
+		
+		As part of the project, we tried to design and run tests of these famous conjectures. 
+		Curious to see the results?? Check out the <a href="tests_results">tests &amp; results</a> section.
+		
+		<br/>
+		
+		Additionally, in the spirit of convex geometry, the following statement was suggested to be tested by Y. Ostrover.
+		It is known that for any convex (symmetric?) body $K$, 
+		<div class="conjecture">
+			\begin{equation}
+			
+				c(K-K) \leq ???
+			
+			\end{equation}
+		</div>
 	</p>
 	
 	
-	<span class="sec_title">The discretized problem</span>
+	<span class="sec_title">Towards computations - The discretized problem</span>
 	<p>
 		Discretization here.
 	</p>
