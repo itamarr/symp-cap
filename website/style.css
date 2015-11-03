@@ -103,6 +103,13 @@ h1.title{
 
 
 span.sec_title{
+	font-weight: bold;
+	font-size: large;	
+	margin: 1% 0;
+	color: #009966; /* #990066; */
+}
+
+span.sub_sec_title{
 	font-weight: bold;	
 	margin: 1% 0;
 	color: ;
