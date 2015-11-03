@@ -4,7 +4,7 @@
 <html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
 
 	<head>
-		<title>Capacities project homepage</title>
+		<title>Symplectic Capacities Project Homepage</title>
 		
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-8" />
 		<meta name="description" content="Comutational project, symplectic capacities, ICERM and TAU" />
@@ -82,8 +82,8 @@
 	<a href="#theoretical_background">Theoretical Background</a>
 	<a href="#algorithm">The Algorithm</a>
 	<a href="#examples">Examples</a>
-	<a href="#team">The Team</a>
 	<a href="#references">References</a>
+	<a href="#team">The Team</a>
 </div>
 
 
@@ -151,7 +151,7 @@
 		Theoretical Background
 	</h2>
 	
-	<span class="sec_title">Symplectic manifolds and symplectic capacities</span>
+	<span class="sec_title">Symplectic Manifolds and Symplectic Capacities</span>
 	<p>
 		A <span class="defn">symplectic manifold</span> $(M,\om)$ is a smooth manifold $M$ equipped with a closed non-degenerate 2-form $\om$, called a symplectic form.
 		A first example would be the standard symplectic vector space $\R^{2n}$, with coordinates $q_1, \ldots, q_n, p_1,\ldots, p_n$, equipped with the standard symplectic form $\om_0 = \sum_{i=1}^n dp_i \wedge dq_i$.
@@ -243,18 +243,28 @@
 		</div>
 	</p>
 	
-	<span class="sec_title">Capacities - Known Values and Known Conjectures</span>
+	<span class="sec_title" id="known-capacities">Known Capacity Values</span>
 	<p>
-		It is well known that in the plane $\mathbb{R}^2$ all capacities coincide with the 2-dimensional volume, or simply put - area. Quite understandably the 2 dimensional case have been crucial to testing that the algorithm works.
-			- In the plane (or state it before as an explanation?)
-			
-			- Ellipsoids (from [HZ])
-			
-			- Yoav's
-			
-			
+		There are a few cases in which the capacities are known analytically, namely for any open subset of the plane, for ellipsoids in any dimension, and for the standard simplex in any dimension. For subsets of the plane, capcities simply coincide with the area. Let us then consider ellipsoids and the standard simplices.
 	</p>
-	
+	<p>
+Given an ellipsoid $\mathcal{E}$, one can change the base of the space and arrive at the next representation of the ellipsoid:
+\begin{equation}
+	\mathcal{E}=\left\{x\in\mathbb{R}\Bigg\vert \sum_{j=1}^{n}\frac{1}{r_j^2}(x_{e_j}^2+x_{f_j}^2)\leq 1\right\}.
+\end{equation}
+Where here we assumed the symplectic basis is given by $e_1,\ldots,e_n,f_1,\ldots,f_n$, and $x_{e_j}$ is the $e_j$'th coordinate of $x$.
+Further, the numbers $r_1,\ldots,r_n$ are ordered, and denoted, like so $0< r_1(\mathcal{E})\leq\ldots\leq r_n(\mathcal{E})$.
+These are symplectic invariants of $\mathcal{E}$, called the symplectic radii, and in fact it's known that,
+\begin{equation}
+	c(\mathcal{E})=\pi r_1(\mathcal{E})^2
+\end{equation}
+for any weakly nontrivial symplectic capacity $c$ on the class of symplectic manifolds.
+For further details see <a href="HZ">[HZ]</a>.
+	</p>
+	<p>
+		In the case of the standard simplex, viz. the simplex whose vertices are 0 and the unit vectors, Yoav Nir proved in <a href="N">[N]</a> that the $c_{EHZ}$ capacity of the simplex is $\frac{1}{2n}$.
+	</p>
+	<span class="sec_title">Known Conjectures</span>
 	<p>
 	
 		To establish a connection between capacities and the approach of Riemannian geometry, one can ask about the relations between capacity and volume. Some of these questions are in the taste of the isoperimetric inequality.
@@ -306,7 +316,7 @@
 		As part of the project, we tried to design and run tests for these famous conjectures. They are detailed in the document being prepared.
 	</p>
 
-	<span class="sec_title">Towards computations - discretization </span>
+	<span class="sec_title">Towards Computations - Discretization </span>
 	<p>
 				As mentioned before, we want to solve the following minimization problem, being a minimization problem equivalent to our initial one.
 				We consider the set
@@ -388,10 +398,10 @@
 				\end{equation*}
 				
 				To minimize the functional $F$ under the constraints $\ell,q$ we use the Matlab library function named 
-				"<a href="http://www.mathworks.com/help/optim/ug/fmincon.html">fmincon</a>. 
+				<font face="courier"><a href="http://www.mathworks.com/help/optim/ug/fmincon.html">fmincon</a></font>. 
 				This function receives as input the functional, its gradient, the constraints and their gradients, 
 				together with a starting point in  $\R^{2n\cdot m}$ and iteratively searches for a local minimum. 
-				The function "fmincon" enables to choose a minimization algorithm out of a given list. 
+				The function <font face="courier">fmincon</font> enables choosing a minimization algorithm out of a given list. 
 				After numerically experimenting the possible algorithms, we chose "active-set" as it produced the best results in terms of accuracy and run-time. 
 				To choose a starting vector, we randomly pick a vector in $\R^{2n\cdot m}$, 
 				then shift and rescale it to satisfy conditions (\ref{eq:lincon}), (\ref{eq:quadcon}).
@@ -483,7 +493,7 @@ Theoretically this is achieved by integration, and so the implementation of the 
 
 We ran different tests, attempting to better understand the behaviour of the capacity function, and to test the correctness of some conjectures.
 	</p>
-<span class="sec_title">Capacity of a ball</span>
+<span class="sec_title">Capacity of a Ball</span>
 	<p>
 One of the basic convex bodies is a ball, and since the Ekeland-Hofer-Zehnder capacity is normalized, we know that we should be getting $\pi$.
 To calculate the capacity of a ball one can either consider the ball as an epllipsoid whose radii are all 1, or one can approximate via polytopes.
@@ -775,6 +785,7 @@ Compare this to the 2-dimensional case, i.e., $n=1$:
 	</p>
 	</div>
 
+	<br/>
 	<span class="sec_title">Capacity of $l_p$ Balls</span>
 	<p>
 Running the Capacity function on $l_p$ unit balls, denoted by $B_p^n(1)$ where $n$ is the dimension, yields the following results when approximating them with 50 random points scaled by the appropriate norm.
@@ -873,7 +884,8 @@ Of course, as in the case of Euclidean balls, the norms are known analytically, 
 However, this has not been done.
 	</p>
 
-	<span class="sec_title">Capacity of the standard simplex</span>
+	<br/>
+	<span class="sec_title">Capacity of the Standard Simplex</span>
 	<p>
 The standard simplex for us is the simplex whose vertices are 0 and the unit vectors.
 The capacity of the standard simplex has been computed in <a href="#N">[N]</a> to be $\frac{1}{2n}$ where $2n$ is the dimension of the ambient space.
@@ -942,24 +954,18 @@ Our capacity function gave the following results:
 	</table>
 	</div>
 
+	<br/>
 	<span class="sec_title" id="ellipsoid_capacity">Capacity of Ellipsoids</span>
 	<p>
-Given an ellipsoid $\mathcal{E}$, one can change the base of the space and arrive at the next representation of the ellipsoid:
-\begin{equation}
-	\mathcal{E}=\left\{x\in\mathbb{R}\Bigg\vert \sum_{j=1}^{n}\frac{1}{r_j^2}(x_{e_j}^2+x_{f_j}^2)\leq 1\right\}.
-\end{equation}
-Where here we assumed the symplectic basis is given by $e_1,\ldots,e_n,f_1,\ldots,f_n$, and $x_{e_j}$ is the $e_j$'th coordinate of $x$.
-Further, the numbers $r_1,\ldots,r_n$ are ordered, and denoted, like so $0<r_1(\mathcal{(E)})\leq\ldots\leq r_n(\mathcal{E})$.
-These are symplectic invariants of $\mathcal{E}$, called the symplectic radii, and in fact it's known that,
-\begin{equation}
-	c(\mathcal{E})=\pi r_1(\mathcal{E})^2
-\end{equation}
-for any weakly nontrivial symplectic capacity $c$ on the class of symplectic manifolds.
-For further details see <a href="HZ">[HZ]</a>.
+		As explained in the <a href="known-capacities">theoretical section</a>, the capacity $c$ of an ellipsoid $E$ is simply given by,
+		\begin{equation}
+			c(E)=\pi r_1(E)^2,
+		\end{equation}
+		where $r_1(E)$ is the smallest symplectic radius of the ellipsoid.
 	</p>
 	<p>
 Therefore, we implemented a version of the Capacity function that calculates the capacity of ellipsoids, given in symplectic form.
-That is, the input for this version of the function receives a vector of symplectic radii as input, and finds its capacity using the general algorithm described <a href="#algorithm">here</a>.
+That is, the input for this version of the function receives a vector of symplectic radii as input, and finds its capacity using the general algorithm described <a href="#algorithm">above</a>.
 	</p>
 <span class="sub_sec_title">Example 1</span>
 	<p>
@@ -1026,11 +1032,32 @@ As mentioned above, the euclidean ball is just an ellipsoid whose radii are all 
 	</table>
 	</div>
 
-	<span class="sec_title">Capacity of the Lagrangian product of a triangle and a circle in $\mathbb{R}^4$</span>
+	<br/>
+	<span class="sec_title">Capacity of the Lagrangian Product of a Triangle and a Circle in $\mathbb{R}^4$</span>
 	<p>
 		COMING SOON...!
 	</p>
-	
+
+
+	<div class="stupid_separation" id="references"> <br/><br/></div>
+	<h2 class="title">
+		References
+	</h2>
+	<p>
+		<ul class="ref">
+		<li id="AAO"><b>[AAO]</b> - S. Artstein-Avidan and Y. Ostrover, <i>Bounds for minkowski billiard trajectories in convex
+bodies</i>, International Mathematics Research Notices <b>2014</b> (2014), no. 1, 165–193.
+</li>
+
+		  <li id="GJ+"><b>[GJ+]</b> - A. G&ouml;ing-Jaeschke et al., <i>Parameter estimation and bessel processes in financial models
+and numerical analysis in hamiltonian dynamics</i>, Ph.D. Thesis, 1998.
+</li>
+		<li id="HZ"><b>[HZ]</b> - H. Hofer and E. Zehnder, <i>Symplectic invariants and hamiltonian dynamics</i>, Birkh&auml;user
+Advanced Texts Basler Lehrb&uuml;cher, Birkh&auml;user Basel, 2012.
+</li>
+		<li id="N"><b>[N]</b> - Nir, Yoav. <i>On closed characteristics and billiards in convex bodies</i>. Diss. Tel Aviv University, 2013.</li>
+		</ul>
+	</p>	
 	
 	<div class="stupid_separation" id="team"> <br/><br/></div>
 	<h2 class="title">
@@ -1057,25 +1084,6 @@ As mentioned above, the euclidean ball is just an ellipsoid whose radii are all 
 		Shira Tanny, Tel-Aviv University.
 		
 
-	</p>
-
-	<div class="stupid_separation" id="references"> <br/><br/></div>
-	<h2 class="title">
-		References
-	</h2>
-	<p>
-		<ul>
-		  <li id="GJ+"> A. G&ouml;ing-Jaeschke et al., <i>Parameter estimation and bessel processes in financial models
-and numerical analysis in hamiltonian dynamics</i>, Ph.D. Thesis, 1998.
-</li>
-		<li id="N">Nir, Yoav. <i>On closed characteristics and billiards in convex bodies</i>. Diss. Tel Aviv University, 2013.</li>
-		<li id="HZ"> H. Hofer and E. Zehnder, <i>Symplectic invariants and hamiltonian dynamics</i>, Birkh&auml;user
-Advanced Texts Basler Lehrb&uuml;cher, Birkh&auml;user Basel, 2012.
-</li>
-		<li id="AAO"> S. Artstein-Avidan and Y. Ostrover, <i>Bounds for minkowski billiard trajectories in convex
-bodies</i>, International Mathematics Research Notices <b>2014</b> (2014), no. 1, 165–193.
-</li>
-		</ul>
 	</p>
 	</div> <!-- end of content div -->
 	<!-- ~~~~~~~~~~~~~~~~~~~ END OF MAIN CONTENT~~~~~~~~~~~~~~~~~~~~~ -->
