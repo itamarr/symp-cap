@@ -27,7 +27,7 @@
 	// defining macros
 	// to use in latex - type \"name of macro", e.g. \R would give \mathbb{R}
 	
-	// !!! DON'T FORGET the commas!
+		// !!! DON'T FORGET the commas!
 				MathJax.Hub.Config({
 			  TeX: {
 			    Macros: {
@@ -41,7 +41,9 @@
 			      calE: "{\\mathcal{E}}",
 			      calA: "{\\mathcal{A}}",
 			      calF: "{\\mathcal{F}}",
-			      calK: "{\\mathcal{K}}"
+			      calK: "{\\mathcal{K}}",
+			      x :	"{\\mathbf{x}}",
+			      Mat:  "{\\operatorname{Mat}}"
 			    }
 			  }
 			});
@@ -303,14 +305,97 @@
 	<p>
 		As part of the project, we tried to design and run tests for these famous conjectures. They are detailed in the document being prepared.
 	</p>
-	
-	
-	<span class="sec_title">Towards Computations - The Discretized Problem</span>
+
+	<span class="sec_title">Towards computations - discretization </span>
 	<p>
-		Discretization here.
+				As mentioned before, we want to solve the following minimization problem, being a minimization problem equivalent to our initial one.
+				We consider the set
+					\begin{equation}
+						M = \left\{ x\in H^{1}([0,1],\R^{2n})\,:\, \int_0^1 \dot x(t)dt = 0\right\}
+					\end{equation}
+					
+				and the functional 
+					\begin{equation}
+						\calF_K(x) = \int_0^1h_K^2(-J\dot x(t))dt \;.
+						\label{eq:functional}
+					\end{equation}
+					
+				Our minimization problem is the following constrained one:
+					\begin{equation}
+						\lambda = \inf\left\{ \calF_K(x) : \, x\in M,\, \int_0^1\langle -J\dot x(t),x(t)\rangle dt = 1\right\}
+						\label{MinProblem}
+					\end{equation}
+				We know that it has at least one solution, denoted by $u$. 
+				
 	</p>
 	
-	
+	<p>			
+				
+				In order to numerically solve the minimization problem (\ref{MinProblem}), 
+				we follow the general lines of the discretized problem presented in <a href="#GJ+">[GJ+]</a>.
+				<br/>
+			
+				
+				Given $m\in\N$, divide the interval $[0,1]$ to $m$ subintervals 
+					$I_{m,k}:=(\frac{k}{m},\frac{k+1}{m})$, $k=0,\dots,m-1$, of length $\frac{1}{m}$, 
+				and consider only $H^1$-functions that are linear on each subinterval,
+				
+				\begin{equation}
+					W_m:=\left\{u\in H^1([0,1],\R^{2n})\ \big|\ \dot u|_{I_{m,k}} \text{ is constant},
+					\ \int_0^1u(t)dt=0,\ \int_0^1\left<-J\dot u,u\right>=1 \right\},
+				\end{equation}
+				
+				where $J\in\Mat(2n,\R)$ is the standard complex structure on $\R^{2n}$,
+				
+				\begin{equation*}
+					J= \left(\begin{array}{cc}
+						0 & I_n\\ -I_n & 0
+						\end{array}\right).
+				\end{equation*}
+				
+				Let $u\in W_m$, then $\dot u$ is piece-wise constant, and can be represented by a vector 
+				$\dot \x= (\dot x_1,\dots,\dot x_{m})\in \R^{2n\cdot m}$. In this case, the functional to minimize (\ref{eq:functional}) takes the form
+				
+				\begin{equation}
+					F(\dot\x) = \frac{1}{m} \sum_{j=1}^{m} G(-J \dot x_j),
+				\end{equation}
+				
+				and its gradient is
+				\begin{equation}
+					\nabla F (\dot\x) = \frac{1}{m} (J\nabla G(-J\dot x_1),\dots,J\nabla G(-J\dot x_{m})).
+				\end{equation}
+				
+				The constraints are given by
+				\begin{eqnarray}
+					0 &=& \ell(\dot\x) = \sum_{j=0}^{m-1}\dot x_j, \label{eq:lincon}\\
+					0 &=& q(\dot\x) = \frac{1}{m^2} \sum_{k=1}^{m-1}\sum_{j=0}^{k-1}\left<-J \dot x_k, \dot x_j\right> -1 = \frac{1}{m^2} \dot \x^T A \dot \x -1,\label{eq:quadcon}
+				\end{eqnarray}
+				
+				where 
+				
+				\begin{equation*}
+					A:=\left(\begin{array}{cccc}
+						0_{2n} & -J_{2n} & \cdots & -J_{2n}\\
+						\vdots & \ddots & & \vdots\\
+						\vdots & & \ddots & -J_{2n}\\
+						0_{2n} & \cdots & \cdots & 0_{2n}
+					\end{array}\right) \in \Mat(\R, 2n\cdot m),
+				\end{equation*}
+
+				and the gradient of the quadratic constraint is 
+				\begin{equation*}
+					\nabla q(\dot\x) = \frac{1}{m^2} (A+A^T)\dot \x.
+				\end{equation*}
+				
+				To minimize the functional $F$ under the constraints $\ell,q$ we use the Matlab library function named 
+				"<a href="http://www.mathworks.com/help/optim/ug/fmincon.html">fmincon</a>. 
+				This function receives as input the functional, its gradient, the constraints and their gradients, 
+				together with a starting point in  $\R^{2n\cdot m}$ and iteratively searches for a local minimum. 
+				The function "fmincon" enables to choose a minimization algorithm out of a given list. 
+				After numerically experimenting the possible algorithms, we chose "active-set" as it produced the best results in terms of accuracy and run-time. 
+				To choose a starting vector, we randomly pick a vector in $\R^{2n\cdot m}$, 
+				then shift and rescale it to satisfy conditions (\ref{eq:lincon}), (\ref{eq:quadcon}).
+				
 	<div class="stupid_separation" id="algorithm"> <br/><br/></div>
 	<h2 class="title">
 		The Algorithm
