@@ -1,0 +1,204 @@
+
+#container{
+	background-color: #F0F0F0;
+	line-height: 145%;
+}
+
+#header{
+	margin-top: 55px;
+}
+
+body {
+ padding: 0; 
+ margin: 0;
+ /* margin-top:5px; */
+}
+
+
+div.content{
+	width: 65%;
+	/* text-align: center; */
+	margin:0 auto; /*this will center ur content*/	
+}
+
+div.footer{	
+	/* margin-top: 3em; */ 
+}	
+
+div.stupid_separation{
+	
+}
+
+
+/* 
+####################################################
+NAVIGATION BAR
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+#navigation{
+	position:  absolute; /* fixed; */ /* absolute is workaround for winE5,6 (does really work there.. see: http://www.w3.org/Style/Examples/007/menus.en.html */
+	z-index: 10;
+	top: 0;
+	width: 100%;
+	color: #ffffff;
+	height: 35px;
+	text-align: center;
+	padding-top: 15px;
+	/* Adds shadow to the bottom of the bar */
+	-webkit-box-shadow: 0px 0px 8px 0px #000000;
+	-moz-box-shadow: 0px 0px 8px 0px #000000;
+	box-shadow: 0px 0px 8px 0px #000000;
+	/* Adds the transparent background */
+	background-color: rgba(1, 1, 1, 0.8);
+	color: rgba(1, 1, 1, 0.8);
+}
+
+*>#navigation {position: fixed} /* sill workaround to make winE5,6 display the menu at least, altouhg not fixed */
+
+#navigation a {
+font-size: 14px;
+padding-left: 15px;
+padding-right: 15px;
+color: white;
+text-decoration: none;
+}
+
+#navigation a:hover {
+	color: grey;
+} 
+
+#navigation a:active{
+/*	color: #0033CC; */
+}
+	
+
+
+
+
+/* hyperlinks */
+a:link {color:#3366CC; text-decoration: underline;}      /* 0033CC */ /* 3333FF */ /* 6666FF */
+a:visited {color:#666699; text-decoration: underline;}  /* 6699CC, 0066CC, 336699, 808080, 333366 */
+a:hover {color:#9900CC; text-decoration: none;}  /* 6633FF */ /* 993399 */ /* 6666FF */
+a:active {color:#0033CC; text-decoration: underline;}  
+
+/*
+###################################################
+################################################## */
+
+
+
+h2.title{
+	letter-spacing: 7px;
+	/*font-weight: bold;*/
+	font-variant: small-caps;
+	font-family:Verdana;
+}
+
+
+h1.title{
+/*	letter-spacing: ; */
+	font-family: Verdana;	
+	color: #CC0066;
+}
+
+
+span.sec_title{
+	font-weight: bold;	
+	margin: 1% 0;
+	color: ;
+}
+
+ul.numbered{
+	list-style-type: decimal;	
+}
+
+span.it{
+		 font-style: italic;
+	}
+	
+span.defn{
+		font-style: italic;
+}
+
+
+/*
+#########################################################
+#########################################################
+*/
+/* Defining partly amsthm package with CSS, such as : theorem, definition, remark */
+
+
+/* ALL HAD ONCE "margin: 12px 0;" */
+
+.theorem {
+    display: block;
+    margin: 1% 0;
+    font-style: italic;
+}
+.theorem:before {
+    content: "Theorem.";
+    font-weight: bold;
+    font-style: normal;
+}
+.lemma {
+    display: block;
+    margin: 1% 0;
+    font-style: italic;
+}
+.lemma:before {
+    content: "Lemma.";
+    font-weight: bold;
+    font-style: normal;
+}
+.proof {
+    display: block;
+    margin: 1% 0;
+    font-style: normal;
+}
+.proof:before {
+    content: "Proof.";
+    font-style: italic;
+}
+.proof:after {
+    content: "\25FC";
+    float:right;
+}
+.definition {
+    display: block;
+    margin: 1% 0;
+    font-style: normal;
+}
+.definition:before {
+    content: "Definition.";
+    font-weight: bold;
+    font-style: normal;
+}
+
+.remark {
+    display: block;
+    margin: 1% 0;
+    font-style: normal;
+}
+.remark:before {
+    content: "Remark.";
+    font-weight: bold;
+    font-style: normal;
+}
+
+.conjecture {
+    display: block;
+    margin: 1% 0;
+    font-style: normal;
+}
+.conjecture:before {
+    content: "Conjecture.";
+    font-weight: bold;
+    font-style: italic;
+}
+
+
+
+/*
+#########################################################
+#########################################################
+*/

@@ -33,8 +33,9 @@
 	
 	The Ekeland-Hofer-Zehnder capacity, denoted $c_{EHZ}$, is a normalized symplectic capacity defined on compact, convex subsets of $\R^{2n}$. Let $K$ be a compact, strictly convex set in $\R^{2n}$ such that the interior of $K$ contains the origin and the boundary of $K$ is smooth of class $C^2$ (i.e. locally it has $C^2$ parameterizations).  Let
 	\begin{equation*}
-	H(x) = ||x||_K^2.
+	H(x) = ||x||_K^2 \;,
 	\end{equation*}
+	where $\|x\|_K = \inf \{ \lambda > 0 : x\in \lambda K \}$ is the semi-norm with respect to the convex body $K$. 
 	The Hamiltonian vector field $X_H = J\nabla H$ defines a flow on $\partial K$ which is the level set $H^{-1}(1)$.  Consider the space of periodic orbits of $X_H$, 
 	\begin{equation*}
 	\mathcal{E}_K = \left\{ z \in C^2( \R,\partial K) : \dot z = X_H\circ z,\ z(0)=z(T) \text{ for some }T>0\right\}
