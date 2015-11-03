@@ -76,11 +76,12 @@
 	
 
 <div id="navigation">
-	<a href="#">The project</a>
-	<a href="#theoretical_background">Theoretical background</a>
-	<a href="#algorithm">The algorithm</a>
-	<a href="#tests_results">Tests &amp; Results</a>
-	<a href="#team">The team</a>
+	<a href="#">The Project</a>
+	<a href="#theoretical_background">Theoretical Background</a>
+	<a href="#algorithm">The Algorithm</a>
+	<a href="#examples">Examples</a>
+	<a href="#team">The Team</a>
+	<a href="#references">References</a>
 </div>
 
 
@@ -103,15 +104,15 @@
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~MAIN CONTENT~~~~~~~~~~~~~~~~~ -->
 	<div class="content">
 
+		<div class="stupid_separation"> <br/></div>
 		<h1 class="title">
-			Capacitators of the world - unite!
+			Computational Symplectic Capacities
 		</h1>
-		
 
-		
+
 	<h2 class="title" id="the_project">
-		About the project
-	</h2>	
+		About the Project
+	</h2>
 		
 	<p>
 				
@@ -128,19 +129,24 @@
 			section
 			 of this site; 
 			and moreover, attempt to demystify several aspect of the behaviour of the capcity function.
+	</p>
+	<p>
+			This website is meant to succinctly explain about the project and its results. For the interested reader, a document with further details is being prepared.
 			<br/><br/>
 			The implementation of the project is written in MATLAB, and its code is based 
-			<a href="http://github.com/itamarr/symp-cap">here</a> (github).
+			<a href="http://github.com/itamarr/symp-cap">here</a> (github), icluding test results.
+			<br/>
+
 
 	
 	</p>
 	
 	
 		
-	<div class="stupid_separation" id="theoretical_background">.<br/><br/></div>
+	<div class="stupid_separation" id="theoretical_background"> <br/><br/></div>
 	
 	<h2 class="title">
-		Theoretical background
+		Theoretical Background
 	</h2>
 	
 	<span class="sec_title">Symplectic manifolds and symplectic capacities</span>
@@ -150,7 +156,7 @@
 		Locally, by Darboux theorem, any symplectic manifold looks like the standard $(\R^{2n},\om_0)$. 
 		Thus, there are no local invariants in symplectic geometry, as opposed to the situation in Riemannian geometry.
 		However, numerical global invariants do exist, symplectic capacities are a significant example of such invariants.
-		We deal with symplectic capacities of submanifolds of $\R ^{2n}$ equipped with the standard symplectic form, so will only describe this case.
+		We deal with symplectic capacities of submanifolds of $\R ^{2n}$ equipped with the standard symplectic form, so we'll only describe this case.
 	</p>
 	
 	<p>
@@ -220,20 +226,27 @@
 		<div class="theorem">
 		 	The functional $c_{EHZ}$ is a capacity on $\calK$.
 		</div>
-		
-		dddd
-		
-		<div class="definition">
-		 bla-bla-bla
+
+		For computation purposes we use the next result.
+		<div class="theorem">
+			For a convex body $K$ containing $0$, it holds that
+			\begin{equation}
+				c_{EHZ}(K)=\min_{z\in\mathcal{E}}\frac{\pi}{2}\int_0^{2\pi}h_K^2(\dot{z}(t))dt,
+			\end{equation}
+			where
+			\begin{equation}
+				\mathcal{E}=\left\{z\in W^{1,2}(\mathbb{S}^1,\mathbb{R}) \Bigg\vert \int_0^{2\pi}z(t)dt=0, \frac{1}{2}\int_0^{2\pi}\langle Jz,\dot{z}\rangle=1\right\},
+			\end{equation}
+			and $h_K(v)=\lVert v\rVert_{K^\circ}$.
 		</div>
-		
 	</p>
 	
-	<span class="sec_title">Capacities - Known values and known conjectures</span>
+	<span class="sec_title">Capacities - Known Values and Known Conjectures</span>
 	<p>
+		It is well known that in the plane $\mathbb{R}^2$ all capacities coincide with the 2-dimensional volume, or simply put - area. Quite understandably the 2 dimensional case have been crucial to testing that the algorithm works.
 			- In the plane (or state it before as an explanation?)
 			
-			- Balls
+			- Ellipsoids (from [HZ])
 			
 			- Yoav's
 			
@@ -242,9 +255,9 @@
 	
 	<p>
 	
-		To establish a connection between capacities with the approach of Riemannian geometry, one can ask about the relations between capacity and volume. Some of these questions are in the taste of the isoperimetric inequality.
-		
-		<br/>
+		To establish a connection between capacities and the approach of Riemannian geometry, one can ask about the relations between capacity and volume. Some of these questions are in the taste of the isoperimetric inequality.
+	</p>
+	<p>
 		Claude Viterbo has conjectured that among all convex bodies in $\R^{2n}$ of a given volume, the Euclidean ball has maximal symplectic capacity. 
 
 		To be precise, consider the following relation between the a capacity $c$ of a (convex) set $K$ and the unit ball in $\R^{2n}$
@@ -256,16 +269,14 @@
 		\end{equation}
 		
 		where the constant $\gamma_n$ is of interest.
-		
+		We therefore considered the following conjecture for the Ekeland-Hofer-Zehnder capacity.
+	</p>
 		
 		
 		<div class="conjecture"> (Viterbo's conjecture)
 			The best constant in (\ref{viterbo_ineq_expression}) is $\gamma_n = 1$, for any choice of convex body $K$ and any capacity.
 		</div>
-		
-		We considered this conjecture for the Ekeland-Hofer-Zehnder capacity.
-		<br/>
-		
+	<p>
 		Another known question is the following.
 		<div class="conjecture"> (The subadditivity conjecture)
 			If a convex body $K \subset \R^{2n}$ is covered by a finite set of convex bodies $\{ K_i \}$
@@ -274,89 +285,671 @@
 				c(K) \leq \sum_i c(K_i) \;,
 			\end{equation}
 		</div>
-		
-		As part of the project, we tried to design and run tests of these famous conjectures. 
-		Curious to see the results?? Check out the <a href="tests_results">tests &amp; results</a> section.
-		
-		<br/>
-		
+	</p>
+	<p>		
 		Additionally, in the spirit of convex geometry, the following statement was suggested to be tested by Y. Ostrover.
-		It is known that for any convex (symmetric?) body $K$, 
+		It is known that for any convex body $K$, such that $-K\subset nK$ and its barycenter at $0$, it holds that,
+			\begin{equation}
+				c_{EHZ}(K-K)\leq (2n+1) c_{EHZ}(K).
+			\end{equation}
+		Thus, it makes sense to ask whether or not the following conjecture holds true.
 		<div class="conjecture">
 			\begin{equation}
-			
-				c(K-K) \leq ???
-			
+				c_{EHZ}(K-K) \leq \mathtt{const}\cdot c_{EHZ}(K)
 			\end{equation}
+			for some <font face="courier"><b>const</b></font> independent of the dimension.
 		</div>
+	</p>
+	<p>
+		As part of the project, we tried to design and run tests for these famous conjectures. They are detailed in the document being prepared.
 	</p>
 	
 	
-	<span class="sec_title">Towards computations - The discretized problem</span>
+	<span class="sec_title">Towards Computations - The Discretized Problem</span>
 	<p>
 		Discretization here.
 	</p>
 	
-	<span class="sec_title">Alice strikes again:</span>
-	<p>
 	
-			It was all very well to say `Drink me,' but the wise little Alice was not going to do that in a hurry. `No, I'll look first,' she said, `and see whether it's marked "poison" or not'; for she had read several nice little histories about children who had got burnt, and eaten up by wild beasts and other unpleasant things, all because they would not remember the simple rules their friends had taught them: such as, that a red-hot poker will burn you if you hold it too long; and that if you cut your finger very deeply with a knife, it usually bleeds; and she had never forgotten that, if you drink much from a bottle marked `poison,' it is almost certain to disagree with you, sooner or later.
-			
-			However, this bottle was not marked `poison,' so Alice ventured to taste it, and finding it very nice, (it had, in fact, a sort of mixed flavour of cherry-tart, custard, pine-apple, roast turkey, toffee, and hot buttered toast,) she very soon finished it off.
-			
-			     *       *       *       *       *       *       *
-			
-			         *       *       *       *       *       *
-			
-			     *       *       *       *       *       *       *
-			`What a curious feeling!' said Alice; `I must be shutting up like a telescope.'
-			And so it was indeed: she was now only ten inches high, and her face brightened up at the thought that she was now the right size for going through the little door into that lovely garden. First, however, she waited for a few minutes to see if she was going to shrink any further: she felt a little nervous about this; `for it might end, you know,' said Alice to herself, `in my going out altogether, like a candle. I wonder what I should be like then?' And she tried to fancy what the flame of a candle is like after the candle is blown out, for she could not remember ever having seen such a thing.
-			
-			After a while, finding that nothing more happened, she decided on going into the garden at once; but, alas for poor Alice! when she got to the door, she found she had forgotten the little golden key, and when she went back to the table for it, she found she could not possibly reach it: she could see it quite plainly through the glass, and she tried her best to climb up one of the legs of the table, but it was too slippery; and when she had tired herself out with trying, the poor little thing sat down and cried.
-			
-			`Come, there's no use in crying like that!' said Alice to herself, rather sharply; `I advise you to leave off this minute!' She generally gave herself very good advice, (though she very seldom followed it), and sometimes she scolded herself so severely as to bring tears into her eyes; and once she remembered trying to box her own ears for having cheated herself in a game of croquet she was playing against herself, for this curious child was very fond of pretending to be two people. `But it's no use now,' thought poor Alice, `to pretend to be two people! Why, there's hardly enough of me left to make one respectable person!'
-			
-			Soon her eye fell on a little glass box that was lying under the table: she opened it, and found in it a very small cake, on which the words `EAT ME' were beautifully marked in currants. `Well, I'll eat it,' said Alice, `and if it makes me grow larger, I can reach the key; and if it makes me grow smaller, I can creep under the door; so either way I'll get into the garden, and I don't care which happens!'
-			
-			She ate a little bit, and said anxiously to herself, `Which way? Which way?', holding her hand on the top of her head to feel which way it was growing, and she was quite surprised to find that she remained the same size: to be sure, this generally happens when one eats cake, but Alice had got so much into the way of expecting nothing but out-of-the-way things to happen, that it seemed quite dull and stupid for life to go on in the common way.
-			
-			So she set to work, and very soon finished off the cake.
-			
-			     *       *       *       *       *       *       *
-			
-			         *       *       *       *       *       *
-			
-			     *       *       *       *       *       *       *
-	
-	</p>
-	
-	
-	<div class="stupid_separation" id="algorithm">.<br/><br/></div>
+	<div class="stupid_separation" id="algorithm"> <br/><br/></div>
 	<h2 class="title">
-		The algorithm
+		The Algorithm
 	</h2>
 	
 	<p>
-	Alice opened the door and found that it led into a small passage, not much larger than a rat-hole: she knelt down and looked along the passage into the loveliest garden you ever saw. How she longed to get out of that dark hall, and wander about among those beds of bright flowers and those cool fountains, but she could not even get her head though the doorway; `and even if my head would go through,' thought poor Alice, `it would be of very little use without my shoulders. Oh, how I wish I could shut up like a telescope! I think I could, if I only know how to begin.' For, you see, so many out-of-the-way things had happened lately, that Alice had begun to think that very few things indeed were really impossible.
-	There seemed to be no use in waiting by the little door, so she went back to the table, half hoping she might find another key on it, or at any rate a book of rules for shutting people up like telescopes: this time she found a little bottle on it, (`which certainly was not here before,' said Alice,) and round the neck of the bottle was a paper label, with the words `DRINK ME' beautifully printed on it in large letters.
-	
+		The project contains several sub-modules, each with its own computational purpose, yet all of them use the basic function called Capacity which calculates the capacity of a given polytope. In this section we explain the algorithm of this function which relies on the discretization presented in A. G&ouml;ing-Jaeschke's PhD thesis <a href="#GJ+">[GJ+]</a>.
+	</p>
+	<p>
+		We present the algorithm, with modifications, here:
+	</p>
+<pre><code><ol>
+<li> If needed move the polytope's centroid to 0.</li>
+<li> Generate a random path.
+<ol><li>Put <i>x</i><sub>0</sub>:= a random vector of size (<i>2*n*m</i>, 1) with entries in [-1,1].</li>
+<li>Correct the vector so that the sum of the entries in each dimension is 0.</li>
+<li>Put <i>l</i>:=<i>x</i><sub>0</sub><sup>T</sup><i>A</i><sub>2n</sub><i>x</i><sub>0</sub>.</li>
+<li>if (<i>l</i>&lt;&epsilon;), go back to step 2.3.</li>
+<li>If (<i>l</i>&lt;0) invert the direction of the path.</li>
+<li>Normalize the path by <sup>1</sup>&frasl;<sub><i>l</i></sub>.</li></ol></li>
+<li>Find the action minimizer
+<ol><li>Use MATLAB's <font face="courier"><b>fmincon</b></font> to find the action minimizer. Keep the output in [minimizer, minimizerAction].</li>
+<li>for k=1 to <font face="courier">exp</font>
+<ol><li>Break the minimizer's path into twice as many smaller sections.</li>
+<li>Multiply <i>m</i> by 2, and recalculate the constraints matrix.</li>
+<li>If <i>m</i> is large enough, increase the tolerance used for <font face="courier"><b>fmincon</b></font>.</li>
+<li>Use <font face="courier"><b>fmincon</b></font> as before.</li>
+<li>If the change in the minimizer's action is small, stop the iterations.</li>
+</ol></li></ol></li>
+<li>If required, reconstruct the characteristic.</li>
+<li>Return 2*<i>F</i>(minimizer).</li>
+</ol>
+</code>
+</pre>
+
+	<p>
+	Let's explain some of the points in the algorithm. First, this is the general form of the algorithm, in the sense that it's agnostic to the question of "what type  of convex body (e.g. ellipsoids, simplices, etc.) are we considering?". It is known that one can approximate a convex body by polytopes, and that approximation translates to capacities. Yet, this requires proof (see the theoretical section), and further, this approach takes a heavy toll in terms of running time. In cases where the norm of the dual body is known analytically, the algorithm is much more precise and takes far less time.
+	</p>
+
+	<p>
+	With this in mind, we'll continue with polytopes as a prime example. The input of the algorithm, therefore, is a matrix $P$ whose rows are the extreme points of the convex hull for which we want to calculate the capacity. Therefore, the dimensions of $P$ is $k\times 2n$ where $k$ is the number of points and $2n$ is the dimension of the ambient euclidean space.
+	</p>
+
+	<p>
+We begin by centralizing the polytope, so to increase the accuracy of the action function. Recall that the Hamiltonian is the norm of the convex body, whence we need the centroid of the convex body to be at 0. We then generate a random starting path in the dual space.
+This path is represented by constant vectors, as explained in the theoretical section of this site. We then fix the path so that it closes to a closed path, and then calculate the constraint function on this path, i.e., $x^TA_{2n}x$. We continue generating such random paths until we reach one whose constraint value is not too small, since we later normalize by this value and would like to avoid loss of significance due to small numbers division. Finally for this part of the algorithm, we check if the constraint value is negative, since this indicates the path is going in the wrong direction, in which case we fix by reversing the order of the vertices.
+	</p>
+	<p>
+For the action minimizing section of the algorithm, note that we iterate the minimization process a few times (the stopping conditions for this are configurable parameters of the algorithm). The idea behind this procedure is to begin with a rough approximation of the action, and then fine tune this value until we don't produce further meaningful improvements. The reason we do this is to improve the running time of the algorithm, and at least empirically this produced satisfying results. Note that we have no proof that this phenomenon holds true in all cases.
+	</p>
+
+	<p>
+The procedure of iteration consists in both increasing the number of subintervals, thus allowing finer paths; and in increasing the tolerance values for the <font face="courier"><b>fmincon</b></font> function. Some of these values are configurable, and generally have been tested to produce better running time.
+	</p>
+
+	<p>
+For completeness we remind the reader that the function to minimize is given by
+\begin{equation}
+		F(x)=\frac{1}{m}\sum_{j=0}^{m-1}G(-J_{2n}x_j),
+\end{equation}
+where $x_j$ is the derivative of the characteristic in the interval $I_j$. Note that in $G$ is where a change of the convex body, e.g. from polytope to ellipsoid, affects the implementation. The linear constraints supplied to <font face="courier"><b>fmincon</b></font> is the discretized version of the constraint $\int_0^1\tilde{u}\operatorname{d}t=0$, namely,
+\begin{equation}
+	\sum_{j=0}^{m-1}x_j=0,
+\end{equation}
+where $\tilde{u}$ is the piecewise constant derivatives. The nonlinear constraints supplied to <font face="courier"><b>fmincon</b></font> is given by the function
+\begin{equation}
+	c(x)=\frac{1}{m^2}x^TA_{2n}x-1
+\end{equation}
+	</p>
+	<p>
+A final remark on the minimization, is that the algorithm we use in <font face="courier"><b>fmincon</b></font> is called 'active set'. This choice was made after several attempts to find the most suitable of algorithms, during which all others gave worse results - either in running time or in numerical result.
+	</p>
+	<p>
+The last non-trivial step in the Capacity function is to reconstruct the characteristic out of the minimizer of the dual problem.
+Theoretically this is achieved by integration, and so the implementation of the <font face="courier">ReconstructCharacteristic</font> function simply consists of summing of the correct terms in the right factors.
 	</p>
 	
 	
-	
-	<div class="stupid_separation" id="tests_results">.<br/><br/></div>	
+	<div class="stupid_separation" id="examples"> <br/><br/></div>	
 	<h2 class="title">
-		Tests &amp; Results
+		Examples
 	</h2>
 	
 	<p>
-	
+
+We ran different tests, attempting to better understand the behaviour of the capacity function, and to test the correctness of some conjectures.
+	</p>
+<span class="sec_title">Capacity of a ball</span>
+	<p>
+One of the basic convex bodies is a ball, and since the Ekeland-Hofer-Zehnder capacity is normalized, we know that we should be getting $\pi$.
+To calculate the capacity of a ball one can either consider the ball as an epllipsoid whose radii are all 1, or one can approximate via polytopes.
+Here we'll discuss approximation by polytopes, see later section about  <a href="#ellipsoid_capacity">ellipsoids</a>.
+In 2 dimensions, we approximate the disc by regular polygons, and indeed we see that as the number of vertices increases, so does the result approaches $\pi$.
+	</p>
+
+<p>
+	<div class="CSSTableGenerator">
+	<table>
+		<tr>
+			<td>Number of points</td>
+			<td>Capacity</td>
+		</tr>
+
+		<tr>
+			<td>3</td>
+			<td>1.3001</td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>2.0038</td>
+		</tr>
+		<tr>
+			<td>5</td>
+			<td>2.3804</td>
+		</tr>
+		<tr>
+			<td>6</td>
+			<td>2.6004</td>
+		</tr>
+		<tr>
+			<td>7</td>
+			<td>2.7385</td>
+		</tr>
+		<tr>
+			<td>8</td>
+			<td>2.8348</td>
+		</tr>
+		<tr>
+			<td>9</td>
+			<td>2.8952</td>
+		</tr>
+		<tr>
+			<td>10</td>
+			<td>2.9414</td>
+		</tr>
+		<tr>
+			<td>11</td>
+			<td>2.9760</td>
+		</tr>
+		<tr>
+			<td>12</td>
+			<td>3.0029</td>
+		</tr>
+		<tr>
+			<td>13</td>
+			<td>3.0234</td>
+		</tr>
+		<tr>
+			<td>14</td>
+			<td>3.0397</td>
+		</tr>
+		<tr>
+			<td>15</td>
+			<td>3.0530</td>
+		</tr>
+		<tr>
+			<td>16</td>
+			<td>3.0687</td>
+		</tr>
+		<tr>
+			<td>17</td>
+			<td>3.0732</td>
+		</tr>
+		<tr>
+			<td>18</td>
+			<td>3.0807</td>
+		</tr>
+		<tr>
+			<td>19</td>
+			<td>3.0872</td>
+		</tr>
+		<tr>
+			<td>20</td>
+			<td>3.0928</td>
+		</tr>
+		<tr>
+			<td>21</td>
+			<td>3.0974</td>
+		</tr>
+		<tr>
+			<td>22</td>
+			<td>3.1016</td>
+		</tr>
+		<tr>
+			<td>23</td>
+			<td>3.1052</td>
+		</tr>
+		<tr>
+			<td>24</td>
+			<td>3.1089</td>
+		</tr>
+		<tr>
+			<td>25</td>
+			<td>3.1112</td>
+		</tr>
+		<tr>
+			<td>26</td>
+			<td>3.1137</td>
+		</tr>
+		<tr>
+			<td>27</td>
+			<td>3.1159</td>
+		</tr>
+		<tr>
+			<td>28</td>
+			<td>3.1179</td>
+		</tr>
+		<tr>
+			<td>29</td>
+			<td>3.1196</td>
+		</tr>
+		<tr>
+			<td>30</td>
+			<td>3.1212</td>
+		</tr>
+		<tr>
+			<td>31</td>
+			<td>3.1226</td>
+		</tr>
+		<tr>
+			<td>32</td>
+			<td>3.1291</td>
+		</tr>
+		<tr>
+			<td>33</td>
+			<td>3.1253</td>
+		</tr>
+		<tr>
+			<td>34</td>
+			<td>3.1264</td>
+		</tr>
+		<tr>
+			<td>35</td>
+			<td>3.1273</td>
+		</tr>
+		<tr>
+			<td>36</td>
+			<td>3.1283</td>
+		</tr>
+		<tr>
+			<td>37</td>
+			<td>3.1291</td>
+		</tr>
+		<tr>
+			<td>38</td>
+			<td>3.1299</td>
+		</tr>
+		<tr>
+			<td>39</td>
+			<td>3.1306</td>
+		</tr>
+		<tr>
+			<td>40</td>
+			<td>3.1314</td>
+		</tr>
+
+	</table>
+	</div>
+</p>
+
+	<p>
+Here is a scatter plot of the characteristic reconstructed for the regular polygon with 40 points:
+<br/><br/>
+
+	<div class="figure">
+	<p>
+	<img src="images/disc_approx_example.jpg" alt="Characteristic of a regular polygon approximating a circle" />
+	</p>
+	<p>
+		Characteristic of a regular polygon approximating a circle.
+	</p>
+	</div>
+
+	</p>
+	<p>
+In higher dimensions, we approximate by using random points in $\mathbb{R}^{2n}$ and normalizing them to sit on the unit sphere.
+For $n=2$ we received the following results:
+	</p>
+
+	<div  class="CSSTableGenerator">
+	<table>
+
+	<tr>
+		<td>Capacity</td>
+		<td>Number of points</td>
+		<td>Running Time (sec)</td>
+	</tr>
+	<tr>
+		<td>0.3798</td>
+		<td>10</td>
+		<td>31</td>
+	</tr>
+	<tr>
+		<td>1.1237</td>
+		<td>20</td>
+		<td>74</td>
+	</tr>
+	<tr>
+		<td>1.8652</td>
+		<td>50</td>
+		<td>51</td>
+	</tr>
+		<td>2.2351</td>
+		<td>100</td>
+		<td>28</td>
+	</tr>
+	<tr>
+		<td>2.5226</td>
+		<td>200</td>
+		<td>46</td>
+	</tr>
+	<tr>
+		<td>2.7305</td>
+		<td>400</td>
+		<td>40</td>
+	</tr>
+	</table>
+	</div>
+
+	<p>
+It appears that the number of points required to approximate the unit ball's capacity increases dramatically with the dimension.
+Furthermore, the difference in running time is quite noticable.
+	</p>
+	<p>
+Compare this to the 2-dimensional case, i.e., $n=1$:
+	</p>
+	<p>
+	<div  class="CSSTableGenerator">
+	<table>
+	<tr>
+		<td>Capacity</td>
+		<td>Number of Points</td>
+		<td>Running Time</td>
+	</tr>
+	<tr>
+		<td>2.1187</td>
+		<td>10</td>
+		<td>20</td>
+	</tr>
+	<tr>
+		<td>2.9537</td>
+		<td>20</td>
+		<td>17</td>
+	</tr>
+	<tr>
+		<td>3.1005</td>
+		<td>50</td>
+		<td>8.6</td>
+	</tr>
+	<tr>
+		<td>3.1253</td>
+		<td>100</td>
+		<td>6.2</td>
+	</tr>
+	<tr>
+		<td>3.1408</td>
+		<td>200</td>
+		<td>3.7</td>
+	</tr>
+	<tr>
+		<td>3.1432</td>
+		<td>400</td>
+		<td>3</td>
+	</tr>
+	</table>
+	</div>
+	</p>
+
+
+	In the case of 50 points, the characteristic also seems to be visibly different than the circle, but quite close to it.<br/></br>
+	<div class="figure">
+	<p>
+	<img src="images/random_points_approx_disc.jpg" alt="Characteristic of an approximated circle." />
+	</p>
+	<p>
+		Characteristic of an approximated circle.
+	</p>
+	</div>
+
+	<span class="sec_title">Capacity of $l_p$ Balls</span>
+	<p>
+Running the Capacity function on $l_p$ unit balls, denoted by $B_p^n(1)$ where $n$ is the dimension, yields the following results when approximating them with 50 random points scaled by the appropriate norm.
+	</p>
+
+<p>For $n=1$ the results are:</p>
+	<div class="CSSTableGenerator">
+	<table>
+	<tr>
+		<td>Capacity</td>
+		<td>$p$ value</td>	
+	</tr>
+	<tr>
+		<td>1.9774</td>
+		<td>1.01</td>
+	</tr>
+	<tr>
+		<td>3.1137</td>
+		<td>2</td>
+	</tr>
+	<tr>
+		<td>3.5076</td>
+		<td>3</td>
+	</tr>
+	<tr>
+		<td>3.6910</td>
+		<td>4</td>
+	</tr>
+	<tr>
+		<td>3.8887</td>
+		<td>8</td>
+	</tr>
+	<tr>
+		<td>3.8548</td>
+		<td>10</td>
+	</tr>
+	</table>
+	</div>
+<p>And here are a couple of figures of the reconstructed characteristics, for $p=1.01$ and $p=10$.</p>
+
+	<div class="figure">
+	<p>
+	<img src="images/l_p_norm_approx_for_p_1.01.jpg" alt="Characteristic of the $l_p$ unit ball for $p=1.01$." />
+	</p>
+	<p>
+		Characteristic of the $l_p$ unit ball for $p=1.01$.
+	</p>
+	</div>
+<br/>
+	<div class="figure">
+	<p>
+	<img src="images/l_p_norm_approx_for_p_10.jpg" alt="Characteristic of the $l_p$ unit ball for $p=10$." />
+	</p>
+	<p>
+		Characteristic of the $l_p$ unit ball for $p=10$.
+	</p>
+	</div>
+
+<p>For $n=2$ the results are:</p>
+	<div class="CSSTableGenerator">
+	<table>
+	<tr>
+		<td>Capacity</td>
+		<td>$p$ value</td>
+	</tr>
+	<tr>
+		<td>0.7430</td>
+		<td>1.01</td>
+	</tr>
+	<tr>
+		<td>1.9588</td>
+		<td>2</td>
+	</tr>
+	<tr>
+		<td>2.8250</td>
+		<td>3</td>
+	</tr>
+	<tr>
+		<td>3.1430</td>
+		<td>4</td>
+	</tr>
+	<tr>
+		<td>3.4425</td>
+		<td>8</td>
+	</tr>
+	<tr>
+		<td>3.6170</td>
+		<td>10</td>
+	</tr>
+	</table>
+	</div>
+
+
+	<p>
+Of course, as in the case of Euclidean balls, the norms are known analytically, whence we could write a version of the Capacity function that handles $l_p$ balls specifically.
+However, this has not been done.
+	</p>
+
+	<span class="sec_title">Capacity of the standard simplex</span>
+	<p>
+The standard simplex for us is the simplex whose vertices are 0 and the unit vectors.
+The capacity of the standard simplex has been computed in <a href="#N">[N]</a> to be $\frac{1}{2n}$ where $2n$ is the dimension of the ambient space.
+	</p>
+	<p>
+Our capacity function gave the following results:
+	</p>
+
+	<div class="CSSTableGenerator">
+	<table>
+	<tr>
+		<td>$n$</td>
+		<td>Capacity</td>
+		<td>Running time (sec)</td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>0.5008</td>
+		<td>20</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>0.2520</td>
+		<td>15</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>0.1700</td>
+		<td>9</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>0.1264</td>
+		<td>15</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>0.1021</td>
+		<td>152</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>0.0856</td>
+		<td>53</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>0.0740</td>
+		<td>46</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>0.0634</td>
+		<td>549</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>0.0577</td>
+		<td>135</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>0.0533</td>
+		<td>186</td>
+	</tr>
+	</table>
+	</div>
+
+	<span class="sec_title" id="ellipsoid_capacity">Capacity of Ellipsoids</span>
+	<p>
+Given an ellipsoid $\mathcal{E}$, one can change the base of the space and arrive at the next representation of the ellipsoid:
+\begin{equation}
+	\mathcal{E}=\left\{x\in\mathbb{R}\Bigg\vert \sum_{j=1}^{n}\frac{1}{r_j^2}(x_{e_j}^2+x_{f_j}^2)\leq 1\right\}.
+\end{equation}
+Where here we assumed the symplectic basis is given by $e_1,\ldots,e_n,f_1,\ldots,f_n$, and $x_{e_j}$ is the $e_j$'th coordinate of $x$.
+Further, the numbers $r_1,\ldots,r_n$ are ordered, and denoted, like so $0<r_1(\mathcal{(E)})\leq\ldots\leq r_n(\mathcal{E})$.
+These are symplectic invariants of $\mathcal{E}$, called the symplectic radii, and in fact it's known that,
+\begin{equation}
+	c(\mathcal{E})=\pi r_1(\mathcal{E})^2
+\end{equation}
+for any weakly nontrivial symplectic capacity $c$ on the class of symplectic manifolds.
+For further details see <a href="HZ">[HZ]</a>.
+	</p>
+	<p>
+Therefore, we implemented a version of the Capacity function that calculates the capacity of ellipsoids, given in symplectic form.
+That is, the input for this version of the function receives a vector of symplectic radii as input, and finds its capacity using the general algorithm described <a href="#algorithm">here</a>.
+	</p>
+<span class="sub_sec_title">Example 1</span>
+	<p>
+As mentioned above, the euclidean ball is just an ellipsoid whose radii are all 1. We therefore expect the Capacity function to yield a value close to $\pi$ for a radii vector given by [1 ... 1]. This is indeed the case:
+	</p>
+
+	<div class="CSSTableGenerator">
+	<table>
+	<tr>
+		<td>$n$</td>
+		<td>Capacity</td>
+		<td>Running time (sec)</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>3.1457</td>
+		<td>1.4</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>3.1457</td>
+		<td>5</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>3.1457</td>
+		<td>18</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>3.1457</td>
+		<td>29</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>3.1457</td>
+		<td>57</td>
+	</tr>
+	</table>
+	</div>
+
+<span class="sub_sec_title">Example 2</span>
+	<p>
+		In this example we show the results of the Capacity function for a couple of ellipsoids. Note that they are of dimension twice the number of radii. Further, note that although our implementation can find the capacity of ellipsoids already given in symplectic form, the order of the radii makes no difference.
+	</p>
+
+	<div class="CSSTableGenerator">
+	<table>
+	<tr>
+		<td>Radii</td>
+		<td>Capacity</td>
+		<td>Running time (sec)</td>
+	</tr>
+	<tr>
+		<td>[1 2 3 4 5 6]</td>
+		<td>3.1485</td>
+		<td>288</td>
+	</tr>
+	<tr>
+		<td>[5 3 6]</td>
+		<td>28.3117</td>
+		<td>13.4</td>
+	</tr>
+	</table>
+	</div>
+
+	<span class="sec_title">Capacity of the Lagrangian product of a triangle and a circle in $\mathbb{R}^4$</span>
+	<p>
+		COMING SOON...!
 	</p>
 	
 	
-	<div class="stupid_separation" id="team">.<br/><br/></div>
+	<div class="stupid_separation" id="team"> <br/><br/></div>
 	<h2 class="title">
-		The team
+		The Team
 	</h2>
 		
 	<p>
@@ -376,11 +969,28 @@
 		<br/>
 		Kyler Bryce Siegel, Stanford University,
 		<br/>
-		Emmanuel Tsukerman, University of California, Berkeley,
-		<br/>
 		Shira Tanny, Tel-Aviv University.
 		
 
+	</p>
+
+	<div class="stupid_separation" id="references"> <br/><br/></div>
+	<h2 class="title">
+		References
+	</h2>
+	<p>
+		<ul>
+		  <li id="GJ+"> A. G&ouml;ing-Jaeschke et al., <i>Parameter estimation and bessel processes in financial models
+and numerical analysis in hamiltonian dynamics</i>, Ph.D. Thesis, 1998.
+</li>
+		<li id="N">Nir, Yoav. <i>On closed characteristics and billiards in convex bodies</i>. Diss. Tel Aviv University, 2013.</li>
+		<li id="HZ"> H. Hofer and E. Zehnder, <i>Symplectic invariants and hamiltonian dynamics</i>, Birkh&auml;user
+Advanced Texts Basler Lehrb&uuml;cher, Birkh&auml;user Basel, 2012.
+</li>
+		<li id="AAO"> S. Artstein-Avidan and Y. Ostrover, <i>Bounds for minkowski billiard trajectories in convex
+bodies</i>, International Mathematics Research Notices <b>2014</b> (2014), no. 1, 165–193.
+</li>
+		</ul>
 	</p>
 	</div> <!-- end of content div -->
 	<!-- ~~~~~~~~~~~~~~~~~~~ END OF MAIN CONTENT~~~~~~~~~~~~~~~~~~~~~ -->

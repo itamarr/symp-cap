@@ -14,7 +14,6 @@ body {
  /* margin-top:5px; */
 }
 
-
 div.content{
 	width: 65%;
 	/* text-align: center; */
@@ -27,6 +26,24 @@ div.footer{
 
 div.stupid_separation{
 	
+}
+
+
+div.figure {
+  width: 90%;
+  border: thin silver solid;
+  margin: 0.5em;
+  padding: 0.5em;
+}
+div.figure p {
+  text-align: center;
+  font-style: italic;
+  font-size: smaller;
+  text-indent: 0;
+}
+
+div.figure img {
+	width: 90%;
 }
 
 
@@ -128,6 +145,8 @@ span.defn{
 }
 
 
+
+
 /*
 #########################################################
 #########################################################
@@ -209,3 +228,161 @@ span.defn{
 #########################################################
 #########################################################
 */
+
+/* Defining some styles for code preview */
+
+pre {
+    font-size: 90%;
+    line-height: 1.2em;
+    font-family: "Courier 10 Pitch", Courier, monospace; 
+    white-space: pre; 
+    white-space: pre-wrap; 
+    white-space: -moz-pre-wrap; 
+    white-space: -o-pre-wrap; 
+
+
+    height:1%;
+    width: auto;
+    display: block;
+    clear: both;
+    color: #555555;
+    padding: 1em 1em;
+   / margin: auto 40px auto 40px;
+    background: #f4f4f4;
+    border: solid 1px #e1e1e1
+} 
+code { 
+    font-size: 90%;
+    line-height: 1.2em;
+    font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+
+    display: inline; 
+    color: #555555;
+    padding: 1em 1em;
+    background: #f4f4f4;
+}
+
+/* This is supposed to get the nested list right */
+ol {
+    counter-reset: item;
+}
+ol li {
+    display: block;
+    position: relative;
+}
+ol li:before {
+    content: counters(item, ".")".";
+    counter-increment: item;
+    position: absolute;
+    margin-right: 100%;
+    right: 10px; /* space between number and text */
+}
+/*
+#########################################################
+#########################################################
+*/
+
+.CSSTableGenerator {
+	margin:auto;padding:0px;
+	width:80%;
+	/*box-shadow: 10px 10px 5px #888888;*/
+	border:1px solid #d68773;
+	
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-bottom-left-radius:0px;
+	border-bottom-left-radius:0px;
+	
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-bottom-right-radius:0px;
+	
+	-moz-border-radius-topright:0px;
+	-webkit-border-top-right-radius:0px;
+	border-top-right-radius:0px;
+	
+	-moz-border-radius-topleft:0px;
+	-webkit-border-top-left-radius:0px;
+	border-top-left-radius:0px;
+}.CSSTableGenerator table{
+    border-collapse: collapse;
+        border-spacing: 0;
+	width:100%;
+	height:100%;
+	margin:0px;padding:0px;
+}.CSSTableGenerator tr:last-child td:last-child {
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-bottom-right-radius:0px;
+}
+.CSSTableGenerator table tr:first-child td:first-child {
+	-moz-border-radius-topleft:0px;
+	-webkit-border-top-left-radius:0px;
+	border-top-left-radius:0px;
+}
+.CSSTableGenerator table tr:first-child td:last-child {
+	-moz-border-radius-topright:0px;
+	-webkit-border-top-right-radius:0px;
+	border-top-right-radius:0px;
+}.CSSTableGenerator tr:last-child td:first-child{
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-bottom-left-radius:0px;
+	border-bottom-left-radius:0px;
+}.CSSTableGenerator tr:hover td{
+	background-color:#f9e0e0;
+		
+
+}
+.CSSTableGenerator td{
+	vertical-align:middle;
+	
+	background-color:#ffffff;
+
+	border:1px solid #d68773;
+	border-width:0px 1px 1px 0px;
+	text-align:center;
+/*	padding:7px;
+	font-size:10px;*/
+	font-family:Courier;
+	font-weight:normal;
+	color:#000000;
+}.CSSTableGenerator tr:last-child td{
+	border-width:0px 1px 0px 0px;
+}.CSSTableGenerator tr td:last-child{
+	border-width:0px 0px 1px 0px;
+}.CSSTableGenerator tr:last-child td:last-child{
+	border-width:0px 0px 0px 0px;
+}
+.CSSTableGenerator tr:first-child td{
+		background:-o-linear-gradient(bottom, #bfb5b7 5%, #bfb5b7 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #bfb5b7), color-stop(1, #bfb5b7) );
+	background:-moz-linear-gradient( center top, #bfb5b7 5%, #bfb5b7 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#bfb5b7", endColorstr="#bfb5b7");	background: -o-linear-gradient(top,#bfb5b7,bfb5b7);
+
+	background-color:#bfb5b7;
+	border:0px solid #d68773;
+	text-align:center;
+	border-width:0px 0px 1px 1px;
+	font-size:14px;
+	font-family:Helvetica;
+	font-weight:bold;
+	color:#000000;
+}
+.CSSTableGenerator tr:first-child:hover td{
+	background:-o-linear-gradient(bottom, #bfb5b7 5%, #bfb5b7 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #bfb5b7), color-stop(1, #bfb5b7) );
+	background:-moz-linear-gradient( center top, #bfb5b7 5%, #bfb5b7 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#bfb5b7", endColorstr="#bfb5b7");	background: -o-linear-gradient(top,#bfb5b7,bfb5b7);
+
+	background-color:#bfb5b7;
+}
+.CSSTableGenerator tr:first-child td:first-child{
+	border-width:0px 0px 1px 0px;
+}
+.CSSTableGenerator tr:first-child td:last-child{
+	border-width:0px 0px 1px 1px;
+}
+
+/*
+#########################################################
+
+#########################################################
+*/
+
