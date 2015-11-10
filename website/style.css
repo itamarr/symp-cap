@@ -536,7 +536,12 @@ span.defn{
 		font-style: italic;
 }
 
-
+div.table_title {
+	font-weight: bold;
+	font-size: 1.1em;
+	margin: auto;
+	color: #006300;
+}
 
 
 /*
