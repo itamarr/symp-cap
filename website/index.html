@@ -339,7 +339,7 @@ For further details see section 2.1 in <a href="#HZ2">[HZ2]</a>.
 		As part of the project, we tried to design and run tests for these conjectures, and more.
 	</p>
 
-	<span class="sec_title">Towards Computations - Discretization </span>
+	<span class="sec_title" id="discretization">Towards Computations - Discretization </span>
 	<p>
 				In her thesis, G&ouml;ing-Jaeschke developed a method of discretizing the minimization problem at hand, which we used in our implementation. Let us briefly describe this method, and note that the full details are given in <a href="#GJ+">[GJ+]</a>. First, recall that we want to solve the following minimization problem, which is equivalent to our initial one.
 				We consider the set
@@ -1102,16 +1102,11 @@ Denote by $B_4(1)$ the open unit ball in $R^2(q)\times R^2(p)$.
 	c_{EHZ}(\triangle(\pi)\times \square) = \pi.
 	\end{equation}
 	</p>
-<!--
-	<p>
-		To test that our code for Lagrangian product works, we constructed the polytope $\triangle(\pi)\times \square$ and tested the program for various values of $n$.
-	</p>
--->
 	<p>
 		In our implementation, to compute the Lagrangian product of bodies for which the dual norm is not known analytically, we construct the product of two polytopes representing the bodies, then compute the extreme points of this product. The result of this calculation is then supply as input to the Capacity function.
 	</p>
 	<p>
-		Following the theoretical results above, we constructed the polytope $\triangle(\pi)\times \square$ and tested the program for various values of $m$, and got the following:
+		Following the theoretical results above, we constructed the polytope $\triangle(\pi)\times \square$ and tested the program for various values of the number of subintervals $m$ (for details see <a href="#discretization">Discretization</a> about), and got the following:
 	</p>
 
 	<div class="table_title" align="center">Capacity of $\triangle(\pi)\times \square$ for different number $m$ of subintervals</div>
