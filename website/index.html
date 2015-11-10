@@ -121,8 +121,11 @@
 			In May 2015 a group of graduate students gathered for the Computational Symplectic Topology Workshop's 
 			<a href="http://www.math.tau.ac.il/~ostrover/Workshop/CST/Workshop-CST.html">first seat</a>, 
 			in which they started work on the symplectic capacities project.
-			The goal of this project was to come up with, and implement, an algorithm to calculate a symplectic invariant called symplectic capacity, 
+			The goal of this project was to design a computer program that calculates a symplectic invariant called symplectic capacity, 
 			specifically the symplectic capacity called Ekeland-Hofer-Zehnder capacity.
+			<br/>
+			The development had started off by implementing an algorithm given in the PhD thesis of G&ouml;ing-Jaeschke from 1998 (see <a href="#GJ+">[GJ+]</a>).
+			The team then adapted it according to the project's needs, also using new computational tools now available, such as some of MATLAB's built-in functions.
 			<br/>
 			Once this was achieved, the team went on to use this computational tool and pursue with ambition to supply numerical evidence to some
 			famous long standing conjectures regarding this invariant, such as Viterbo's conjecture, which is detailed in the 
@@ -151,18 +154,35 @@
 		Theoretical Background
 	</h2>
 	
+	<p>
+		We give a brief survey of the required theoretical background from symplectic topology,
+		a full theoretical exposition can be found in the books by 
+			McDuff and Salamon (<a href="#McDS">[McDS]</a>) or by 
+			Hofer and Zehnder (<a href="#HZ2">[HZ]</a>).
+	</p>
+	
 	<span class="sec_title">Symplectic Manifolds and Symplectic Capacities</span>
 	<p>
 		A <span class="defn">symplectic manifold</span> $(M,\om)$ is a smooth manifold $M$ equipped with a closed non-degenerate 2-form $\om$, called a symplectic form.
 		A first example would be the standard symplectic vector space $\R^{2n}$, with coordinates $q_1, \ldots, q_n, p_1,\ldots, p_n$, equipped with the standard symplectic form $\om_0 = \sum_{i=1}^n dp_i \wedge dq_i$.
 		Locally, by Darboux theorem, any symplectic manifold looks like the standard $(\R^{2n},\om_0)$. 
 		Thus, there are no local invariants in symplectic geometry, as opposed to the situation in Riemannian geometry.
-		However, numerical global invariants do exist, symplectic capacities are a significant example of such invariants.
+		However, numerical global invariants do exist, symplectic capacities are a significant example of such symplectic measurements.
+		<br/>
+		This theory has started from the fundamental work of 
+			Gromov on pseudoholomorphic curves (<a href="#G">[G]</a>), 
+		followed then by the influential works of 
+			Ekeland and Hofer (<a href="#EH">[EH]</a>) and 
+			Hofer and Zehnder (<a href="#HZ1">[HZ1]</a>) 
+		on variational theory in Hamiltonian systems,
+		and the work of Viterbo on generating functions (<a href="#V2">[V2]</a>).
+		<br/>
+		
 		We deal with symplectic capacities of submanifolds of $\R ^{2n}$ equipped with the standard symplectic form, so we'll only describe this case.
 	</p>
 	
 	<p>
-		We use the following notations:
+		Let us use the following notations:
 		<ul>
 			<li>
 				$B_{2n}(r) = \{ x\in \R^{2n} \ |\  \|x\| < r \}$  the open ball of radius $r$ centered at the origin,
@@ -225,12 +245,21 @@
 		
 		We denote by $\calK$ the set of all compact strictly convex subsets of $\R^{2n}$ which have $C^2$ boundary.
 		
-		<div class="theorem">
-		 	The functional $c_{EHZ}$ is a capacity on $\calK$.
+		<div class="theorem"> (Ekeland, Hofer, Zehnder)
+		 	The functional $c_{EHZ}$ is a capacity on $\calK$. 
 		</div>
-
+		
+		This theorem is a combination of results from 
+			<a href="#EH">[EH]</a> and 
+			<a href="#HZ2">[HZ2]</a>, 
+		that amounts to the fact that on the class of convex domains in $\R^{2n}$, 
+		two capacities, the Ekeland-Hofer capacity $c_{EH}$ and the Hofet-Zehnder capacity $c_{HZ}$, coincide, 
+		and they are equal to the Ekeland-Hofer-Zehnder capacity $c_{EHZ}$ that is defined above.
+		
+		<br/>
+		
 		For computation purposes we use the next result.
-		<div class="theorem">
+		<div class="theorem"> (Rabinowitz, Weinstein)
 			For a convex body $K$ containing $0$, it holds that
 			\begin{equation}
 				c_{EHZ}(K)=\min_{z\in\mathcal{E}}\frac{\pi}{2}\int_0^{2\pi}h_K^2(\dot{z}(t))dt,
@@ -241,11 +270,20 @@
 			\end{equation}
 			and $h_K(v)=\lVert v\rVert_{K^\circ}$.
 		</div>
+		
+		This result is due to 
+			Rabinowitz <a href="#R">[R]</a> and 
+			Weinstein <a href="#W">[W]</a>, 
+		see also <a href="#HZ2">[HZ, section 1.5]</a>, where a proof is based on Clarke's duality principle 
+		(see <a href="#C">[C]</a>). 
+		
 	</p>
 	
 	<span class="sec_title" id="known-capacities">Known Capacity Values</span>
 	<p>
-		There are a few cases in which the capacities are known analytically, namely for any open subset of the plane, for ellipsoids in any dimension, and for the standard simplex in any dimension. For subsets of the plane, capcities simply coincide with the area. Let us then consider ellipsoids and the standard simplices.
+		There are a few cases in which the capacities are known analytically, namely for any open subset of the plane, for ellipsoids in any dimension, 
+		and for the standard simplex in any dimension. 
+		For subsets of the plane, capacities simply coincide with the area. Let us then consider ellipsoids and the standard simplices.
 	</p>
 	<p>
 Given an ellipsoid $\mathcal{E}$, one can change the base of the space and arrive at the next representation of the ellipsoid:
@@ -259,15 +297,16 @@ These are symplectic invariants of $\mathcal{E}$, called the symplectic radii, a
 	c(\mathcal{E})=\pi r_1(\mathcal{E})^2
 \end{equation}
 for any weakly nontrivial symplectic capacity $c$ on the class of symplectic manifolds.
-For further details see <a href="HZ">[HZ]</a>.
+For further details see <a href="#HZ2">[HZ2]</a>.
 	</p>
 	<p>
-		In the case of the standard simplex, viz. the simplex whose vertices are 0 and the unit vectors, Yoav Nir proved in <a href="N">[N]</a> that the $c_{EHZ}$ capacity of the simplex is $\frac{1}{2n}$.
+		In the case of the standard simplex, viz. the simplex whose vertices are 0 and the unit vectors, Yoav Nir proved in <a href="#N">[N]</a> that the $c_{EHZ}$ capacity of the simplex is $\frac{1}{2n}$.
 	</p>
 	<span class="sec_title">Known Conjectures</span>
 	<p>
 	
-		To establish a connection between capacities and the approach of Riemannian geometry, one can ask about the relations between capacity and volume. Some of these questions are in the taste of the isoperimetric inequality.
+		Following Viterbo's work, it is interesting to establish a connection between capacities and the approach of Riemannian geometry, one can ask about the relations between capacity and volume. 
+		Some of these questions are in the taste of the isoperimetric inequality.
 	</p>
 	<p>
 		Claude Viterbo has conjectured that among all convex bodies in $\R^{2n}$ of a given volume, the Euclidean ball has maximal symplectic capacity. 
@@ -281,13 +320,26 @@ For further details see <a href="HZ">[HZ]</a>.
 		\end{equation}
 		
 		where the constant $\gamma_n$ is of interest.
-		We therefore considered the following conjecture for the Ekeland-Hofer-Zehnder capacity.
-	</p>
 		
+	</p>		
+	<p>
+		A result by Viterbo is the following linear bound.
+		<div class="theorem"> (Viterbo, <a href="#V1">[V1]</a>)
+			$\gamma_n \leq 32n$ for any capacity $c$.
+		</div>
+		Also, in the case of centrally symmetric bodies, he showed that it is $\gamma_n \leq 2n$.
+		<br/>
+		
+		We consider the following conjecture.
 		
 		<div class="conjecture"> (Viterbo's conjecture)
 			The best constant in (\ref{viterbo_ineq_expression}) is $\gamma_n = 1$, for any choice of convex body $K$ and any capacity.
 		</div>
+		
+		We want to note also that for the special class of convex Reinhardt domains, Hermann showed that this conjecture holds 
+			(see <a href="#Hn">Hn</a>). 
+		
+	</p>
 	<p>
 		Another known question is the following.
 		<div class="conjecture"> (The subadditivity conjecture)
@@ -1046,16 +1098,66 @@ As mentioned above, the euclidean ball is just an ellipsoid whose radii are all 
 	<p>
 		<ul class="ref">
 		<li id="AAO"><b>[AAO]</b> - S. Artstein-Avidan and Y. Ostrover, <i>Bounds for minkowski billiard trajectories in convex
-bodies</i>, International Mathematics Research Notices <b>2014</b> (2014), no. 1, 165â€“193.
-</li>
+				bodies</i>, International Mathematics Research Notices <b>2014</b> (2014), no. 1, 165-193.
+		</li>
+		
+		<li id="C"><b>[C]</b> -
+			F.H. Clarke, <i>Shorter Notes: A Classical Variational Principle for Periodic Hamiltonian Trajectories.</i>,
+				Proceedings of the American Mathematical Society (1979): 186-188.
+		</li>
 
-		  <li id="GJ+"><b>[GJ+]</b> - A. G&ouml;ing-Jaeschke et al., <i>Parameter estimation and bessel processes in financial models
-and numerical analysis in hamiltonian dynamics</i>, Ph.D. Thesis, 1998.
-</li>
-		<li id="HZ"><b>[HZ]</b> - H. Hofer and E. Zehnder, <i>Symplectic invariants and hamiltonian dynamics</i>, Birkh&auml;user
-Advanced Texts Basler Lehrb&uuml;cher, Birkh&auml;user Basel, 2012.
-</li>
-		<li id="N"><b>[N]</b> - Nir, Yoav. <i>On closed characteristics and billiards in convex bodies</i>. Diss. Tel Aviv University, 2013.</li>
+		<li id="EH"><b>[EH]</b> - 
+			I. Ekeland and H. Hofer, <i>Symplectic topology and Hamiltonian dynamics</i>, Mathematische Zeitschrift, 200 (1989), no. 3, 355-378.
+		</li>
+		
+		
+		<li id="GJ+"><b>[GJ+]</b> - A. G&ouml;ing-Jaeschke et al., <i>Parameter estimation and bessel processes in financial models
+				and numerical analysis in hamiltonian dynamics</i>, Ph.D. Thesis, 1998.
+		</li>
+		
+		<li id="G"><b>[G]</b> - M. Gromov, 
+			<i>"Pseudo holomorphic curves in symplectic manifolds."</i> Inventiones mathematicae 82.2 (1985): 307-347.
+		</li>
+		
+		<li id="Hn"> <b>[Hn]</b> - D. Hermann, 
+			<i>Non-equivalence of symplectic capacities for open sets with restricted
+contact type boundary</i>. Pr&eacute;publication d'Orsay num&eacute;ro 32 (29/4/1998).
+		</li>
+		
+		<li id="HZ1"><b>[HZ1]</b> - H. Hofer, E. Zehnder. <i>A new capacity for symplectic manifolds</i>, Analysis, et cetera,
+				405–427, Academic Press, Boston, MA, 1990
+		</li>		
+
+		<li id="HZ2"><b>[HZ2]</b> - H. Hofer and E. Zehnder, <i>Symplectic invariants and hamiltonian dynamics</i>, Birkh&auml;user
+			Advanced Texts Basler Lehrb&uuml;cher, Birkh&auml;user Basel, 2012.
+		</li>
+		
+		<li id="McDS"> <b>[McDS]</b> - D. McDuff and D. Salamon, <i>Introduction to symplectic topology</i>, 
+			Oxford University Press, 1998.
+		</li>
+		
+		<li id="N"><b>[N]</b> - Y. Nir, <i>On closed characteristics and billiards in convex bodies</i>. Diss. Tel Aviv University, 2013.</li>
+		
+		<li id="R"> <b>[R]</b> -
+			P.H. Rabinowitz, <i>Periodic solutions of Hamiltonian systems.</i>, Communications on Pure and Applied Mathematics 31.2 (1978): 157-184.
+		</li>
+		
+		
+		<li id="V1"> <b>[V1]</b>
+			-	C. Viterbo, <i>Metric and isoperimetric problems in symplectic geometry.</i>, 
+				J. Amer. Math. Soc. 13 (2000), no. 2, 411–431.
+		</li>
+		
+		
+		<li id="V2"> <b>[V2]</b> - C. Viterbo, <i>"Symplectic topology as the geometry of generating functions."</i> 
+			Mathematische Annalen 292.1 (1992): 685-710.
+		</li>
+		
+		<li id="W"><b>[W]</b> -
+			A. Weinstein, <i>Periodic orbits for convex Hamiltonian systems.</i>, Annals of Mathematics (1978): 507-518.
+		</li>
+		
+		
 		</ul>
 	</p>	
 	
