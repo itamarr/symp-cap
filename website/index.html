@@ -82,6 +82,7 @@
 	<a href="#theoretical_background">Theoretical Background</a>
 	<a href="#algorithm">The Algorithm</a>
 	<a href="#examples">Examples</a>
+	<a href="#conclusion">Conclusion</a>
 	<a href="#references">References</a>
 	<a href="#team">The Team</a>
 </div>
@@ -111,7 +112,7 @@
 			Computational Symplectic Capacities
 		</h1>
 		<span class="sub_sec_title">
-				Graduate student team-based research workshop supported by the Institute for Computational and Experimental Research in Mathematics (<a href="https://icerm.brown.edu/home/">ICERM</a>), and by the European Research Council (<a href="erc.europa.eu">ERC</a>)
+				Graduate student team-based research workshop supported by the Institute for Computational and Experimental Research in Mathematics (<a href="https://icerm.brown.edu/home/">ICERM</a>), and by the European Research Council (<a href="https://erc.europa.eu">ERC</a>)
 
 			</span>
 
@@ -122,18 +123,18 @@
 	<p>
 		In May 2015 a group of graduate students gathered for the Computational Symplectic Topology Workshop's 
 		<a href="http://www.math.tau.ac.il/~ostrover/Workshop/CST/Workshop-CST.html">first seat</a>, 
-		in which they started work on the symplectic capacities project. The goal of this project was to design a computer program that calculates a symplectic invariant called symplectic capacity, specifically the symplectic capacity called Ekeland-Hofer-Zehnder capacity.
+		in which they started work on the symplectic capacities project. The goal of this project was to design a computer program that calculates a symplectic invariant called symplectic capacity, specifically the symplectic capacity known as Ekeland-Hofer-Zehnder capacity for convex domains in the classical phase space.
 	</p>
 	<p>
-		The development had started off by implementing an algorithm given in the PhD thesis of G&ouml;ing-Jaeschke from 1998 (see <a href="#GJ+">[GJ+]</a>).	The team then adapted it according to the project's needs, also using new computational tools now available, such as some of MATLAB's built-in functions.
+		The development had started off by implementing an algorithm given in the PhD thesis of G&ouml;ing-Jaeschke from 1998 (see <a href="#GJ">[GJ]</a>).	The team then adapted it according to the project's needs, also using new computational tools now available, such as some of MATLAB's built-in functions.
 	</p>
 	<p>
-		Once this was achieved, the team went on to use this computational tool and pursue with ambition to supply numerical evidence to some famous long standing conjectures regarding this invariant, such as Viterbo's conjecture, which is detailed in the <a href="#theoretical_background">background</a> section of this site; and moreover, attempt to demystify several aspect of the behaviour of the capcity function.
+		Once this was achieved, the team went on to use this computational tool and pursue with ambition to supply numerical evidence to some famous long standing conjectures regarding symplectic capacities, such as Viterbo's conjecture, which is detailed in the <a href="#theoretical_background">background</a> section of this site; and moreover, attempt to demystify several aspect of the behaviour of the capcity function.
 	</p>
 	<p>
 		This website is meant to succinctly explain about the project and its results.
 		<br/>
-		The implementation of the project is written in MATLAB, and its code is based <a href="http://github.com/itamarr/symp-cap">here</a> (github), icluding test results.
+		The implementation of the project is written in MATLAB, and its code is based <a href="http://github.com/itamarr/symp-cap">here</a> (github), including test results.
 		<br/>
 	</p>
 	
@@ -198,18 +199,19 @@
 				<li>(Non-triviality) $c (B_{2n}(1)) > 0$ and $c(Z_{2n}(1)) < \infty$.</li>
 			</ul>
 		</div>
-		A symplectic capacity $c$ is said to be <span class="defn">normalized</span>, if $c (B_{2n}(1)) = c(Z_{2n}(1)) = \pi $.
-	<br/>
+		A symplectic capacity $c$ is said to be <span class="defn">normalized</span>, if $c (B_{2n}(1)) = c(Z_{2n}(1)) = \pi $, and <b>henceforth all symplectic capacities in this text are assumed to be normalized</b>.
+	</p>
+	<p>
 	
 		It is a-priori unclear whether a symplectic capacity exists, but currently there is already a list of capacities introduced in various ways.
-		The concept was introduced by I. Ekeland amd H. Hofer in 1990, although, in fact, the first symplectic capacity (the symplectic width) was constructed by M. Gromov, related to the Non-Squeezing theorem he proved in 1985.
+		The concept was introduced by I. Ekeland and H. Hofer in 1990, although, in fact, the first symplectic capacity (the symplectic width) was constructed by M. Gromov, related to the Non-Squeezing theorem he proved in 1985.
 	</p>
 	
 	<p>
 		The project focuses on a certain capacity, called the Ekeland-Hofer-Zehnder capacity, $c_{EHZ}$ defined for convex domains in $\R^{2n}$, which is also normalized.
 		<br/>
 		Let $K$ be a compact strictly convex set in $\R^{2n}$, such that $0$ is in the interior of $K$ and the boundary $\de K$ is smooth of class $C^2$.
-		Denote $H(x) = \| x \|_K^2$, where $\| x \|_K = inf \{ \lambda>0 : x \in \lambda K \} $ is the semi-norm with respect to the convex body $K$.
+		Denote $H(x) = \| x \|_K^2$, where $\| x \|_K = inf \{ \lambda>0 : x \in \lambda K \} $ is the semi-norm with respect to the convex body $K$, where by convex body we mean here and henceforth a compact convex set with non-empty interior in $\R^{2n}$.
 		(It is a semi-norm in the sense that it is only positively homogeneous, since $K$ might not be symmetric; Being a semi-norm would be enough for our purposes). 
 	
 		By definition, $K = \{ x\in \R^{2n} : \|x\|_K \leq 1 \}$ and $\de K = H^{-1} (1)$.	
@@ -245,13 +247,14 @@
 			<a href="#EH">[EH]</a> and 
 			<a href="#HZ2">[HZ2]</a>, 
 		that amounts to the fact that on the class of convex domains in $\R^{2n}$, 
-		two capacities, the Ekeland-Hofer capacity $c_{EH}$ and the Hofet-Zehnder capacity $c_{HZ}$, coincide, 
+		two capacities &mdash; the Ekeland-Hofer capacity $c_{EH}$ and the Hofer-Zehnder capacity $c_{HZ}$ which are defined in a much more general setting &mdash; coincide, 
 		and they are equal to the Ekeland-Hofer-Zehnder capacity $c_{EHZ}$ as defined above.
 		
-		<br/>
+	</p>
+	<p>
 		
-		For computation purposes we use the next result.
-		<div class="theorem"> (Rabinowitz, Weinstein)
+		For computational purposes we use the next result which is based on Clarke's duality principle (see <a href="#C">[C]</a>).
+		<div class="theorem">
 			For a convex body $K$ containing $0$, it holds that
 			\begin{equation}
 				c_{EHZ}(K)=\min_{z\in\mathcal{E}}\frac{\pi}{2}\int_0^{2\pi}h_K^2(\dot{z}(t))dt,
@@ -263,17 +266,17 @@
 			and $h_K(v)=\lVert v\rVert_{K^\circ}$.
 		</div>
 		
-		This result is due to 
-			Rabinowitz <a href="#R">[R]</a> and 
-			Weinstein <a href="#W">[W]</a>, 
-		see also <a href="#HZ2">[HZ2, section 1.5]</a>, where a proof is based on Clarke's duality principle 
-		(see <a href="#C">[C]</a>). 
+		For proof see <a href="#HZ2">[HZ2, section 1.5]</a>; cf. Rabinowitz in <a href="#R">[R]</a> and	Weinstein in <a href="#W">[W]</a>.
 		
 	</p>
 	
 	<span class="sec_title" id="known-capacities">Known Capacity Values</span>
 	<p>
-		There are a few cases in which the capacities are known analytically. For any open subset of the plane, capacities simply coincide with the area. For ellipsoids in any even dimension, the capacity is $\pi$ times the minimal symplectic radius squared; see <a href="#HZ2">[HZ2]</a> sectoin 2.1 for details. In the case of polydiscs, any normalized capacity would give the minimum over the capacity of the disks considered as 2 dimensional objects; see <a href="#McDS">[McDS]</a> section 13.1 for further discussion regarding polydiscs. For Reinhardt domains see treatment by Hermann in <a href="#Hn">[Hn]</a>. In the case of the standard simplex, viz. the simplex whose vertices are 0 and the standard unit vectors in $\R^{2n}$, Nir proved in <a href="#N">[N]</a> that the $c_{EHZ}$ capacity of the simplex is $\frac{1}{2n}$.
+		There are a few cases in which symplectic capacities are known analytically. Foy any compact connected domain with smooth boundary in $\R^2$, Siburg showed in <a href="#Si">[Si]</a> that its symplectic capacity would equal its Lebesgue measure.
+		Other examples where symplectic capacities can be computed precisely include polydiscs, ellipsoids (see <a href="#HZ2">[HZ2]</a>), and convex Reinhardt domains (see <a href="#Hn">[Hn]</a>).
+		Further, we wish to remark that Nir proved in <a href="#N">[N]</a> that the $c_{EHZ}$ capacity of the standard simplex in $\R^{2n}$ is $\frac{1}{2n}$; where by the standard simplex we mean the simplex whose vertices are 0 and the standard unit vectors in $\R^{2n}$.
+<!--
+ For ellipsoids in any even dimension, the capacity is $\pi$ times the minimal symplectic radius squared; see <a href="#HZ2">[HZ2]</a> sectoin 2.1 for details. In the case of polydiscs, any normalized capacity would give the minimum over the capacity of the disks considered as 2 dimensional objects; see <a href="#McDS">[McDS]</a> section 13.1 for further discussion regarding polydiscs. For Reinhardt domains see treatment by Hermann in <a href="#Hn">[Hn]</a>. In the case of the standard simplex, viz. the simplex whose vertices are 0 and the standard unit vectors in $\R^{2n}$, Nir proved in <a href="#N">[N]</a> that the $c_{EHZ}$ capacity of the simplex is $\frac{1}{2n}$.
 	</p>
 	<p>
 As an example, let's consider the class of ellipsoids. Given an ellipsoid $\mathcal{E}$, one can change the base of the space and arrive at the next representation of the ellipsoid. Assume that the symplectic basis is given by $q_1,\ldots,q_n,p_1,\ldots,p_n$, and $x_{q_j}$ is the $q_j$'th coordinate of $x$, and likewise for $x_{p_j}$. In these coordinates,
@@ -287,16 +290,27 @@ These are symplectic invariants of $\mathcal{E}$, called the <i>symplectic radii
 \end{equation}
 for any weakly nontrivial symplectic capacity $c$ on the class of symplectic manifolds.
 For further details see section 2.1 in <a href="#HZ2">[HZ2]</a>.
+-->
 	</p>
 	<span class="sec_title">Known Conjectures</span>
 	<p>
 	
-		Following Viterbo's work, it is interesting to establish a connection between capacities and the approach of Riemannian geometry. One can ask about the relations between capacity and volume. 
-		Some of these questions are in the flavor of the isoperimetric inequality.
+		Following Viterbo's work, it is interesting to establish a connection between symplectic capacities and the approach of Riemannian geometry. For instance, one can ask about the relations between symplectic capacities and volume. 
+		Some of the questions arising in this fashion are in the flavor of the isoperimetric inequality.
 	</p>
 	<p>
-		Viterbo conjectured that among all convex bodies in $\R^{2n}$ of a given volume, the Euclidean ball has maximal symplectic capacity. 
-
+		Viterbo conjectured that among all convex bodies in $\R^{2n}$ of a given volume, the Euclidean ball has maximal symplectic capacity. The precise statement is the following.
+		<div class="conjecture"> (Viterbo's Symplectic Isoperimetric Conjecture)
+			Let $K$ be any convex body in $\R^{2n}$, and any symplectic capacity $c$,
+			\begin{equation} 
+				\frac{c(K)}{c\left( B \right)} 
+					\leq 
+				\left( \frac{Vol (K) }{Vol (B)} \right) ^{1/n} \;,
+				\label{viterbo_ineq_expression}
+			\end{equation}
+			where $B=B^{2n}(1)$ is the unit ball in $\R^{2n}$.
+		</div>
+<!--
 		To be precise, consider the following relation between the a capacity $c$ of a (convex) set $K$ and the unit ball in $\R^{2n}$
 		\begin{equation} 
 			\frac{c(K)}{c\left( B_{2n} \right)} 
@@ -319,6 +333,7 @@ For further details see section 2.1 in <a href="#HZ2">[HZ2]</a>.
 		<div class="conjecture"> (Viterbo's Symplectic Isoperimetric Conjecture)
 			The best constant in (\ref{viterbo_ineq_expression}) is $\gamma_n = 1$, for any choice of convex body $K$ and any normalized symplectic capacity.
 		</div>
+-->
 		
 		We want to note also that for the special class of convex Reinhardt domains, Hermann showed that this conjecture holds 
 			(see <a href="#Hn">[Hn]</a>). 
@@ -336,12 +351,12 @@ For further details see section 2.1 in <a href="#HZ2">[HZ2]</a>.
 		Note that we only checked this conjecture for $c_{EHZ}$.
 	</p>
 	<p>
-		As part of the project, we tried to design and run tests for these conjectures, and more.
+		As part of the project, we designed and ran tests to try and refute both these conjectures. However, we could not find any counterexamples.
 	</p>
 
 	<span class="sec_title" id="discretization">Towards Computations - Discretization </span>
 	<p>
-				In her thesis, G&ouml;ing-Jaeschke developed a method of discretizing the minimization problem at hand, which we used in our implementation. Let us briefly describe this method, and note that the full details are given in <a href="#GJ+">[GJ+]</a>. First, recall that we want to solve the following minimization problem, which is equivalent to our initial one.
+				In her thesis, G&ouml;ing-Jaeschke developed a method of discretizing the minimization problem at hand, which we used in our implementation. Let us briefly describe this method, and note that the full details are given in <a href="#GJ">[GJ]</a>. First, recall that we want to solve the following minimization problem, which is equivalent to our initial one.
 				We consider the set
 					\begin{equation}
 						M = \left\{ x\in H^{1}([0,1],\R^{2n})\,:\, \int_0^1 \dot x(t)dt = 0\right\}
@@ -365,7 +380,7 @@ For further details see section 2.1 in <a href="#HZ2">[HZ2]</a>.
 	<p>			
 				
 				In order to numerically solve the minimization problem (\ref{MinProblem}), 
-				we follow the general outline presented in <a href="#GJ+">[GJ+]</a>.
+				we follow the general outline presented in <a href="#GJ">[GJ]</a>.
 				<br/>
 			
 				
@@ -435,7 +450,7 @@ For further details see section 2.1 in <a href="#HZ2">[HZ2]</a>.
 	</h2>
 	
 	<p>
-		The project contains several sub-modules, each with its own computational purpose, yet all of them use the basic function called Capacity which calculates the capacity of a given polytope. In this section we explain the algorithm of this function which relies on the discretization presented in A. G&ouml;ing-Jaeschke's PhD thesis <a href="#GJ+">[GJ+]</a>.
+		The project contains several sub-modules, each with its own computational purpose, yet all of them use the basic function called Capacity which calculates the capacity of a given polytope. In this section we explain the algorithm of this function which relies on the discretization presented in A. G&ouml;ing-Jaeschke's PhD thesis <a href="#GJ">[GJ]</a>.
 	</p>
 	<p>
 		We present the algorithm, with modifications, here:
@@ -516,94 +531,23 @@ Theoretically this is achieved by integration, and so the implementation of the 
 
 We ran different tests, attempting to better understand the behaviour of the capacity function, and to test the correctness of some conjectures.
 	</p>
-<span class="sec_title">Capacity of a Ball</span>
+<span class="sec_title">Symplectic Capacity of a Disk in $\R^2$</span>
 	<p>
-One of the basic convex bodies is a ball, and since the Ekeland-Hofer-Zehnder capacity is normalized, we know that we should be getting $\pi$.
-To calculate the capacity of a ball one can either consider the ball as an epllipsoid whose radii are all 1, or one can approximate via polytopes.
-Here we'll discuss approximation by polytopes, see later section about  <a href="#ellipsoid_capacity">ellipsoids</a>.
-In 2 dimensions, we approximate the disc by regular polygons, and indeed we see that as the number of vertices increases, so does the result approaches $\pi$.
+One of the basic convex bodies is a disk in the 2 dimensional euclidean plane. Since the Ekeland-Hofer-Zehnder capacity is normalized, we know that the output of our program for the disk of radius 1 should be $\pi$.
+To calculate the capacity of a disk one can either calculate its dual norm and plug it into the algorithm above, or one can approximate by regular polygons.
+Here we'll discuss approximation by polygons, since this approximation is more general in the sense that if the result for the disk is correct, then it's likely that the program would also work for other approximated bodies.
+	</p>
+	<p>
+	Therefore, here are the results of our program for regular polygons in $\R^2$ with increasing number of edges. Indeed, we see that as the number of edges increases, so does the result approach $\pi$.
 	</p>
 
 <p>
-	<div class="table_title" align="center">Capacity of $m$-gons approximating a 2D ball</div>
+	<div class="table_title" align="center">Symplectic capacity of $m$-gons approximating a disk in $\R^2$</div>
 	<div class="CSSTableGenerator">
 	<table>
 		<tr>
 			<td>Number of Edges = $m$</td>
 			<td>Capacity</td>
-		</tr>
-
-		<tr>
-			<td>3</td>
-			<td>1.3001</td>
-		</tr>
-		<tr>
-			<td>4</td>
-			<td>2.0038</td>
-		</tr>
-		<tr>
-			<td>5</td>
-			<td>2.3804</td>
-		</tr>
-		<tr>
-			<td>6</td>
-			<td>2.6004</td>
-		</tr>
-		<tr>
-			<td>7</td>
-			<td>2.7385</td>
-		</tr>
-		<tr>
-			<td>8</td>
-			<td>2.8348</td>
-		</tr>
-		<tr>
-			<td>9</td>
-			<td>2.8952</td>
-		</tr>
-		<tr>
-			<td>10</td>
-			<td>2.9414</td>
-		</tr>
-		<tr>
-			<td>11</td>
-			<td>2.9760</td>
-		</tr>
-		<tr>
-			<td>12</td>
-			<td>3.0029</td>
-		</tr>
-		<tr>
-			<td>13</td>
-			<td>3.0234</td>
-		</tr>
-		<tr>
-			<td>14</td>
-			<td>3.0397</td>
-		</tr>
-		<tr>
-			<td>15</td>
-			<td>3.0530</td>
-		</tr>
-		<tr>
-			<td>16</td>
-			<td>3.0687</td>
-		</tr>
-		<tr>
-			<td>17</td>
-			<td>3.0732</td>
-		</tr>
-		<tr>
-			<td>18</td>
-			<td>3.0807</td>
-		</tr>
-		<tr>
-			<td>19</td>
-			<td>3.0872</td>
-		</tr>
-		<tr>
-			<td>20</td>
-			<td>3.0928</td>
 		</tr>
 		<tr>
 			<td>21</td>
@@ -690,134 +634,12 @@ In 2 dimensions, we approximate the disc by regular polygons, and indeed we see 
 	</div>
 </p>
 
-	<p>
-Here is a scatter plot of the characteristic reconstructed for the regular polygon with 40 points:
-<br/><br/>
-
-	<div class="figure">
-	<p>
-	<img src="images/disc_approx_example.jpg" alt="Characteristic of a regular polygon approximating a circle" />
-	</p>
-	<p>
-		Characteristic of a regular polygon approximating a circle.
-	</p>
-	</div>
-
-	</p>
-	<p>
-<!--
-In higher dimensions, we approximate by using random points in $\mathbb{R}^{2n}$ and normalizing them to sit on the unit sphere.
-For $n=2$ we received the following results:
-	</p>
-
-	<div  class="CSSTableGenerator">
-	<table>
-
-	<tr>
-		<td>Capacity</td>
-		<td>Number of points</td>
-		<td>Running Time (sec)</td>
-	</tr>
-	<tr>
-		<td>0.3798</td>
-		<td>10</td>
-		<td>31</td>
-	</tr>
-	<tr>
-		<td>1.1237</td>
-		<td>20</td>
-		<td>74</td>
-	</tr>
-	<tr>
-		<td>1.8652</td>
-		<td>50</td>
-		<td>51</td>
-	</tr>
-		<td>2.2351</td>
-		<td>100</td>
-		<td>28</td>
-	</tr>
-	<tr>
-		<td>2.5226</td>
-		<td>200</td>
-		<td>46</td>
-	</tr>
-	<tr>
-		<td>2.7305</td>
-		<td>400</td>
-		<td>40</td>
-	</tr>
-	</table>
-	</div>
-
-	<p>
-It appears that the number of points required to approximate the unit ball's capacity increases dramatically with the dimension.
-Furthermore, the difference in running time is quite noticable.
-	</p>
-	<p>
-Compare this to the 2-dimensional case, i.e., $n=1$:
-	</p>
-
-	<p>
-	<div  class="CSSTableGenerator">
-	<table>
-	<tr>
-		<td>Capacity</td>
-		<td>Number of Points</td>
-		<td>Running Time</td>
-	</tr>
-	<tr>
-		<td>2.1187</td>
-		<td>10</td>
-		<td>20</td>
-	</tr>
-	<tr>
-		<td>2.9537</td>
-		<td>20</td>
-		<td>17</td>
-	</tr>
-	<tr>
-		<td>3.1005</td>
-		<td>50</td>
-		<td>8.6</td>
-	</tr>
-	<tr>
-		<td>3.1253</td>
-		<td>100</td>
-		<td>6.2</td>
-	</tr>
-	<tr>
-		<td>3.1408</td>
-		<td>200</td>
-		<td>3.7</td>
-	</tr>
-	<tr>
-		<td>3.1432</td>
-		<td>400</td>
-		<td>3</td>
-	</tr>
-	</table>
-	</div>
-	</p>
-
-
-	In the case of 50 points, the characteristic also seems to be visibly different than the circle, but quite close to it.<br/></br>
-	<div class="figure">
-	<p>
-	<img src="images/random_points_approx_disc.jpg" alt="Characteristic of an approximated circle." />
-	</p>
-	<p>
-		Characteristic of an approximated circle.
-	</p>
-	</div>
--->
-
 	<br/>
-	<span class="sec_title">Capacity of $l_p$ Balls</span>
+	<span class="sec_title">Symplectic Capacity of $l_p$ Balls in $\R^2$</span>
 	<p>
-Running the Capacity function on $l_p$ unit balls, denoted by $B_p^n(1)$ where $n$ is the dimension, yields the following results when approximating them with 50 random points scaled by the appropriate norm.
+Running the Capacity function on $l_p$ unit balls in $\R^2$, denoted by $B_p(1)$, yields the following results when approximating them with 50 random points scaled by the appropriate norm.
 	</p>
-	<div class="table_title" align="center">Capacity of unit balls in $\R^2$ with $l_p$ norm for varried $p$, approximated by random 50-gons</div>
+	<div class="table_title" align="center">Symplectic capacity of unit balls in $\R^2$ with $l_p$ norm for varried $p$, approximated by random 50-gons</div>
 	<div class="CSSTableGenerator">
 	<table>
 	<tr>
@@ -850,84 +672,29 @@ Running the Capacity function on $l_p$ unit balls, denoted by $B_p^n(1)$ where $
 	</tr>
 	</table>
 	</div>
-<p>And here are a couple of figures of the reconstructed characteristics, for $p=1.01$ and $p=10$.</p>
-
-	<div class="figure">
-	<p>
-	<img src="images/l_p_norm_approx_for_p_1.01.jpg" alt="Characteristic of the $l_p$ unit ball for $p=1.01$." />
-	</p>
-	<p>
-		Characteristic of the $l_p$ unit ball for $p=1.01$.
-	</p>
-	</div>
-<br/>
-	<div class="figure">
-	<p>
-	<img src="images/l_p_norm_approx_for_p_10.jpg" alt="Characteristic of the $l_p$ unit ball for $p=10$." />
-	</p>
-	<p>
-		Characteristic of the $l_p$ unit ball for $p=10$.
-	</p>
-	</div>
 
 <!--
-<p>For $n=2$ the results are:</p>
-	<div class="CSSTableGenerator">
-	<table>
-	<tr>
-		<td>Capacity</td>
-		<td>$p$ value</td>
-	</tr>
-	<tr>
-		<td>0.7430</td>
-		<td>1.01</td>
-	</tr>
-	<tr>
-		<td>1.9588</td>
-		<td>2</td>
-	</tr>
-	<tr>
-		<td>2.8250</td>
-		<td>3</td>
-	</tr>
-	<tr>
-		<td>3.1430</td>
-		<td>4</td>
-	</tr>
-	<tr>
-		<td>3.4425</td>
-		<td>8</td>
-	</tr>
-	<tr>
-		<td>3.6170</td>
-		<td>10</td>
-	</tr>
-	</table>
-	</div>
-
--->
-
 	<p>
-Of course, as in the case of Euclidean balls, the norms are known analytically, whence we could write a version of the Capacity function that handles $l_p$ balls specifically.
+Of course, as in the case of Euclidean disks, the norms are known analytically, whence we could write a version of the Capacity function that handles $l_p$ balls specifically.
 However, this has not been done.
 	</p>
-
+-->
 	<br/>
-	<span class="sec_title">Capacity of the Standard Simplex</span>
+	<span class="sec_title">Symplectic Capacity of the Standard Simplex in $\R^{2n}$</span>
 	<p>
-The standard simplex for us is the simplex whose vertices are 0 and the unit vectors in $\R^{2n}$.
+	The standard simplex is the simplex whose vertices are 0 and the unit vectors in $\R^{2n}$.
 The capacity of the standard simplex has been computed by Nir in <a href="#N">[N]</a> to be $\frac{1}{2n}$.
 	</p>
 	<p>
 Our capacity function gave the following results:
 	</p>
 
-	<div class="table_title" align="center">Capacity of the standard simplex in $\R^{2n}$</div>
+	<div class="table_title" align="center">Symplectic capacity of the standard simplex in $\R^{2n}$</div>
 	<div class="CSSTableGenerator">
 	<table>
 	<tr>
 		<td>Half Dimension = $n$</td>
-		<td>Capacity</td>
+		<td>E.H.Z. Capacity</td>
 		<td>Theoretical Value = $\frac{1}{2n}$</td>
 		<td>Running Time (sec)</td>
 	</tr>
@@ -994,10 +761,14 @@ Our capacity function gave the following results:
 	</table>
 	</div>
 
-	<br/>
-	<span class="sec_title" id="ellipsoid_capacity">Capacity of Ellipsoids</span>
 	<p>
-		As explained in the <a href="#known-capacities">theoretical section</a>, the capacity $c$ of an ellipsoid $E$ is simply given by,
+		Note that the results of the program are very close to the theoretical value.
+	</p>
+
+	<br/>
+	<span class="sec_title" id="ellipsoid_capacity">Symplectic Capacity of Ellipsoids in $\R^{2n}$</span>
+	<p>
+		As mentioned in the <a href="#known-capacities">theoretical section</a>, the symplectic capacities for ellipsoids are known analytically. Moreover, all symplectic capacities coincide for ellipsoids, and give the following result. For details see <a href="#HZ2">[HZ2]</a>, and in the notations there we calculate that for a symplectic capacity $c$ and an ellipsoid $E$ we have that,
 		\begin{equation}
 			c(E)=\pi r_1(E)^2,
 		\end{equation}
@@ -1007,109 +778,59 @@ Our capacity function gave the following results:
 Therefore, we implemented a version of the Capacity function that calculates the capacity of ellipsoids, given in symplectic form.
 That is, the input for this version of the function receives a vector of symplectic radii as input, and finds its capacity using the general algorithm described <a href="#algorithm">above</a>.
 	</p>
-<span class="sub_sec_title">Example 1</span>
-	<p>
-As mentioned above, the euclidean ball is just an ellipsoid whose radii are all 1. We therefore expect the Capacity function to yield a value close to $\pi$ for a radii vector given by [1 ... 1]. This is indeed the case:
-	</p>
 
-	<div class="table_title" align="center">Capacity of the unit ball in $\R^{2n}$ considered as ellipsoid</div>
-	<div class="CSSTableGenerator">
-	<table>
-	<tr>
-		<td>Half Dimension = $n$</td>
-		<td>Capacity</td>
-		<td>Running Time (sec)</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>3.1457</td>
-		<td>1.4</td>
-	</tr>
-	<tr>
-		<td>4</td>
-		<td>3.1457</td>
-		<td>5</td>
-	</tr>
-	<tr>
-		<td>6</td>
-		<td>3.1457</td>
-		<td>18</td>
-	</tr>
-	<tr>
-		<td>8</td>
-		<td>3.1457</td>
-		<td>29</td>
-	</tr>
-	<tr>
-		<td>10</td>
-		<td>3.1457</td>
-		<td>57</td>
-	</tr>
-	</table>
-	</div>
-
-<span class="sub_sec_title">Example 2</span>
 	<p>
 		In this example we show the results of the Capacity function for a couple of ellipsoids. Note that they are of dimension twice the number of radii. Further, note that although our implementation can find the capacity of ellipsoids already given in symplectic form, the order of the radii makes no difference.
 	</p>
 
-	<div class="table_title" align="center">Capacity of ellipsoids in $\R^{2n}$</div>
+	<div class="table_title" align="center">Symplectic capacity of ellipsoids in $\R^{2n}$</div>
 	<div class="CSSTableGenerator">
 	<table>
 	<tr>
 		<td>Half dimension = $n$</td>
 		<td>Radii</td>
 		<td>Capacity</td>
+		<td>Theoretical Value</td>
 		<td>Running time (sec)</td>
 	</tr>
 	<tr>
 		<td>6</td>
 		<td>[1 2 3 4 5 6]</td>
 		<td>3.1485</td>
+		<td>3.1415</td>
 		<td>288</td>
 	</tr>
 	<tr>
 		<td>3</td>
 		<td>[5 3 6]</td>
 		<td>28.3117</td>
+		<td>28.2743</td>
 		<td>13.4</td>
 	</tr>
 	</table>
 	</div>
 
+	<p>
+		Note that the calculated value by the program is indeed very close to the theoretical value.
+	</p>
+
 	<br/>
-	<span class="sec_title">Capacity of the Lagrangian Product of a Triangle and a Circle in $\mathbb{R}^4$</span>
+	<span class="sec_title">Symplectic Capacity of the Lagrangian Product of a Triangle and a Circle in $\mathbb{R}^4$</span>
 	<p>
 		Following F. Schlenk, denote by $\triangle(a) = \left\{0< q_1,q_2 \Big| \frac{q_1}{a} + \frac{q_2}{a} < 1 \right\}$ an open right triangle with side length $a$, and by $\square = \left\{0< p_1,p_2 \Big| 0< p_i<1,\quad i=1,2 \right\}$ an open square of side length 1.
-Denote by $B_4(1)$ the open unit ball in $R^2(q)\times R^2(p)$.
 	</p>
 	<p>
 
-		We consider the Lagrangian product $\triangle(\pi)\times \square$. Schlenk proves in <i>Lemma 5.3.1</i> in <a href="#S">[S]</a> that the following holds:
-	</p>
+		We consider the Lagrangian product $\triangle(\pi)\times \square$. The interior of this product is symplectomorphic to a Euclidean ball with the same volume. See <i>Lemma 5.3.1</i> in <a href="#Sc">[Sc]</a>.
+		It therefore follows that all symplectic capacities should yield $\pi$ for this product.
 	<p>
-
-	Let $\varepsilon>0$.
-	<ol>
-	<li> $B_4(1)$ symplectically embeds into $(1+\varepsilon)\triangle(\pi)\times \square$.</li>
-	<li> $\triangle(\pi)\times \square$ symplectiaclly embeds into $(1+\varepsilon)B_4(1)$.</li>
-	</ol>
-
-	</p>
-	<p>
-		We conclude that they have the same capacity, so we expect
-	\begin{equation}
-	c_{EHZ}(\triangle(\pi)\times \square) = \pi.
-	\end{equation}
-	</p>
-	<p>
-		In our implementation, to compute the Lagrangian product of bodies for which the dual norm is not known analytically, we construct the product of two polytopes representing the bodies, then compute the extreme points of this product. The result of this calculation is then supply as input to the Capacity function.
+		In our implementation, to compute the Lagrangian product of bodies for which the dual norm is not known analytically, we construct the product of two polytopes representing the bodies, then compute the extreme points of this product. The result of this calculation is then supplied as input to the Capacity function.
 	</p>
 	<p>
 		Following the theoretical results above, we constructed the polytope $\triangle(\pi)\times \square$ and tested the program for various values of the number of subintervals $m$ (for details see <a href="#discretization">Discretization</a> about), and got the following:
 	</p>
 
-	<div class="table_title" align="center">Capacity of $\triangle(\pi)\times \square$ for different number $m$ of subintervals</div>
+	<div class="table_title" align="center">Symplectic capacity of $\triangle(\pi)\times \square$ for different number $m$ of subintervals</div>
 	<div class="CSSTableGenerator">
 	<table>
 	<tr>
@@ -1130,6 +851,15 @@ Denote by $B_4(1)$ the open unit ball in $R^2(q)\times R^2(p)$.
 	</tr>
 	</table>
 	</div>
+
+<div class="stupid_separation" id="conclusion"> <br/><br/></div>
+	<h2 class="title">
+		Conclusion
+	</h2>
+	<p>
+		As mentioned, while working on the project, we did not find any counter examples for the conjectures in the theoretical section above, but there are several directions for further investigation.
+		It is our hope that this project would help anyone interested in symplectic capacities, both theoretically and computationally. We hope this project could be used further in advancing research, in asking new questions, and perhaps in answering them as well.
+	</p>
 
 	<div class="stupid_separation" id="references"> <br/><br/></div>
 	<h2 class="title">
@@ -1153,7 +883,7 @@ Denote by $B_4(1)$ the open unit ball in $R^2(q)\times R^2(p)$.
 		</li>
 		
 		
-		<li id="GJ+"><b>[GJ+]</b> - A. G&ouml;ing-Jaeschke et al., <i>Parameter estimation and bessel processes in financial models
+		<li id="GJ"><b>[GJ]</b> - A. G&ouml;ing-Jaeschke et al., <i>Parameter estimation and bessel processes in financial models
 				and numerical analysis in hamiltonian dynamics</i>, Ph.D. Thesis, 1998.
 		</li>
 		
@@ -1184,8 +914,10 @@ contact type boundary</i>. Pr&eacute;publication d'Orsay num&eacute;ro 32 (29/4/
 			P.H. Rabinowitz, <i>Periodic solutions of Hamiltonian systems.</i>, Communications on Pure and Applied Mathematics 31.2 (1978): 157-184.
 		</li>
 
-		<li id="S"><b>[S]</b> - Schlenk Felix, <i>Embedding Problems in Symplectic Geometry</i>, de Gruyter Expositions in Mathematics, vol. 40, Berlin, 2005
+		<li id="Sc"><b>[Sc]</b> - Schlenk Felix, <i>Embedding Problems in Symplectic Geometry</i>, de Gruyter Expositions in Mathematics, vol. 40, Berlin, 2005.
 		</li>
+
+		<li id="Si"><b>[Si]</b> - Siburg, K. F., <i>Symplectic capacities in two dimensions</i>, Manuscripta Math. 78 (1993), no. 2, 149-163.
 		
 		
 		<li id="V1"> <b>[V1]</b>
