@@ -16,3 +16,5 @@
 *.pdf
 *.out
 *.bbl
+*.blg
+*.gz
