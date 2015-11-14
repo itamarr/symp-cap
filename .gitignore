@@ -9,3 +9,10 @@
 # image files
 *.png
 *.ico
+
+# tex output files
+*.aux
+*.toc
+*.pdf
+*.out
+*.bbl
