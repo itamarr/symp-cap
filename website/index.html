@@ -129,7 +129,7 @@
 		The development had started off by implementing an algorithm given in the PhD thesis of G&ouml;ing-Jaeschke from 1998 (see <a href="#GJ">[GJ]</a>).	The team then adapted it according to the project's needs, also using new computational tools now available, such as some of MATLAB's built-in functions.
 	</p>
 	<p>
-		Once this was achieved, the team went on to use this computational tool and pursue with ambition to supply numerical evidence to some famous long standing conjectures regarding symplectic capacities, such as Viterbo's conjecture, which is detailed in the <a href="#theoretical_background">background</a> section of this site; and moreover, attempt to demystify several aspect of the behaviour of the capcity function.
+		Once this was achieved, the team went on to use this computational tool and pursue with ambition numerical evidence to some famous long standing conjectures regarding symplectic capacities, such as Viterbo's conjecture, which is detailed in the <a href="#theoretical_background">background</a> section of this site; and moreover, attempt to demystify several aspect of the behaviour of the capcity function.
 	</p>
 	<p>
 		This website is meant to succinctly explain about the project and its results.
@@ -162,7 +162,7 @@
 		However, numerical global invariants do exist, symplectic capacities are a significant example of such symplectic measurements.
 	</p>
 	<p>
-		This theory of capacities started with the fundamental work of 
+		This theory of symplectic capacities started with the fundamental work of 
 			Gromov on pseudoholomorphic curves (<a href="#G">[G]</a>), 
 		followed then by the influential works of 
 			Ekeland and Hofer (<a href="#EH">[EH]</a>) and 
@@ -203,7 +203,7 @@
 	</p>
 	<p>
 	
-		It is a-priori unclear whether a symplectic capacity exists, but currently there is already a list of capacities introduced in various ways.
+		It is a-priori unclear whether a symplectic capacity exists, but currently there is already a list of symplectic capacities introduced in various ways.
 		The concept was introduced by I. Ekeland and H. Hofer in 1990, although, in fact, the first symplectic capacity (the symplectic width) was constructed by M. Gromov, related to the Non-Squeezing theorem he proved in 1985.
 	</p>
 	
@@ -247,7 +247,7 @@
 			<a href="#EH">[EH]</a> and 
 			<a href="#HZ2">[HZ2]</a>, 
 		that amounts to the fact that on the class of convex domains in $\R^{2n}$, 
-		two capacities &mdash; the Ekeland-Hofer capacity $c_{EH}$ and the Hofer-Zehnder capacity $c_{HZ}$ which are defined in a much more general setting &mdash; coincide, 
+		two symplectic capacities &mdash; the Ekeland-Hofer capacity $c_{EH}$ and the Hofer-Zehnder capacity $c_{HZ}$ which are defined in a much more general setting &mdash; coincide, 
 		and they are equal to the Ekeland-Hofer-Zehnder capacity $c_{EHZ}$ as defined above.
 		
 	</p>
@@ -480,11 +480,11 @@ For further details see section 2.1 in <a href="#HZ2">[HZ2]</a>.
 </pre>
 
 	<p>
-	Let's explain some of the points in the algorithm. First, this is the general form of the algorithm, in the sense that it's agnostic to the question of "what type  of convex body (e.g. ellipsoids, simplices, etc.) are we considering?". It is known that one can approximate a convex body by polytopes, and that approximation translates to capacities. Yet, this requires proof (see the theoretical section), and further, this approach takes a heavy toll in terms of running time. In cases where the norm of the dual body is known analytically, the algorithm is much more precise and takes far less time.
+	Let's explain some of the points in the algorithm. First, this is the general form of the algorithm, in the sense that it's agnostic to the question of "what type  of convex body (e.g. ellipsoids, simplices, etc.) are we considering?". It is known that one can approximate a convex body by polytopes, and that approximation translates to capacities. Yet, this requires proof, and further, this approach takes a heavy toll in terms of running time. In cases where the norm of the dual body is known analytically, the algorithm is much more precise and takes far less time.
 	</p>
 
 	<p>
-	With this in mind, we'll continue with polytopes as a prime example. The input of the algorithm, therefore, is a matrix $P$ whose rows are the extreme points of the convex hull for which we want to calculate the capacity. Therefore, the dimensions of $P$ is $k\times 2n$ where $k$ is the number of points and $2n$ is the dimension of the ambient euclidean space.
+	With this in mind, we'll continue with polytopes as a prime example. The input of the algorithm, therefore, is a matrix $P$ whose rows are the extreme points of the convex hull for which we want to calculate the capacity. Therefore, the dimensions of $P$ is $k\times 2n$ where $k$ is the number of points and $2n$ is the dimension of the ambient Euclidean space.
 	</p>
 
 	<p>
@@ -533,7 +533,7 @@ We ran different tests, attempting to better understand the behaviour of the cap
 	</p>
 <span class="sec_title">Symplectic Capacity of a Disk in $\R^2$</span>
 	<p>
-One of the basic convex bodies is a disk in the 2 dimensional euclidean plane. Since the Ekeland-Hofer-Zehnder capacity is normalized, we know that the output of our program for the disk of radius 1 should be $\pi$.
+One of the basic convex bodies is a disk in the 2 dimensional Euclidean plane. Since the Ekeland-Hofer-Zehnder capacity is normalized, we know that the output of our program for the disk of radius 1 should be $\pi$.
 To calculate the capacity of a disk one can either calculate its dual norm and plug it into the algorithm above, or one can approximate by regular polygons.
 Here we'll discuss approximation by polygons, since this approximation is more general in the sense that if the result for the disk is correct, then it's likely that the program would also work for other approximated bodies.
 	</p>
@@ -780,7 +780,7 @@ That is, the input for this version of the function receives a vector of symplec
 	</p>
 
 	<p>
-		In this example we show the results of the Capacity function for a couple of ellipsoids. Note that they are of dimension twice the number of radii. Further, note that although our implementation can find the capacity of ellipsoids already given in symplectic form, the order of the radii makes no difference.
+		In this example we show the results of the Capacity function for a couple of ellipsoids. Note that they are of dimension twice the number of radii. Further, note that although our implementation can only find the $c_{EHZ}$ capacity of ellipsoids already given in symplectic form, the order of the radii makes no difference.
 	</p>
 
 	<div class="table_title" align="center">Symplectic capacity of ellipsoids in $\R^{2n}$</div>
@@ -827,7 +827,7 @@ That is, the input for this version of the function receives a vector of symplec
 		In our implementation, to compute the Lagrangian product of bodies for which the dual norm is not known analytically, we construct the product of two polytopes representing the bodies, then compute the extreme points of this product. The result of this calculation is then supplied as input to the Capacity function.
 	</p>
 	<p>
-		Following the theoretical results above, we constructed the polytope $\triangle(\pi)\times \square$ and tested the program for various values of the number of subintervals $m$ (for details see <a href="#discretization">Discretization</a> about), and got the following:
+		Following the theoretical results above, we constructed the polytope $\triangle(\pi)\times \square$ and tested the program for various values of the number of subintervals $m$ (for details see <a href="#discretization">Discretization</a> above), and got the following:
 	</p>
 
 	<div class="table_title" align="center">Symplectic capacity of $\triangle(\pi)\times \square$ for different number $m$ of subintervals</div>
