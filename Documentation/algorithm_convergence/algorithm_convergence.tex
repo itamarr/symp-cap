@@ -94,14 +94,14 @@ We are interested in the minimal values of the functional $\F(v)=\int_0^1 G(-J\d
 
 \subsection{Explicit Bound on the Error}
 
-Let $u_m$ be the minimizer of the functional $\F(x)=\int_0^1 h_K^2 (\dot x(t))dt$ on the space $M_m$, and $u$ be the minimizer on the total space $M$. Denote by $E_m:=|\F (u_m)-\F(u)|$ the error of the capacity approximation. Let $\alpha_m\in M_m$ be the piecewise linear approximation of $u$, defined by $\alpha_m=\frac{1}{\sqrt{1+c_m}}\beta_m$, where $\dot\beta_m$ is the average of $\dot u$ on each subinterval (as in the construction in Lemma~\ref{Lemma:dense}), and the normalization is such that $\alpha_m$ has action equal to 1.
+Let $u_m$ be the minimizer of the functional $\F(x)=\int_0^1 G(\dot x(t))dt$ on the space $M_m$, and $u$ be the minimizer on the total space $M$. Denote by $E_m:=|\F (u_m)-\F(u)|$ the error of the capacity approximation. Let $\alpha_m\in M_m$ be the piecewise linear approximation of $u$, defined by $\alpha_m=\frac{1}{\sqrt{1+c_m}}\beta_m$, where $\dot\beta_m$ is the average of $\dot u$ on each subinterval (as in the construction in Lemma~\ref{Lemma:dense}), and the normalization is such that $\alpha_m$ has action equal to 1.
 
 \begin{Lemma}
-	For  $m\geq\frac{12\l^2}{\pi^2 }\|\boldsymbol{H} (H)\|_{C^0}\cdot \|\nabla H\|^2_{C^0} $, the error is bounded by: 
+	For  $m\geq\frac{12\l^2}{\pi^2 }\|\boldsymbol{H} (H)\|_{C^0(\{H=1\})}\cdot \|\nabla H\|^2_{C^0(\{H=1\})} $, the error is bounded by: 
 	\begin{equation}\label{Lemma:error_bound}
-	E_m\leq \left(\frac{6}{\pi}  +2 L(G)\right) \cdot \frac{2\l^2}{\pi m}\|\boldsymbol{H} (H)\|_{C^0}\cdot \|\nabla H\|^2_{C^0},
+	E_m\leq \left(\frac{6}{\pi}  +2 L(G)\right) \cdot \frac{2\l^2}{\pi m}\|\boldsymbol{H} (H)\|_{C^0(\{H=1\})}\cdot \|\nabla H\|^2_{C^0(\{H=1\})},
 	\end{equation}
-	where $L(G)$ is the Lipschitz constant of $G:R^{2n}\rightarrow\R$ in the unit ball, $H(\cdot) = \|\cdot\|^2_K$ is the squared norm associated with $K$, and $\boldsymbol{H} (H)$ is the Hessian of $H$.
+	where $L(G)$ is the Lipschitz constant of $G:R^{2n}\rightarrow\R$ in the unit ball, $\|\cdot\|_{C^0(\{H=1\})}$ is the maximum norm  when restricting the function to $\{H=1\}$, and $\boldsymbol{H} (H)$ is the Hessian of $H$.
 \end{Lemma}
 \begin{proof}
 	Since $u_m$ minimizes $\F$ on the space $M_m$, we have:
@@ -125,7 +125,7 @@ Let $u_m$ be the minimizer of the functional $\F(x)=\int_0^1 h_K^2 (\dot x(t))dt
 		for some constant vector $c\in\R^{2n}$. We can use the above equation and the Hamilton equation that $z$ satisfies to bound $\dot u$:
 		\begin{eqnarray*}
 		\|\dot u\|_{L^2}^2 &=& \int_0^1 \left(\frac{1}{2\sqrt{\l}}2\l\cdot\dot 	z(2\l t)\right)^2 dt =\l\int_0^{2\l} \dot z(s)^2 \frac{1}{2\l}ds \\
-		&=& \frac{1}{2}\|\dot z\|_{L^2}^2 = \frac{1}{2}\|-J\nabla H\circ z\|_{L^2}^2 \leq \l\cdot \|\nabla H\|_{C^0}^2. 
+		&=& \frac{1}{2}\|\dot z\|_{L^2}^2 = \frac{1}{2}\|-J\nabla H\circ z\|_{L^2}^2 \leq \l\cdot \|\nabla H\|_{C^0(\{H=1\})}^2. 
 		\end{eqnarray*}\\
 		
 	 \item Bounding $\|\dot\beta_m-\dot u\|_{L^2}$:
@@ -135,7 +135,7 @@ Let $u_m$ be the minimizer of the functional $\F(x)=\int_0^1 h_K^2 (\dot x(t))dt
 		Using the Poincare inequality for the $L^2$-norm (and recalling that for intervals, the Poincare constant equals to the length of the interval), we get:
 		\begin{eqnarray*}
 		 	\|\dot\beta_m-\dot u\|_{L^2}^2 &=& \sum_{k=0}^{m-1} \int_{I_k} \left( \fint_{I_k}\dot u(s) ds-\dot u(t)\right)^2 dt\\
-		 	&\leq& \sum_{k=0}^{m-1} \frac{1}{\pi^2 m^2}\int_{I_k} \ddot u^2(t)dt =  \frac{1}{\pi^2 m^2}\sum_{k=0}^{m-1}  \int_{\cup_k I_k} \ddot u^2(t)dt\\
+		 	&\leq& \sum_{k=0}^{m-1} \frac{1}{\pi^2 m^2}\int_{I_k} \ddot u^2(t)dt =  \frac{1}{\pi^2 m^2} \int_{\cup_k I_k} \ddot u^2(t)dt\\
 		 	&=& \frac{1}{\pi^2 m^2} \|\ddot u(t)\|_{L^2(S^1,\R^{2n})}^2.
 		\end{eqnarray*}
 		In order to bound the second derivative, $\ddot u$, we present it in terms of the dual curve $z(t)$: 
@@ -149,7 +149,7 @@ Let $u_m$ be the minimizer of the functional $\F(x)=\int_0^1 h_K^2 (\dot x(t))dt
 		\end{eqnarray*}
 		which yields:
 		\[
-		\|\dot\beta_m-\dot u\|_{L^2}^2 \leq \frac{2\l^2}{\pi^2 m^2} \| (\boldsymbol{H}(H)\cdot \nabla H)\circ z(t)\|^2_{L^2}\leq \frac{4\l^3}{\pi^2 m^2}\|\boldsymbol{H} (H)\|^2_{C^0}\cdot \|\nabla H\|^2_{C^0}.
+		\|\dot\beta_m-\dot u\|_{L^2}^2 \leq \frac{2\l^2}{\pi^2 m^2} \int_0^{2\l} \left( (\boldsymbol{H}(H)\cdot \nabla H)\circ z(t)\right)^2 dt\leq \frac{4\l^3}{\pi^2 m^2}\|\boldsymbol{H} (H)\|^2_{C^0(\{H=1\})}\cdot \|\nabla H\|^2_{C^0(\{H=1\})}.
 		\]	\\
 	 
 	\item Bounding {$|c_m|$}:\\
@@ -171,9 +171,9 @@ Let $u_m$ be the minimizer of the functional $\F(x)=\int_0^1 h_K^2 (\dot x(t))dt
 	 	\begin{eqnarray*}
 	 	|c_m| &\leq& \frac{1}{\pi} \left(2 \|\dot u\|_{L^2}\cdot \|\dot\beta_m-\dot u\|_{L^2} + \|\dot\beta_m-\dot u\|_{L^2}^2\right)\\
 	 	&\leq& \frac{3}{\pi} \|\dot u\|_{L^2}\cdot \|\dot\beta_m-\dot u\|_{L^2}\\
-	 	&\leq& \frac{6\l^2}{\pi^2 m}\|\boldsymbol{H} (H)\|_{C^0}\cdot \|\nabla H\|^2_{C^0}.
+	 	&\leq& \frac{6\l^2}{\pi^2 m}\|\boldsymbol{H} (H)\|_{C^0(\{H=1\})}\cdot \|\nabla H\|^2_{C^0(\{H=1\})}.
 	 	\end{eqnarray*}
-	 	Notice that for $m\geq\frac{12\l^2}{\pi^2 }\|\boldsymbol{H} (H)\|_{C^0}\cdot \|\nabla H\|^2_{C^0} $, it holds that $|c_m|\leq \frac{1}{2}$ which implies that $\frac{|c_m|}{1-|c_m|}\leq 2|c_m|$.
+	 	Notice that for $m\geq\frac{12\l^2}{\pi^2 }\|\boldsymbol{H} (H)\|_{C^0(\{H=1\})}\cdot \|\nabla H\|^2_{C^0(\{H=1\})} $, it holds that $|c_m|\leq \frac{1}{2}$ which implies that $\frac{|c_m|}{1-|c_m|}\leq 2|c_m|$.
 
 	 \end{itemize}\
 
@@ -183,7 +183,7 @@ Let $u_m$ be the minimizer of the functional $\F(x)=\int_0^1 h_K^2 (\dot x(t))dt
 	|\F(u_m)-\F(u)| &\leq& \frac{|c_m|}{1-|c_m|} + 2 L(G) \cdot \|\dot u\|_{L^2}\cdot \|\dot \beta_m - \dot u\|_{L^2}\\ 
 	&\leq& 2|c_m| + 2 L(G) \cdot \|\dot u\|_{L^2}\cdot \|\dot \beta_m - \dot u\|_{L^2}\\ 
 	&\leq& \left(\frac{6}{\pi}  +2 L(G)\right) \cdot \|\dot u\|_{L^2}\cdot \|\dot \beta_m - \dot u\|_{L^2}\\
-	&\leq& \left(\frac{6}{\pi}  +2 L(G)\right) \cdot \frac{2\l^2}{\pi m}\|\boldsymbol{H} (H)\|_{C^0}\cdot \|\nabla H\|^2_{C^0}.
+	&\leq& \left(\frac{6}{\pi}  +2 L(G)\right) \cdot \frac{2\l^2}{\pi m}\|\boldsymbol{H} (H)\|_{C^0(\{H=1\})}\cdot \|\nabla H\|^2_{C^0(\{H=1\})}.
 	\end{eqnarray*}
 	
 \end{proof}\
