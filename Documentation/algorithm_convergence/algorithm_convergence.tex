@@ -94,75 +94,98 @@ We are interested in the minimal values of the functional $\F(v)=\int_0^1 G(-J\d
 
 \subsection{Explicit Bound on the Error}
 
-Let $u_m$ be a minimizer of the functional $\F(x)=\int_0^1 h_K^2 (\dot x(t))dt$ on the space $W_m$, and $u$ be a minimizer on the total space $W$. Denote by $E_m:=|\F (u_m)-\F(u)|$ the error of the capacity approximation. Denote by $\alpha_m\in W_m$ the piecewise linear approximation of $u$, $\alpha_m=\frac{1}{\sqrt{1+c_m}}\beta_m$, where $\dot\beta_m$ is the average of $\dot u$ on each subinterval and the normalization is such that the action of $\alpha_m$ has action equals 1. %%%ADD DISCRIPTION
+Let $u_m$ be the minimizer of the functional $\F(x)=\int_0^1 h_K^2 (\dot x(t))dt$ on the space $M_m$, and $u$ be the minimizer on the total space $M$. Denote by $E_m:=|\F (u_m)-\F(u)|$ the error of the capacity approximation. Let $\alpha_m\in M_m$ be the piecewise linear approximation of $u$, defined by $\alpha_m=\frac{1}{\sqrt{1+c_m}}\beta_m$, where $\dot\beta_m$ is the average of $\dot u$ on each subinterval (as in the construction in Lemma~\ref{Lemma:dense}), and the normalization is such that $\alpha_m$ has action equal to 1.
 
 \begin{Lemma}
-	$E_m\leq L(h_K^2) \cdot $, where $L(h_K^2)$ is the Lipschitz constant of $h_K^2$ in the unit ball.
+	For  $m\geq\frac{12\l^2}{\pi^2 }\|\boldsymbol{H} (H)\|_{C^0}\cdot \|\nabla H\|^2_{C^0} $, the error is bounded by: 
+	\begin{equation}\label{Lemma:error_bound}
+	E_m\leq \left(\frac{6}{\pi}  +2 L(G)\right) \cdot \frac{2\l^2}{\pi m}\|\boldsymbol{H} (H)\|_{C^0}\cdot \|\nabla H\|^2_{C^0},
+	\end{equation}
+	where $L(G)$ is the Lipschitz constant of $G:R^{2n}\rightarrow\R$ in the unit ball, $H(\cdot) = \|\cdot\|^2_K$ is the squared norm associated with $K$, and $\boldsymbol{H} (H)$ is the Hessian of $H$.
 \end{Lemma}
 \begin{proof}
-	Since $u_m$ minimizes $\F$ on the space $W_m$, we have:
+	Since $u_m$ minimizes $\F$ on the space $M_m$, we have:
 	\begin{eqnarray*}
-		|\F(u_m)-\F(u)|&\leq& |\F(\alpha_m)-\F(u)| \leq \int_0^1 |\F(\dot \alpha_m)-\F(\dot u)| dt\\
-		&\leq& L(h_K^2) \cdot \max(\|\dot \alpha_m\|_{L^2},\|\dot u\|_{L^2})\cdot \|\dot \alpha_m - \dot u\|_{L^2}\\
-		&\leq& L(h_K^2) \cdot (\|\dot u\|_{L^2}+\|\dot \alpha_m - \dot u\|_{L^2}) \cdot \|\dot \alpha_m - \dot u\|_{L^2}.
+	|\F(u_m)-\F(u)|&\leq& |\F(\alpha_m)-\F(u)| \leq |\F(\alpha_m)-\F(\beta_m)|+|\F(\beta_m)-\F(u)|\\ 
+	&\leq& \big|\frac{1}{1+c_m}-1\big| + \int_0^1 |\F(\dot \beta_m)-\F(\dot u)| dt\\
+	&\underset{\text{by Lemma~\ref{Lemma:Lipschitz}}}{\leq}& \big|\frac{c_m}{1+c_m}\big| + L(G) \cdot \max(\|\dot \beta_m\|_{L^2},\|\dot u\|_{L^2})\cdot \|\dot \beta_m - \dot u\|_{L^2}\\
+	&\leq&\frac{|c_m|}{1-|c_m|} + L(G) \cdot (\|\dot u\|_{L^2}+\|\dot \beta_m - \dot u\|_{L^2}) \cdot \|\dot \beta_m - \dot u\|_{L^2}.
 	\end{eqnarray*}
-	Now, denoting by $\l:=\F(u)$ the minimal value, and using the dual action principle, the closed characteristic of the dual problem will be (\cite{going1998diss}):
-	\[
-	z(t)= 2\sqrt{\l} \cdot u\left(\frac{t}{2\l}\right) + c
-	\]
-	for some constant vector $c\in\R^{2n}$. We can use the above equation and the Hamilton equation that $z$ satisfies to bound $\dot u$:
-	\begin{eqnarray*}
-		\|\dot u\|_{L^2}^2 &=& \int_0^1 \left(\frac{1}{2\sqrt{\l}}2\l\cdot\dot z(2\l t)\right)^2 dt =\l\int_0^{2\l} \dot z(s)^2 \frac{1}{2\l}ds \\
-		&=& \frac{1}{2}\|\dot z\|_{L^2}^2 = \frac{1}{2}\|-J\nabla H\circ z\|_{L^2}^2 \leq \l\cdot \|\nabla H\|_{C^0}^2. 
-	\end{eqnarray*}
-	In order to bound the difference $\|\dot\alpha_m-\dot u\|_{L^2}$,  we notice that 
-	\begin{eqnarray*}
-		\|\dot\alpha_m-\dot u\|_{L^2}&\leq& \left|1-\frac{1}{\sqrt{1+c_m}}\right|\|\dot\beta_m\|_{L^2}+\|\dot\beta_m- \dot u\|_{L^2}\\
-		&\leq& \left|1-\frac{1}{\sqrt{1+c_m}}\right|\left(\|\dot u\|_{L^2}+\|\dot\beta_m-\dot u\|_{L^2}\right)+\|\dot\beta_m-\dot u\|_{L^2}
-	\end{eqnarray*}
-	and so it remains to bound $c_m$ and $\|\dot\beta_m-\dot u\|_{L^2}$.
+	Notice that $\|\dot \beta_m - \dot u\|_{L^2}\leq \|\dot \beta_1 - \dot u\|_{L^2}\leq \|\dot u\|_{L^2}$, and therefore,
+	\begin{equation}\label{eq:main_bound}
+		|\F(u_m)-\F(u)|\leq \frac{|c_m|}{1-|c_m|} +2 L(G) \cdot \|\dot u\|_{L^2}\cdot \|\dot \beta_m - \dot u\|_{L^2}.
+	\end{equation}
+	It remains to bound $\|\dot u\|_{L^2}$, $|c_m|$ and $\|\dot\beta_m-\dot u\|_{L^2}$.
 	\begin{itemize}
-		\item By definition, $1+c_m:=\int_0^1 \left<-J\dot\beta_m,\beta_m\right>dt$, and so:
+	\item Bounding {$\|\dot u\|_{L^2}$}:\\
+		Denoting by $\l:=\F(u)$ the minimal value, and using the dual action principle, the closed characteristic of the dual problem will be (\cite{going1998diss}):
+		\[
+		z(t)= 2\sqrt{\l} \cdot u\left(\frac{t}{2\l}\right) + c
+		\]
+		for some constant vector $c\in\R^{2n}$. We can use the above equation and the Hamilton equation that $z$ satisfies to bound $\dot u$:
 		\begin{eqnarray*}
-			1+c_m &=& \int_0^1 \left<-J\dot\beta_m,\beta_m\right>dt = \int_0^1 \left<-J\dot u,u\right>dt + \int_0^1 \left<-J(\dot\beta_m-\dot u),u\right>dt\\
-			&+& \int_0^1 \left<-J\dot u,(\beta_m-u)\right>dt + \int_0^1 \left<-J(\dot\beta_m-\dot u),(\beta_m-u)\right>dt,
-		\end{eqnarray*}
-		therefore,
+		\|\dot u\|_{L^2}^2 &=& \int_0^1 \left(\frac{1}{2\sqrt{\l}}2\l\cdot\dot 	z(2\l t)\right)^2 dt =\l\int_0^{2\l} \dot z(s)^2 \frac{1}{2\l}ds \\
+		&=& \frac{1}{2}\|\dot z\|_{L^2}^2 = \frac{1}{2}\|-J\nabla H\circ z\|_{L^2}^2 \leq \l\cdot \|\nabla H\|_{C^0}^2. 
+		\end{eqnarray*}\\
+		
+	 \item Bounding $\|\dot\beta_m-\dot u\|_{L^2}$:
 		\[
-		c_m = \int_0^1 \left<-J(\dot\beta_m-\dot u),u\right>dt + \int_0^1 \left<-J\dot u,(\beta_m-u)\right>dt + \int_0^1 \left<-J(\dot\beta_m-\dot u),(\beta_m-u)\right>dt.
+		\|\dot\beta_m-\dot u\|_{L^2}^2 = \int_0^1 (\dot\beta_m(t)-\dot u(t))^2 dt = \sum_{k=0}^{m-1} \int_{I_k} \left( \fint_{I_k}\dot u(s) ds-\dot u(t)\right)^2 dt.
 		\]
-		Using the Cauchy-Schwartz inequality we get,
-		\[
-		|c_m| \leq \|\dot\beta_m-\dot u\|_{L^2} \cdot \|u\|_{L^2} + \|\dot u\|_{L^2}\cdot \|\beta_m-u\|_{L^2} + \|\dot\beta_m-\dot u\|_{L^2}\cdot \|\beta_m-u\|_{L^2},
-		\]
-		which, after applying the Poincare inequality (without loss of generality, we may assume that the average of $u$ is 0 and so is the average of $\beta_m-u$) reduces to:
-		\[
-		|c_m| \leq \frac{1}{\pi} \left(2 \|\dot u\|_{L^2}\cdot \|\dot\beta_m-\dot u\|_{L^2} + \|\dot\beta_m-\dot u\|_{L^2}^2\right).
-		\]
-		\item 	Bounding $\|\dot\beta_m-\dot u\|_{L^2}$:
-		\[
-		\|\dot\beta_m-\dot u\|_{L^2}^2 = \int_0^1 (\dot\beta_m(t)-\dot u(t))^2 dt = \sum_{k=0}^{m-1} \int_{I_k} \left( \fint_{I_k}\dot u(s) ds-\dot u(t)\right)^2 dt
-		\]
-		Using the Poincare inequality for the $L^2$-norm (or, equivalently, the variational principle), we get:
+		Using the Poincare inequality for the $L^2$-norm (and recalling that for intervals, the Poincare constant equals to the length of the interval), we get:
 		\begin{eqnarray*}
-			\|\dot\beta_m-\dot u\|_{L^2}^2 &=& \sum_{k=0}^{m-1} \int_{I_k} \left( \fint_{I_k}\dot u(s) ds-\dot u(t)\right)^2 dt\\
-			&\leq& \sum_{k=0}^{m-1} \frac{1}{\pi^2 m^2}\int_{I_k} \ddot u^2(t)dt \leq  \sum_{k=0}^{m-1} \frac{1}{\pi^2 m^2} \|\ddot u(t)\|_{L^2(S^1,\R^{2n})}^2\\
-			&=& \frac{1}{\pi^2 m} \|\ddot u(t)\|_{L^2(S^1,\R^{2n})}^2.
+		 	\|\dot\beta_m-\dot u\|_{L^2}^2 &=& \sum_{k=0}^{m-1} \int_{I_k} \left( \fint_{I_k}\dot u(s) ds-\dot u(t)\right)^2 dt\\
+		 	&\leq& \sum_{k=0}^{m-1} \frac{1}{\pi^2 m^2}\int_{I_k} \ddot u^2(t)dt =  \frac{1}{\pi^2 m^2}\sum_{k=0}^{m-1}  \int_{\cup_k I_k} \ddot u^2(t)dt\\
+		 	&=& \frac{1}{\pi^2 m^2} \|\ddot u(t)\|_{L^2(S^1,\R^{2n})}^2.
 		\end{eqnarray*}
-		In order to bound the second derivative, $\ddot u$, we can derivate the Hamilton equation by $t$:
+		In order to bound the second derivative, $\ddot u$, we present it in terms of the dual curve $z(t)$: 
 		\[
-		\ddot u(t) = \boldsymbol{H} (H)\circ u(t)\cdot \dot u(t)
+		\ddot u(t) = \frac{1}{2\sqrt{\l}}4\l^2\cdot\ddot z(2\l t) = 2\l^{3/2}\cdot\ddot z(2\l t) ,
 		\]
+		and by taking the derivative of the Hamilton equation with respect to  $t$ we obtain:
+		\begin{eqnarray*}
+			\|\ddot u(t)\|_{L^2(S^1,\R^{2n})}^2 &=& \int_0^1  4\l^3\cdot\ddot z^2(2\l t) dt = 2\l^2 \int_0^{2\l}\ddot z^2(t) dt\\
+			&=& 2\l^2 \int_0^{2\l} (\boldsymbol{H}(H)\cdot \nabla H)^2\circ z(t) dt
+		\end{eqnarray*}
 		which yields:
 		\[
-		\|\dot\beta_m-\dot u\|_{L^2}^2 \leq \frac{1}{\pi^2 m} \|\boldsymbol{H}(H)\circ u(t)\cdot \dot u(t)\|_{L^2}\leq \frac{\l}{\pi^2 m}\|\boldsymbol{H} (H)\|_{C^0}\cdot \|\nabla H\|_{C^0}.
-		\]
-	\end{itemize}\
+		\|\dot\beta_m-\dot u\|_{L^2}^2 \leq \frac{2\l^2}{\pi^2 m^2} \| (\boldsymbol{H}(H)\cdot \nabla H)\circ z(t)\|^2_{L^2}\leq \frac{4\l^3}{\pi^2 m^2}\|\boldsymbol{H} (H)\|^2_{C^0}\cdot \|\nabla H\|^2_{C^0}.
+		\]	\\
+	 
+	\item Bounding {$|c_m|$}:\\
+		By definition, $1+c_m:=\int_0^1 \left<-J\dot\beta_m,\beta_m\right>dt$, and so:
+	 	\begin{eqnarray*}
+	 	1+c_m &=& \int_0^1 \left<-J\dot\beta_m,\beta_m\right>dt \\
+	 	&=& \int_0^1 \left<-J\dot u,u\right>dt + \int_0^1 \left<-J(\dot\beta_m-\dot u),u\right>dt\\
+	 	&+& \int_0^1 \left<-J\dot u,(\beta_m-u)\right>dt + \int_0^1 \left<-J(\dot\beta_m-\dot u),(\beta_m-u)\right>dt,
+	 	\end{eqnarray*}
+	 	therefore,
+	 	\[
+	 	c_m = \int_0^1 \left<-J(\dot\beta_m-\dot u),u\right>dt + \int_0^1 \left<-J\dot u,(\beta_m-u)\right>dt + \int_0^1 \left<-J(\dot\beta_m-\dot u),(\beta_m-u)\right>dt.
+	 	\]
+	 	Using the Cauchy-Schwartz inequality we get,
+	 	\[
+	 	|c_m| \leq \|\dot\beta_m-\dot u\|_{L^2} \cdot \|u\|_{L^2} + \|\dot u\|_{L^2}\cdot \|\beta_m-u\|_{L^2} + \|\dot\beta_m-\dot u\|_{L^2}\cdot \|\beta_m-u\|_{L^2},
+	 	\]
+	 	which, after applying the Poincare inequality (without loss of generality, we may assume that the average of $u$ is 0 and so is the average of $\beta_m-u$) reduces to:
+	 	\begin{eqnarray*}
+	 	|c_m| &\leq& \frac{1}{\pi} \left(2 \|\dot u\|_{L^2}\cdot \|\dot\beta_m-\dot u\|_{L^2} + \|\dot\beta_m-\dot u\|_{L^2}^2\right)\\
+	 	&\leq& \frac{3}{\pi} \|\dot u\|_{L^2}\cdot \|\dot\beta_m-\dot u\|_{L^2}\\
+	 	&\leq& \frac{6\l^2}{\pi^2 m}\|\boldsymbol{H} (H)\|_{C^0}\cdot \|\nabla H\|^2_{C^0}.
+	 	\end{eqnarray*}
+	 	Notice that for $m\geq\frac{12\l^2}{\pi^2 }\|\boldsymbol{H} (H)\|_{C^0}\cdot \|\nabla H\|^2_{C^0} $, it holds that $|c_m|\leq \frac{1}{2}$ which implies that $\frac{|c_m|}{1-|c_m|}\leq 2|c_m|$.
+
+	 \end{itemize}\
+
 	
-	Concluding the above, we obtain the following bound on the error of the discrete approximation:
-	\[
-	|\F(u_m)-\F(u)|\leq  L(h_K^2) \cdot\frac{\l^2}{\pi^2 m} \left(1+\frac{1}{\pi^2 m}\|\boldsymbol{H} (H)\|_{C^0}\right) \cdot\|\boldsymbol{H} (H)\|_{C^0}\cdot \|\nabla H\|_{C^0}^2.
-	\]
+	Applying the above bounds to \autoref{eq:main_bound}, the error of the discrete approximation is bounded as follows:
+	\begin{eqnarray*}
+	|\F(u_m)-\F(u)| &\leq& \frac{|c_m|}{1-|c_m|} + 2 L(G) \cdot \|\dot u\|_{L^2}\cdot \|\dot \beta_m - \dot u\|_{L^2}\\ 
+	&\leq& 2|c_m| + 2 L(G) \cdot \|\dot u\|_{L^2}\cdot \|\dot \beta_m - \dot u\|_{L^2}\\ 
+	&\leq& \left(\frac{6}{\pi}  +2 L(G)\right) \cdot \|\dot u\|_{L^2}\cdot \|\dot \beta_m - \dot u\|_{L^2}\\
+	&\leq& \left(\frac{6}{\pi}  +2 L(G)\right) \cdot \frac{2\l^2}{\pi m}\|\boldsymbol{H} (H)\|_{C^0}\cdot \|\nabla H\|^2_{C^0}.
+	\end{eqnarray*}
+	
 \end{proof}\
 
 \end{document}
