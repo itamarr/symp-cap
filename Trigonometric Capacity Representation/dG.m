@@ -11,10 +11,10 @@ function [y] = dG(x,P,n)
 %   n - The half dimension of the body represented in P.
 
 
-y= zeros(1,size(x,2));
+y= zeros(2,size(x,2));
 
 for i=1:size(x,2)
-    y = (1/2) * NormOfPolarBody(P, x(:,i)) * (GradOfPolarNorm(P, x(:,i))');
+    y(:,i) = (1/2) * NormOfPolarBody(P, x(:,i)) * (GradOfPolarNorm(P, x(:,i))');
 end
 
 end
